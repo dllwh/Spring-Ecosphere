@@ -1,0 +1,8 @@
+#### Thymeleaf 配置
+spring:
+  thymeleaf:
+    cache:  false ## 关闭缓存，便于在热部署文件，页面不产生缓存，能及时更新
+    #prefix: classpath:/thymeleaf/ #添加路径前缀
+    prefix: classpath:/templates/ #默认配置可以不用添加
+    suffix: .html #默认属性是 .html，可以不用添加
+    encoding: UTF-8 #编码格式
