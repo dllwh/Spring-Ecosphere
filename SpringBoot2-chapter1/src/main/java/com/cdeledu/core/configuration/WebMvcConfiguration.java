@@ -82,7 +82,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	 * registry.addViewController("请求路径").setViewName("请求页面文件路径")
 	 */
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("home");
+		registry.addViewController("/").setViewName("index");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
 

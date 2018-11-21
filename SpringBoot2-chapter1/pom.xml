@@ -160,13 +160,6 @@
 			<version>3.2.0</version>
 		</dependency>
 
-		<!-- 引入 FreeMarker 模板引擎 依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- JdbcTemplate 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -192,29 +185,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-
-		<!-- 引入Redis依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-
-		<!-- 引入MongoDB 依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongodb-driver</artifactId>
-		</dependency>
-
+		
 		<!-- 引入AOP依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -257,13 +228,7 @@
 			<version>4.1</version>
 		</dependency>
 		<!-- 导入Apache (结束) -->
-
-
-		<!-- 引入 Thymeleaf 的依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
+		
 		<!-- Spring Boot 默认使用的是yml中的配置，但有时候需要用传统的xml或properties配置, -->
 		<!-- 就需要使用spring-boot-configuration-processor来兼容 -->
 		<dependency>
