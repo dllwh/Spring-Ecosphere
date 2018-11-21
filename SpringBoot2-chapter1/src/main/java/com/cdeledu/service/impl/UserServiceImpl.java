@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.cdeledu.dao.UserMapper;
 import com.cdeledu.model.rbac.SysUserVO;
 import com.cdeledu.service.UserService;
 
 @Service
-@SuppressWarnings("unchecked")
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private UserMapper userMapper;
 
 	@Override
 	public Integer getUserCount() {
@@ -22,7 +24,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<SysUserVO> getUserList() {
-		return (List<SysUserVO>) jdbcTemplate.queryForObject("select * from sys_user",
-				SysUserVO.class);
+		return userMapper.getUserList();
 	}
 }
