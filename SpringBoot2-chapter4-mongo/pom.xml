@@ -38,7 +38,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
+		
+		<!-- Spring 单元测试 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- 引入MongoDB 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
