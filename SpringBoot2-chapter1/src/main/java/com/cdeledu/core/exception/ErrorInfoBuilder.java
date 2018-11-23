@@ -72,7 +72,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 		} else { // 当错误为空,自定义错误消息
 			String message = (String) request.getAttribute(WebUtils.ERROR_MESSAGE_ATTRIBUTE);
 			if (StringUtils.isBlank(message)) {
-				HttpStatus status = WebHelperUtils.getHttpStatus(request);
+				HttpStatus status = WebHelperUtils.getErrorHttpStatus(request);
 				message = "Unknown Exception With " + status.value() + " "
 						+ status.getReasonPhrase();
 			}
@@ -91,7 +91,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 		RestResult errorInfo = new RestResult();
 		errorInfo.setUrl(request.getRequestURL().toString());
 		errorInfo.setError(error.toString());
-		HttpStatus status = WebHelperUtils.getHttpStatus(request);
+		HttpStatus status = WebHelperUtils.getErrorHttpStatus(request);
 		errorInfo.setStatusCode(status.value());
 		errorInfo.setErrorMessage(status.getReasonPhrase());
 		errorInfo.setStackTrace(

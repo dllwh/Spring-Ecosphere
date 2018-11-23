@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
  * @版本: V1.3
  * @since: JDK 1.8
  */
-@Controller
 @Slf4j
 public class GlobalExceptionController implements ErrorController {
 	@Autowired
