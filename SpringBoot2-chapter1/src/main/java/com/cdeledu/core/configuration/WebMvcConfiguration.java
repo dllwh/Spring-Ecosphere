@@ -27,6 +27,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cdeledu.core.interceptor.LoggerInterceptor;
+import com.cdeledu.utils.WebHelperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,10 +104,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 			public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 					Object handler, @Nullable Exception ex) throws Exception {
 				if (response.getStatus() / 100 >= 4) {
-					log.error(
-							"访问URL:" + request.getAttribute(WebUtils.ERROR_REQUEST_URI_ATTRIBUTE));
+					log.error("访问URL:" + request.getAttribute(WebUtils.ERROR_REQUEST_URI_ATTRIBUTE)
+							+ "，其状态码是" + WebHelperUtils.getErrorHttpStatus(request).value());
 				} else {
-					log.info(("访问URL:" + request.getRequestURI()));
+					log.info("访问URL:" + request.getRequestURI() + "，其状态码是" + response.getStatus());
 				}
 			}
 		});

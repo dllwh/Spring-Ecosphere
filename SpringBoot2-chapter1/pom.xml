@@ -228,13 +228,9 @@
 			<version>4.1</version>
 		</dependency>
 		<!-- 导入Apache (结束) -->
-		
-		<!-- Spring Boot 默认使用的是yml中的配置，但有时候需要用传统的xml或properties配置, -->
-		<!-- 就需要使用spring-boot-configuration-processor来兼容 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
 
