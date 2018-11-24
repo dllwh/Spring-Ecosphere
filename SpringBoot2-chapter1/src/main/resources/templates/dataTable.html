@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/js/jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
 <!--  分页引入 -->
-<link rel="stylesheet"
-	href="/js/datatables/css/jquery.dataTables.min.css" />
-
-<script type="text/javascript"
-	src="/js/datatables/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" th:href="@{/js/datatables/css/jquery.dataTables.min.css}" />
+<script type="text/javascript" th:src="@{/js/datatables/js/jquery.dataTables.min.js}"></script>
 </head>
 <body>
 <table border="1px" width="100%" id="myTable" class="tablelist">
@@ -41,11 +38,13 @@
 				"scrollX" : false, // 水平滚动条
 				"scrollY" : false, // 垂直滚动条
 				"lengthChange" : true, // 件数选择功能 默认true
+				"scrollCollapse" : false, //是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变  
 				"lengthMenu" : [ 10, 25, 50, 75, 100 ], // 件数选择下拉框内容
 				"pageLength" : 10, // 每页的初期件数 用户可以操作lengthMenu上的值覆盖
 				"autoWidth" : true, // 自动列宽
 				"processing" : true, // 是否表示 "processing" 加载中的信息，这个信息可以修改
 				"destroy" : false, // 每次创建是否销毁以前的DataTable,默认false
+				"pagingType":"full_numbers", // 定义翻页组件的样式
 				"language" : {
 					"processing" : "正在获取数据，请稍后……",
 					"lengthMenu" : "每页显示 _MENU_ 条记录",// 当前页显示多少条

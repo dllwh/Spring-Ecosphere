@@ -15,7 +15,7 @@ server:
 #### Thymeleaf 配置
 spring:
   thymeleaf:
-    cache:  false ## 关闭缓存，便于在热部署文件，页面不产生缓存，能及时更新
+    cache:  false ## 关闭缓存，便于在热部署文件，页面不产生缓存，能及时更新,（建议：开发环境下设置为false，生产环境设置为true）
     check-template: true # 是否在渲染之前检查模板是否存在。
     check-template-location: true #是否检查模板位置是否存在
     enabled: true # 是否为Web框架启用Thymeleaf视图分辨率
