@@ -28,6 +28,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cdeledu.core.interceptor.LoggerInterceptor;
 import com.cdeledu.utils.WebHelperUtils;
+import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -97,7 +98,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	 */
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 添加拦截器 以及 拦截器规则
-		registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
+		List<String> patterns = Lists.newArrayList();
+		patterns.add("/static/");
+		// addPathPatterns--》需要拦截的方法 ；excludePathPatterns--》不需要拦截的方法
+		registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**").excludePathPatterns(patterns);
 
 		registry.addInterceptor(new HandlerInterceptor() {
 			@Override
