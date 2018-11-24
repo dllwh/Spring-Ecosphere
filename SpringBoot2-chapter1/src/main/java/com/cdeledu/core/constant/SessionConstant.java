@@ -13,4 +13,10 @@ package com.cdeledu.core.constant;
  * @since: JDK 1.8
  */
 public final class SessionConstant {
+	public static final String SESSION_USER = "loginedAgent"; // 用户对象
+	public static final String SESSION_LOGINID = "sessionLoginID"; // 登录ID
+	public static final String SESSION_USERID = "sessionUserID"; // 当前用户对象ID编号
+	public static final String SESSION_USERNAME = "sessionUserName"; // 当前用户对象ID编号
+	public static final String SESSION_URL = "sessionUrl"; // 被记录的url
+	public static final String SESSION_SECURITY_CODE = "sessionVerifyCode"; // 登录页验证码
 }
