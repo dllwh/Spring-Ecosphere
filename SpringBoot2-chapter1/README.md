@@ -10,16 +10,18 @@
 
 `通常我们会在应用主类中做一些框架配置扫描等配置，我们放在root package下可以帮助程序减少手工配置来加载到我们希望被Spring加载的内容`
 
-* 2、实体类(domain)置于com.cdeledu.domain或者 com.cdeledu.domain
+* 2、实体类(domain)置于 **com.cdeledu.model** 或者 **com.cdeledu.domain** 或者 **com.cdeledu.entity**
 
-* 3、数据访问层(Dao)置于com.cdeledu.repository 或者 com.cdeledu.dao
+* 3、数据访问层(Dao)置于 **com.cdeledu.dao** 或者 **com.cdeledu.repository**
 
-* 4、数据服务层(Service)置于com.cdeledu.service,数据服务的实现接口(serviceImpl)至于com.cdeledu.service.impl
+* 4、数据服务层(Service)置于 **com.cdeledu.service**
 
-* 5、前端控制器(Controller)置于com.cdeledu.controller
+* 5、数据服务的实现接口(serviceImpl)置于 **com.cdeledu.service.impl**
 
-* 6、工具类(utils)置于com.cdeledu.utils
+* 6、前端控制器(Controller)置于 **com.cdeledu.controller**
 
-* 7、常量接口类(constant)置于com.cdeledu.constant
+* 7、工具类(utils)置于 **com.cdeledu.utils**
 
-* 8、配置信息类(config)置于com.cdeledu.core.config
+* 8、常量接口类(constant)置于 **com.cdeledu.constant**
+
+* 9、配置信息类(config)置于 **com.cdeledu.core.config**
