@@ -93,7 +93,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 		errorInfo.setError(error.toString());
 		HttpStatus status = WebHelperUtils.getErrorHttpStatus(request);
 		errorInfo.setStatusCode(status.value());
-		errorInfo.setErrorMessage(status.getReasonPhrase());
+		errorInfo.setMessage(status.getReasonPhrase());
 		errorInfo.setStackTrace(
 				WebHelperUtils.getStackTraceInfo(error, isIncludeStackTrace(request)));
 		return errorInfo;
