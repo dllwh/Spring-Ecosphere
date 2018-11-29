@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * @类描述: 日志存储队列消费者
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年10月23日 下午9:23:54
- * @版本: V1.0
+ * @版本: V1.0.1
  * @since: JDK 1.8
  */
 @Component
@@ -55,7 +55,7 @@ public class SystemLogConsumer implements Runnable {
 				log.info("------------------------日志存储" + systemLog.toString());
 			}
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.error("日志存储出现异常，异常信息:{}", e.getMessage());
 		}
 	}
 }
