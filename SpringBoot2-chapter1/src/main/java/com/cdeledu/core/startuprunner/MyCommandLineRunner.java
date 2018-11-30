@@ -17,6 +17,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		String strArgs = Arrays.stream(args).collect(Collectors.joining("|"));
-		logger.info("ApplicationCommandLineRunner started with arguments:" + strArgs);
+		logger.info("服务器启动成功！<<<< 使用CommandLineRunner接口  with arguments:" + strArgs);
 	}
 }

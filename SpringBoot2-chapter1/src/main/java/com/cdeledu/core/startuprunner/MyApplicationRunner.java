@@ -16,7 +16,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 	/** ----------------------------------------------------- Fields end */
 	@Override
 	public void run(ApplicationArguments applicationArguments) throws Exception {
-		logger.info("-------------->" + "项目启动，now=" + new Date());
+		logger.info("服务器启动成功！ <<<< 使用ApplicationRunner接口，now=" + new Date());
 		logger.info("获取到的参数： " + applicationArguments.getOptionNames());
 		logger.info("获取到的参数： " + applicationArguments.getNonOptionArgs());
 		logger.info("获取到的参数： " + applicationArguments.getSourceArgs());
