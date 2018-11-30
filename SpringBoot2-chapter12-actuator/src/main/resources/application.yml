@@ -1,0 +1,33 @@
+management:
+  endpoints:
+    web:
+      base-path: /actuator # 端点的前缀，只对web服务有用
+      cors: ##  跨域支持
+        allowed-methods: GET,POST
+        allowed-headers: "*"
+        allowed-origins: "*"
+        allow-credentials: true
+      exposure:
+        include: "*" # 加载所有的端点，默认只加载了info、health
+  endpoint:
+    env:
+      enabled: true
+    health:
+      enabled: true 
+      show-details: always # 显示健康具体信息  默认不会显示详细信息
+    info:
+      enabled: true 
+    shutdown:
+      enabled: false # 禁用shutdown端点
+    beans:
+      cache:
+        time-to-live: 10s # 缓存时间
+
+---
+#### 数据库配置
+spring: 
+  datasource: 
+    url: jdbc:mysql://rm-2zevys7thq96t31s4no.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: test
+    password: test
+    driver-class-name: com.mysql.jdbc.Driver
