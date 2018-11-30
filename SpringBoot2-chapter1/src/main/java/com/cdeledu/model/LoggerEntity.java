@@ -38,7 +38,7 @@ public class LoggerEntity {
 	private String returnTime; 					// 接口返回时间 
 	private String returnData; 					// 接口返回数据json
 	private String httpStatusCode; 				// 请求时httpStatusCode代码，如：200,400,404等
-	private int timeConsuming; 					// 请求耗时，单位：秒
+	private Long timeConsuming; 					// 请求耗时，单位：秒
 	private String logType; 					// 日志类型 0是正常，1是异常	
 	private String exceptionDetail; 			// 异常详情
 }
