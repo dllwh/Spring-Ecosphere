@@ -3,7 +3,6 @@ package com.cdeledu.core.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,17 +23,17 @@ import lombok.extern.slf4j.Slf4j;
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年10月10日 上午8:24:16
- * @版本: V1.0
+ * @版本: V1.1
  * @since: JDK 1.8
  */
 @Slf4j
 public class LoggerInterceptor implements HandlerInterceptor {
-	/** ----------------------------------------------------- Fields start */
 	// 请求开始时间标识
-	private static final String LOGGER_SEND_TIME = "_send_time";
+	private static final String	LOGGER_SEND_TIME	= "_send_time";
 	// 请求日志实体标识
-	private static final String LOGGER_ENTITY = "_logger_entity";
-
+	private static final String	LOGGER_ENTITY		= "_logger_entity";
+	// private SystemLogQueue systemLogQueue;
+	
 	/**
 	 * 进入SpringMVC的Controller之前开始记录日志实体
 	 * 
@@ -44,7 +43,6 @@ public class LoggerInterceptor implements HandlerInterceptor {
 	 *            响应对象
 	 * 
 	 */
-	/** ----------------------------------------------------- Fields end */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
 		String path = request.getServletPath();
@@ -64,13 +62,13 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			// 设置客户端ip
 			logger.setClientIp(LoggerHelperUtils.getCliectIp(request));
 			// 设置请求方法
-			logger.setMethod(request.getMethod());
+			logger.setRequestMethod(request.getMethod());
 			// 设置请求类型（json|普通请求）
-			logger.setType(LoggerHelperUtils.getRequestType(request));
+			logger.setRequestType(LoggerHelperUtils.getRequestType(request));
 			// 设置请求参数内容json字符串
-			logger.setParamData(paramData);
+			logger.setRequestParameter(paramData);
 			// 设置请求地址
-			logger.setUri(url);
+			logger.setRequestUrl(url);
 			// 设置sessionId
 			logger.setSessionId(sessionId);
 			// 设置请求开始时间
@@ -81,13 +79,13 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			return true; // 返回true则继续向下执行，返回false则取消当前请求
 		}
 	}
-
+	
 	public void postHandle(HttpServletRequest httpservletrequest,
 			HttpServletResponse httpservletresponse, Object obj, ModelAndView modelandview)
-			throws Exception {
+					throws Exception {
 		log.debug("拦截器LoggerInterceptor------->2、请求之后调用，在视图渲染之前，也就是Controller方法调用之后");
 	}
-
+	
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object obj, Exception exception) throws Exception {
 		if (request.getServletPath().matches(PathConstant.NO_INTERCEPTOR_PATH)) { // 不需要的拦截直接过
@@ -101,19 +99,16 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			// 获取本次请求日志实体
 			LoggerEntity loggerEntity = (LoggerEntity) request.getAttribute(LOGGER_ENTITY);
 			// 设置请求时间差
-			loggerEntity.setTimeConsuming(Integer.valueOf((currentTime - time) + ""));
+			loggerEntity.setTimeConsuming(Long.valueOf((currentTime - time) + ""));
 			// 设置返回时间
 			loggerEntity.setReturnTime(currentTime + "");
 			// 设置返回错误码
 			loggerEntity.setHttpStatusCode(status + "");
 			// 设置返回值
-			loggerEntity.setReturnData(
-					JSON.toJSONString(request.getAttribute(LoggerHelperUtils.LOGGER_RETURN),
-							SerializerFeature.DisableCircularReferenceDetect,
-							SerializerFeature.WriteMapNullValue));
+			// loggerEntity.setReturnData(JSON.toJSONString(request.getAttribute(LoggerHelperUtils.LOGGER_RETURN),SerializerFeature.DisableCircularReferenceDetect,SerializerFeature.WriteMapNullValue));
 			// 执行将日志写入数据库
 			log.debug("拦截器LoggerInterceptor------->3、请求结束之后被调用，主要用于清理工作。");
-			WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+			// systemLogQueue.produce(loggerEntity);
 		}
 	}
 }
