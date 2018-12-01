@@ -24,35 +24,42 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class SystemLogConsumer implements Runnable {
-
-	private boolean active = true;
-	private Thread thread;
+	
+	private boolean			active	= true;
+	private Thread			thread;
 	@Autowired
-	private SystemLogQueue auditLogQueue;
-
+	private SystemLogQueue	auditLogQueue;
+							
+	/**
+	 * @方法描述:容器加载时执行init（）方法
+	 */
 	@PostConstruct
 	public void init() {
-		thread = new Thread(this);
-		thread.start();
+		thread = new Thread(this);// 实例化
+		thread.start(); // 启动线程，启动后执行 run（）方法
 	}
-
+	
 	@PreDestroy
 	public void close() {
 		active = false;
 	}
-
+	
 	@Override
 	public void run() {
 		while (active) {
 			execute();
 		}
 	}
-
+	
 	public void execute() {
+		// 判断缓冲队列是否存在记录
 		try {
-			LoggerEntity systemLog = auditLogQueue.poll();
-			if (systemLog != null) {
+			LoggerEntity systemLog = auditLogQueue.poll(); // 从队列中提取信息
+			if (systemLog != null) { // 判断消息是否为空
+				// 如果不为空则执行相应操作
 				log.info("------------------------日志存储" + systemLog.toString());
+			} else {
+				// 如果为空则让线程进入等待状态
 			}
 		} catch (InterruptedException e) {
 			log.error("日志存储出现异常，异常信息:{}", e.getMessage());
