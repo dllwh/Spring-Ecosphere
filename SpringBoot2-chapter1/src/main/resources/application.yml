@@ -2,7 +2,13 @@
 spring: 
   main: 
     banner-mode: log
----
+
+logging:
+  level: # 日志级别控制前缀
+    root: DEBUG # 控制root 的日志级别为DEBUG以上
+    org:
+      springframework: INFO #控制org.springframework包下的日志级别为DEBUG以上
+--- 
 ### 全局异常处理
 server:
   error:
