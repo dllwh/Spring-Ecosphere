@@ -9,7 +9,6 @@ import com.cdeledu.model.rbac.SysUserVO;
 
 @Mapper
 public interface UserMapper {
-
 	@Select("SELECT * from sys_user")
 	List<SysUserVO> getUserList();
 }

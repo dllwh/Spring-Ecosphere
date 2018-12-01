@@ -9,16 +9,14 @@ import com.cdeledu.service.UserService;
 @RestController
 @RequestMapping("hello")
 public class HelloWordController {
-	/** ----------------------------------------------------- Fields start */
 	@Autowired
 	private UserService userSerivce;
-	/** ----------------------------------------------------- Fields end */
-
+	
 	@RequestMapping(value = "")
 	public String hello() throws Exception {
 		return "hello world";
 	}
-
+	
 	@RequestMapping(value = "index")
 	public String index() throws Exception {
 		return "index";

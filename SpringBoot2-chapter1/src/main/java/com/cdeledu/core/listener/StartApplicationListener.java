@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 监听Spring Boot的生命周期：启动、停止、重启、关闭
- * 
+ * 		
  *       <pre>
  * 应用监听器事件执行先后顺序如下：
  * 1、ApplicationStartingEvent
@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component // 这里注意我们直接把监听类注册成组件
 public class StartApplicationListener implements ApplicationListener<ApplicationEvent> {
-
+	
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ApplicationStartingEvent) {
@@ -63,7 +63,7 @@ public class StartApplicationListener implements ApplicationListener<Application
 		} else if (event instanceof ApplicationFailedEvent) {
 			log.info("如果启动时发生异常");
 		} else {
-
+		
 		}
 	}
 }

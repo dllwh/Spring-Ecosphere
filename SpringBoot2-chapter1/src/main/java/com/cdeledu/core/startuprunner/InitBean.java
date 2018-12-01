@@ -32,9 +32,9 @@ public class InitBean implements ApplicationListener<ContextRefreshedEvent> {
 		if (event.getApplicationContext().getParent() == null) {
 			initdata();
 		}
-
+		
 	}
-
+	
 	public void initdata() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		cacheDataDictionary();
@@ -42,14 +42,14 @@ public class InitBean implements ApplicationListener<ContextRefreshedEvent> {
 		cacheQuarzInit();
 		log.info(sdf.format(new Date()) + "--->结束初始化调度任务");
 	}
-
+	
 	/**
 	 * @方法描述 : 加载调度器设置
 	 */
 	private void cacheQuarzInit() {
-
+	
 	}
-
+	
 	/**
 	 * @方法描述 : 加载数据字典，平台常量及平台路径到缓存中
 	 */

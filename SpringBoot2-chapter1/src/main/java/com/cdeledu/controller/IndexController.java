@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
 	private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
-
+	
 	/**
 	 * @方法描述 : 返回首页
 	 * @return
@@ -19,7 +19,7 @@ public class IndexController {
 		logger.debug("记录debug日志");
 		logger.info("访问了index方法");
 		logger.error("记录error错误日志");
-
+		
 		return "index";
 	}
 }

@@ -16,7 +16,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: Swagger2配置
- * 
+ * 		
  *       <pre>
  *       	1、通过@Configuration注解，让Spring来加载该类配置
  *       	2、通过@EnableSwagger2注解来启用Swagger2，在本示例项目中，为了统一管理，该注解放置于Application.java
@@ -57,7 +57,7 @@ public class SwaggerConfig {
 		// .build()
 		;
 	}
-
+	
 	/**
 	 * @方法描述:构建 api文档的详细信息函数
 	 * @return

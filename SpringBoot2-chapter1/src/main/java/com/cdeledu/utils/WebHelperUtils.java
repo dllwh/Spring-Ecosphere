@@ -30,14 +30,13 @@ public final class WebHelperUtils {
 	public static HttpStatus getErrorHttpStatus(HttpServletRequest request) {
 		Integer statusCode = (Integer) request.getAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE);
 		try {
-			System.out.println(statusCode+"--------------");
 			return statusCode != null ? HttpStatus.valueOf(statusCode.intValue())
 					: HttpStatus.INTERNAL_SERVER_ERROR;
 		} catch (Exception ex) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 	}
-
+	
 	/**
 	 * @方法描述 : 获取堆栈轨迹
 	 * @param error
@@ -54,7 +53,7 @@ public final class WebHelperUtils {
 			return "omitted";
 		}
 	}
-
+	
 	/**
 	 * 
 	 * @方法描述 : 判断是否是AJAX请求

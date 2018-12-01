@@ -21,7 +21,7 @@ import com.cdeledu.core.exception.ErrorInfoBuilder;
 public class ExceptionConfig {
 	@Resource
 	private ServerProperties serverProperties;
-
+	
 	public ErrorInfoBuilder errorInfoBuilder() {
 		return new ErrorInfoBuilder(serverProperties);
 	}

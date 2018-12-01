@@ -13,16 +13,10 @@ package com.cdeledu.core.constant;
  * @since: JDK 1.8
  */
 public final class OnlineStatus {
-	/** 在线 */
-	public final static String ONLINE = "ONLINE";
-	/** 离线 */
-	public final static String OFFLINE = "OFFLINE";
-	/** 离开 */
-	public final static String AWAY = "AWAY";
-	/** 忙碌 */
-	public final static String BUSY = "BUSY";
-	/** 隐身 */
-	public final static String HIDDEN = "HIDDEN";
-	/** 请勿打扰 */
-	public final static String DNDST = "DNDST";
+	public final static String	ONLINE	= "ONLINE";	// 在线
+	public final static String	OFFLINE	= "OFFLINE";// 离线
+	public final static String	AWAY	= "AWAY";	// 离开
+	public final static String	BUSY	= "BUSY";	// 忙碌
+	public final static String	HIDDEN	= "HIDDEN";	// 隐身
+	public final static String	DNDST	= "DNDST";	// 请勿打扰
 }

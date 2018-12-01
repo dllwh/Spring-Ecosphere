@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class PathConstant {
 	/** 错误信息页的路径 */
 	@Value("${server.error.path}")
-	public static String DEFAULT_ERROR_VIEW;
+	public static String		DEFAULT_ERROR_VIEW;
 	/** 不验证URL anon：不验证/authc：受控制的 */
-	public static final String NO_INTERCEPTOR_PATH = ".*/((.css)|(.js)|(images)|(login)|(anon)).*";
+	public static final String	NO_INTERCEPTOR_PATH	= ".*/((.css)|(.js)|(images)|(login)|(anon)).*";
 }

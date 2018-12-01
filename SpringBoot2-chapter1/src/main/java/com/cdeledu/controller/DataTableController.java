@@ -9,10 +9,10 @@ import com.cdeledu.service.UserService;
 
 @Controller
 public class DataTableController {
-
+	
 	@Autowired
 	private UserService userService;
-
+	
 	@RequestMapping("dataTable")
 	public ModelAndView dataTable(ModelAndView modelAndView) {
 		modelAndView.addObject("userList", userService.getUserList());

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: Shiro 配置
- * 
+ * 		
  *       <pre>
  * 1、RequiresRoles
  * 	表示当前Subject需要角色
@@ -30,4 +30,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ShiroConfig {
+
 }

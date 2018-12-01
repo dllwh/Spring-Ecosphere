@@ -13,4 +13,5 @@ package com.cdeledu.core.constant;
  * @since: JDK 1.8
  */
 public final class CacheConstant {
+
 }

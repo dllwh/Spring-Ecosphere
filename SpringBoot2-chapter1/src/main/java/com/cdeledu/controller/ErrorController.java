@@ -39,9 +39,9 @@ public class ErrorController {
 		} else {
 			// 情况2：要么继续运行
 		}
-
+		
 	}
-
+	
 	/**
 	 * 模拟用户数据访问.
 	 */

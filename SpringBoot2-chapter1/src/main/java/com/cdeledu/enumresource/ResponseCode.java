@@ -12,7 +12,7 @@ package com.cdeledu.enumresource;
  * @since: JDK 1.8
  */
 public enum ResponseCode {
-
+	
 	SUCCESS(200), // 成功
 	FAIL(400), // 失败
 	UNAUTHORIZED(401), // 未认证（签名错误）
@@ -20,9 +20,9 @@ public enum ResponseCode {
 	UNAUTHZ(4403), // 未授权，拒绝访问
 	INTERNAL_SERVER_ERROR(500),// 服务器内部错误
 	;
-
+	
 	public int code;
-
+	
 	ResponseCode(int code) {
 		this.code = code;
 	}

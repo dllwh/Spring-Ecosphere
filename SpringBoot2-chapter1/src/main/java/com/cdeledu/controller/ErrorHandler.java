@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "errorHandler")
 public class ErrorHandler {
-
+	
 	private void randomException() throws Exception {
 		Exception[] exceptions = { // 异常集合
 				new NullPointerException(), new ArrayIndexOutOfBoundsException(),
@@ -37,7 +37,7 @@ public class ErrorHandler {
 			// 情况2：要么继续运行
 		}
 	}
-
+	
 	/**
 	 * @方法描述 : 模拟用户数据访问
 	 * @return

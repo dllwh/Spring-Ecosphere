@@ -13,7 +13,6 @@ package com.cdeledu.core.constant;
  * @since: JDK 1.8
  */
 public final class StatusConstant {
-	public static final String EX = "ex";
-	/** 是否导出或下载标识 */
-	public static final String EXPORTORDOWNLOADSYSFLAG = "exportOrDownloadSysFlag";
+	public static final String	EX						= "ex";
+	public static final String	EXPORTORDOWNLOADSYSFLAG	= "exportOrDownloadSysFlag";	// 是否导出或下载标识
 }

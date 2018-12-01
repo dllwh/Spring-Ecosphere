@@ -22,17 +22,12 @@ import lombok.Data;
 @Data
 public class RestResult {
 	/** 服务器当前时间（添加该字段的原因是便于查找定位请求时间，因为实际开发过程中服务器时间可能跟本地时间不一致，加上这个时间戳便于日后定位） */
-	private String currentTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-	/** 成功或者失败的code错误码 */
-	private Integer statusCode = ResponseCode.SUCCESS.code;
-	/** 访问Url */
-	private String url;
-	/** 错误类型 */
-	private String error;
-	/** 错误的堆栈轨迹 */
-	private String stackTrace;
-	/** 成功时返回的数据息 */
-	private Object data;
-	/** 请求失败返回的提示信息，给前端进行页面展示的信息 */
-	private String message;
+	private String	currentTime	= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+			.format(LocalDateTime.now());
+	private Integer	statusCode	= ResponseCode.SUCCESS.code;						// 成功或者失败的code错误码
+	private String	url;															// 访问Url
+	private String	error;															// 错误类型
+	private String	stackTrace;														// 错误的堆栈轨迹
+	private Object	data;															// 成功时返回的数据息
+	private String	message;														// 请求失败返回的提示信息，给前端进行页面展示的信息
 }

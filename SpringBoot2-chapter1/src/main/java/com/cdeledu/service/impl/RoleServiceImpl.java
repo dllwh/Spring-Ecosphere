@@ -13,7 +13,7 @@ import com.cdeledu.service.RoleService;
 public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleMapper roleMapper;
-
+	
 	@Override
 	public List<Map<String, Object>> getRoleList() {
 		return roleMapper.getRoleList();

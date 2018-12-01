@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述:
- * 
+ * 		
  * 		<pre>
  * Spring的WebMvcConfigurer接口提供了很多方法让我们来定制SpringMVC的配置。
  * 而且Spring还提供了WebMvcConfigurerAdapter让我们更加优化的去进行配置。
@@ -53,32 +53,32 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootConfiguration
 @Slf4j
 public class WebMvcConfiguration implements WebMvcConfigurer {
-
+	
 	/**
 	 * 添加类型转换器和格式化器
 	 */
 	public void addFormatters(FormatterRegistry registry) {
-
+	
 	}
-
+	
 	/**
 	 * 异常处理
 	 */
 	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
 	}
-
+	
 	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
 	}
-
+	
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 	}
-
+	
 	/**
 	 * 配置视图解析器
 	 */
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 	}
-
+	
 	/**
 	 * addViewControllers可以方便的实现一个请求直接映射成视图，而无需书写controller
 	 * registry.addViewController("请求路径").setViewName("请求页面文件路径")
@@ -87,7 +87,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		registry.addViewController("/").setViewName("index");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
-
+	
 	/**
 	 * 注册拦截器
 	 * 
@@ -101,8 +101,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		List<String> patterns = Lists.newArrayList();
 		patterns.add("/static/");
 		// addPathPatterns--》需要拦截的方法 ；excludePathPatterns--》不需要拦截的方法
-		registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**").excludePathPatterns(patterns);
-
+		registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**")
+				.excludePathPatterns(patterns);
+				
 		registry.addInterceptor(new HandlerInterceptor() {
 			@Override
 			public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
@@ -116,7 +117,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 			}
 		});
 	}
-
+	
 	/**
 	 * 配置自定义静态资源路径
 	 * 
@@ -130,7 +131,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/article/**")
 				.addResourceLocations("file:D:/DevResource/uploads/article/");
 	}
-
+	
 	/**
 	 * 配置消息转换器--这里我用的是alibaba 开源的 fastjson
 	 */
@@ -152,7 +153,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		// 5.将convert添加到converters当中.
 		converters.add(fastJsonHttpMessageConverter);
 	}
-
+	
 	/**
 	 * 重写父类提供的跨域请求处理的接口，目的是添加映射路径和具体的CORS配置信息
 	 */

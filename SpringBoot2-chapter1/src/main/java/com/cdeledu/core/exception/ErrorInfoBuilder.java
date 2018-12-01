@@ -30,17 +30,17 @@ import com.cdeledu.utils.WebHelperUtils;
 @Component
 public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 	// public class ErrorInfoBuilder implements HandlerExceptionResolver {
-	private final static String ERROR_NAME = "springBootChapter.error";
-	private ErrorProperties errorProperties; // 错误配置
-
+	private final static String	ERROR_NAME	= "springBootChapter.error";
+	private ErrorProperties		errorProperties;						// 错误配置
+								
 	public ErrorProperties getErrorProperties() {
 		return errorProperties;
 	}
-
+	
 	public ErrorInfoBuilder(ServerProperties serverProperties) {
 		this.errorProperties = serverProperties.getError();
 	}
-
+	
 	/**
 	 * @方法描述 :构造错误信息
 	 * @param request
@@ -49,10 +49,10 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 	public RestResult buildErrorInfo(HttpServletRequest request) {
 		return buildErrorInfo(request, getError(request));
 	}
-
+	
 	/**
 	 * @方法描述 : 拿到最根部的error,携带手动抛出的异常信息
-	 * 
+	 * 		
 	 *       获取方式：通过Request对象获取(Key="javax.servlet.error.exception").
 	 * @param request
 	 * @return
@@ -64,7 +64,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 			// 根据Request对象获取错误.
 			error = (Throwable) request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE);
 		}
-
+		
 		if (error != null) { // 当错误非空，取出RootCause
 			while (error instanceof Exception && error.getCause() != null) {
 				error = error.getCause();
@@ -80,7 +80,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 		}
 		return error;
 	}
-
+	
 	/**
 	 * @方法描述 : 构建错误信息
 	 * @param request
@@ -98,7 +98,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 				WebHelperUtils.getStackTraceInfo(error, isIncludeStackTrace(request)));
 		return errorInfo;
 	}
-
+	
 	/**
 	 * @方法描述 : 判断是否包含堆栈轨迹
 	 * @param request
@@ -119,7 +119,7 @@ public class ErrorInfoBuilder extends HandlerExceptionResolverComposite {
 		// 情况3：其它情况
 		return false;
 	}
-
+	
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception exception) {

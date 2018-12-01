@@ -13,10 +13,10 @@ import org.springframework.scheduling.support.CronTrigger;
 
 @Configuration
 public class ScheduleConfig implements SchedulingConfigurer {
-	final static Logger logger = LoggerFactory.getLogger(ScheduleConfig.class);
+	final static Logger	logger	= LoggerFactory.getLogger(ScheduleConfig.class);
 	@Autowired
-	TaskScheduler taskScheduler;
-
+	TaskScheduler		taskScheduler;
+						
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		taskRegistrar.setTaskScheduler(taskScheduler);

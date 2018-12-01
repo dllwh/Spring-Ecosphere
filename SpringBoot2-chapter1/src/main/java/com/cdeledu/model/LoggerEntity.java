@@ -22,23 +22,22 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class LoggerEntity {
-
-	private Long id; 							// 编号
 	
-	private String clientIp; 					// 客户端请求ip
-	private String requestUrl; 					// 客户端请求路径
-	private String requestType; 				// 终端请求方式,普通请求,ajax请求
-	private String requestMethod; 				// 请求方式method,post,get等
-	private String requestParameter; 			// 请求参数内容,json
-	private String requestClass;				// 调用类
-	private String sessionId; 					// 请求接口唯一session标识
-	
-	
-	private Timestamp time; 					// 请求时间
-	private String returnTime; 					// 接口返回时间 
-	private String returnData; 					// 接口返回数据json
-	private String httpStatusCode; 				// 请求时httpStatusCode代码，如：200,400,404等
-	private Long timeConsuming; 					// 请求耗时，单位：秒
-	private String logType; 					// 日志类型 0是正常，1是异常	
-	private String exceptionDetail; 			// 异常详情
+	private Long		id;					// 编号
+						
+	private String		clientIp;			// 客户端请求ip
+	private String		requestUrl;			// 客户端请求路径
+	private String		requestType;		// 终端请求方式,普通请求,ajax请求
+	private String		requestMethod;		// 请求方式method,post,get等
+	private String		requestParameter;	// 请求参数内容,json
+	private String		requestClass;		// 调用类
+	private String		sessionId;			// 请求接口唯一session标识
+						
+	private Timestamp	time;				// 请求时间
+	private String		returnTime;			// 接口返回时间
+	private String		returnData;			// 接口返回数据json
+	private String		httpStatusCode;		// 请求时httpStatusCode代码，如：200,400,404等
+	private Long		timeConsuming;		// 请求耗时，单位：秒
+	private String		logType;			// 日志类型 0是正常，1是异常
+	private String		exceptionDetail;	// 异常详情
 }

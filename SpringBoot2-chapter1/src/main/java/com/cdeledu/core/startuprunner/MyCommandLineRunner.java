@@ -10,10 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
-	/** ----------------------------------------------------- Fields start */
 	private final static Logger logger = LoggerFactory.getLogger(MyCommandLineRunner.class);
-
-	/** ----------------------------------------------------- Fields end */
+	
 	@Override
 	public void run(String... args) throws Exception {
 		String strArgs = Arrays.stream(args).collect(Collectors.joining("|"));

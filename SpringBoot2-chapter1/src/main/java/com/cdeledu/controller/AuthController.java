@@ -26,7 +26,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "认证接口")
 public class AuthController {
-
 	
 	@GetMapping("/getCurrentUser")
 	@ApiOperation("获取当前用户信息")
@@ -35,10 +34,9 @@ public class AuthController {
 	}
 	
 	@PostMapping("/sms/token")
-	@ApiOperation(value="获取短信登录Token")
-	public RestResult getSmsToken(){
+	@ApiOperation(value = "获取短信登录Token")
+	public RestResult getSmsToken() {
 		RestResult restResult = new RestResult();
 		return restResult;
 	}
-	
 }

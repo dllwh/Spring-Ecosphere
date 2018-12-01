@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * 
  * 把今天最好的表现当作明天最新的起点．．～
@@ -26,7 +27,7 @@ public class NginxController {
 		request.getSession().setAttribute("verifyCode", "N7GX");
 		return request.getSession().getId() + ":" + request.getSession().getAttribute("verifyCode");
 	}
-
+	
 	// 核对验证码
 	@RequestMapping("checkVerifyCode")
 	public String checkVerifyCode(HttpServletRequest request) {

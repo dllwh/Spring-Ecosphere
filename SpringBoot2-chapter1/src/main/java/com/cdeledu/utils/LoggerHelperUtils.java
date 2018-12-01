@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public final class LoggerHelperUtils {
 	public static final String LOGGER_RETURN = "_logger_return";
-
+	
 	/**
 	 * 获取客户端ip地址
 	 * 
@@ -22,7 +22,7 @@ public final class LoggerHelperUtils {
 		if (ip == null || ip.trim() == "" || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-
+		
 		// 多个路由时，取第一个非unknown的ip
 		final String[] arr = ip.split(",");
 		for (final String str : arr) {
@@ -33,7 +33,7 @@ public final class LoggerHelperUtils {
 		}
 		return ip;
 	}
-
+	
 	/**
 	 * 判断是否为ajax请求
 	 * 
@@ -43,5 +43,4 @@ public final class LoggerHelperUtils {
 	public static String getRequestType(HttpServletRequest request) {
 		return request.getHeader("X-Requested-With");
 	}
-
 }

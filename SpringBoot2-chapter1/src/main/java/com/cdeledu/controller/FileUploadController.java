@@ -29,41 +29,42 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class FileUploadController {
+	
 	@RequestMapping("/uploadPage")
 	public String uploadPage() {
 		return "uploadPage";
 	}
-
+	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String upload(HttpServletRequest req, @RequestParam("file") MultipartFile file,
 			Model model) {
 		try {
 			// 判断上传文件是否为空
-			if(file.isEmpty()){
+			if (file.isEmpty()) {
 				return "上传文件不能为空";
 			}
 			// 根据时间戳创建新的文件名
 			String fileName = System.currentTimeMillis() + file.getOriginalFilename();
-			log.info("服务器文件名称"+fileName);
+			log.info("服务器文件名称" + fileName);
 			// 文件类型
 			file.getContentType();
 			// 文件大小
 			file.getSize();
-			String destFileName = "D:/up_files/springbootChapter/" + "uploaded" + File.separator + fileName;
-
+			String destFileName = "D:/up_files/springbootChapter/" + "uploaded" + File.separator
+					+ fileName;
+					
 			File destFile = new File(destFileName);
 			if (!destFile.exists()) {
 				destFile.getParentFile().mkdirs();
 			}
-
+			
 			// 把上传的文件复制到指定位置
 			// file.transferTo(destFile);
-
+			
 			model.addAttribute("fileName", fileName);
 		} catch (Exception e) {
 			return "上传失败," + e.getMessage();
 		}
-
 		return "showImg";
 	}
 }

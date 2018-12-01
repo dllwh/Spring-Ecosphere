@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InitSetup implements ServletContextListener {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+	
 	/**
 	 * 停止时执行的方法
 	 */
@@ -34,9 +34,9 @@ public class InitSetup implements ServletContextListener {
 		ServletContext sc = event.getServletContext();
 		sc.removeAttribute("syspath");
 		log.info(sdf.format(new Date()) + "--->服务器容器销毁成功");
-
+		
 	}
-
+	
 	/**
 	 * 启动时执行方法
 	 */

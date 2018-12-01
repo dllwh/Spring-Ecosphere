@@ -51,7 +51,7 @@ public class ThreadPoolConfig {
 		taskExecutor.initialize();
 		return taskExecutor;
 	}
-
+	
 	@Bean(name = "taskScheduler")
 	public TaskScheduler getThreadPoolTaskExecutor() {
 		ThreadPoolTaskScheduler taskExecutor = new ThreadPoolTaskScheduler();

@@ -10,10 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {
-	/** ----------------------------------------------------- Fields start */
 	private final static Logger logger = LoggerFactory.getLogger(MyApplicationRunner.class);
-
-	/** ----------------------------------------------------- Fields end */
+	
 	@Override
 	public void run(ApplicationArguments applicationArguments) throws Exception {
 		logger.info("服务器启动成功！ <<<< 使用ApplicationRunner接口，now=" + new Date());
