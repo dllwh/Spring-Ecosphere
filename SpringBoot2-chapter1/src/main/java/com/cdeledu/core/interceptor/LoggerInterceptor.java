@@ -1,5 +1,7 @@
 package com.cdeledu.core.interceptor;
 
+import java.sql.Timestamp;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cdeledu.core.constant.PathConstant;
+import com.cdeledu.core.task.ScheduledManager;
+import com.cdeledu.core.task.TaskFactory;
 import com.cdeledu.model.LoggerEntity;
-import com.cdeledu.utils.LoggerHelperUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import com.cdeledu.utils.WebHelperUtils;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -26,8 +28,8 @@ import lombok.extern.slf4j.Slf4j;
  * @版本: V1.1
  * @since: JDK 1.8
  */
-@Slf4j
 public class LoggerInterceptor implements HandlerInterceptor {
+	private static final String LOGGER_RETURN = "_logger_return";
 	// 请求开始时间标识
 	private static final String	LOGGER_SEND_TIME	= "_send_time";
 	// 请求日志实体标识
@@ -35,13 +37,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
 	// private SystemLogQueue systemLogQueue;
 	
 	/**
-	 * 进入SpringMVC的Controller之前开始记录日志实体
-	 * 
-	 * @param request
-	 *            请求对象
-	 * @param response
-	 *            响应对象
-	 * 
+	 * 1、请求之前调用，也就是Controller方法调用之前。
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
@@ -60,11 +56,15 @@ public class LoggerInterceptor implements HandlerInterceptor {
 					SerializerFeature.DisableCircularReferenceDetect,
 					SerializerFeature.WriteMapNullValue);
 			// 设置客户端ip
-			logger.setClientIp(LoggerHelperUtils.getCliectIp(request));
+			logger.setClientIp(WebHelperUtils.getCliectIp(request));
 			// 设置请求方法
 			logger.setRequestMethod(request.getMethod());
 			// 设置请求类型（json|普通请求）
-			logger.setRequestType(LoggerHelperUtils.getRequestType(request));
+			if(WebHelperUtils.isAjaxRequest(request)){
+				logger.setRequestType(1);
+			} else {
+				logger.setRequestType(0);
+			}
 			// 设置请求参数内容json字符串
 			logger.setRequestParameter(paramData);
 			// 设置请求地址
@@ -75,17 +75,21 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			request.setAttribute(LOGGER_SEND_TIME, System.currentTimeMillis());
 			// 设置请求实体到request内，方面afterCompletion方法调用
 			request.setAttribute(LOGGER_ENTITY, logger);
-			log.debug("拦截器LoggerInterceptor------->1、请求之前调用，也就是Controller方法调用之前。");
 			return true; // 返回true则继续向下执行，返回false则取消当前请求
 		}
 	}
 	
+	/**
+	 * 2、请求之后调用，在视图渲染之前，也就是Controller方法调用之后
+	 */
 	public void postHandle(HttpServletRequest httpservletrequest,
 			HttpServletResponse httpservletresponse, Object obj, ModelAndView modelandview)
 					throws Exception {
-		log.debug("拦截器LoggerInterceptor------->2、请求之后调用，在视图渲染之前，也就是Controller方法调用之后");
 	}
 	
+	/**
+	 * 3、请求结束之后被调用，主要用于清理工作。
+	 */
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object obj, Exception exception) throws Exception {
 		if (request.getServletPath().matches(PathConstant.NO_INTERCEPTOR_PATH)) { // 不需要的拦截直接过
@@ -101,14 +105,14 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			// 设置请求时间差
 			loggerEntity.setTimeConsuming(Long.valueOf((currentTime - time) + ""));
 			// 设置返回时间
-			loggerEntity.setReturnTime(currentTime + "");
+			loggerEntity.setReturnTime(new Timestamp(currentTime));
 			// 设置返回错误码
-			loggerEntity.setHttpStatusCode(status + "");
+			loggerEntity.setHttpStatusCode(status);
 			// 设置返回值
-			// loggerEntity.setReturnData(JSON.toJSONString(request.getAttribute(LoggerHelperUtils.LOGGER_RETURN),SerializerFeature.DisableCircularReferenceDetect,SerializerFeature.WriteMapNullValue));
+			loggerEntity.setReturnData(JSON.toJSONString(request.getAttribute(LOGGER_RETURN),SerializerFeature.DisableCircularReferenceDetect,SerializerFeature.WriteMapNullValue));
 			// 执行将日志写入数据库
-			log.debug("拦截器LoggerInterceptor------->3、请求结束之后被调用，主要用于清理工作。");
 			// systemLogQueue.produce(loggerEntity);
+			ScheduledManager.getInstance().executeLog(TaskFactory.operateLog(loggerEntity));
 		}
 	}
 }
