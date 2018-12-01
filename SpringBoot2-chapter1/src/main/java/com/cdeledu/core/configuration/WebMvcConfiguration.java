@@ -3,34 +3,25 @@ package com.cdeledu.core.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.core.Ordered;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.lang.Nullable;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.util.WebUtils;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cdeledu.core.interceptor.LoggerInterceptor;
-import com.cdeledu.utils.WebHelperUtils;
 import com.google.common.collect.Lists;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -51,7 +42,6 @@ import lombok.extern.slf4j.Slf4j;
  * @since: JDK 1.8
  */
 @SpringBootConfiguration
-@Slf4j
 public class WebMvcConfiguration implements WebMvcConfigurer {
 	
 	/**
@@ -103,19 +93,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		// addPathPatterns--》需要拦截的方法 ；excludePathPatterns--》不需要拦截的方法
 		registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**")
 				.excludePathPatterns(patterns);
-				
-		registry.addInterceptor(new HandlerInterceptor() {
-			@Override
-			public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-					Object handler, @Nullable Exception ex) throws Exception {
-				if (response.getStatus() / 100 >= 4) {
-					log.error("访问URL:" + request.getAttribute(WebUtils.ERROR_REQUEST_URI_ATTRIBUTE)
-							+ "，其状态码是" + WebHelperUtils.getErrorHttpStatus(request).value());
-				} else {
-					log.info("访问URL:" + request.getRequestURI() + "，其状态码是" + response.getStatus());
-				}
-			}
-		});
 	}
 	
 	/**
