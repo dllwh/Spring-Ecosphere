@@ -1,21 +1,26 @@
 package com.cdeledu.core.aspect;
 
-import java.util.Arrays;
+import java.sql.Timestamp;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cdeledu.core.systemlog.SystemLogQueue;
+import com.cdeledu.model.LoggerEntity;
+import com.cdeledu.utils.WebHelperUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,17 +39,26 @@ import lombok.extern.slf4j.Slf4j;
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年11月16日 上午11:27:08
- * @版本: V 1.0.2
+ * @版本: V 1.1
  * @since: JDK 1.8
  */
 @Aspect
 @Component
 @Slf4j
 public class WebLogAspect {
-	ThreadLocal<Long> startTime = new ThreadLocal<>();
+	ThreadLocal<Long>		startTime	= new ThreadLocal<>();
+	private LoggerEntity	requestLog	= new LoggerEntity();	// 创建日志实体
+	private SystemLogQueue	auditLogQueue;
+							
+	@Resource
+	public void setAuditLogQueue(SystemLogQueue auditLogQueue) {
+		this.auditLogQueue = auditLogQueue;
+	}
 	
 	/**
 	 * @方法描述: Controoler切入点
+	 * 		
+	 *        拦截规则定义：拦截com.cdeledu.controller包及其子包下的所有类的所有方法
 	 */
 	@Pointcut("execution(public * com.cdeledu.controller.*.*(..))")
 	public void webLog() {
@@ -54,58 +68,80 @@ public class WebLogAspect {
 	 * @方法描述: 前置通知，用于拦截记录用户的操作
 	 */
 	@Before("webLog()")
-	public void doBefore(JoinPoint joinPoint) throws Throwable {
+	public void doBeforeAdvice(JoinPoint joinPoint) throws Throwable {
 		log.debug("=========执行前置通知===============");
-		startTime.set(System.currentTimeMillis());
-		// 接收到请求，记录请求内容
-		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes();
-		HttpServletRequest request = attributes.getRequest();
-		// 记录下请求内容
-		log.warn("URL={}", request.getRequestURL());
-		log.warn("Method={}", request.getMethod());
-		log.warn("IP={}", request.getRemoteAddr());
-		log.warn("CLass.Method={}", joinPoint.getSignature().getDeclaringTypeName() + "."
-				+ joinPoint.getSignature().getName() + "()");
-		log.warn("Args={}", Arrays.toString(joinPoint.getArgs()));
-	}
-	
-	/**
-	 * @方法描述:配置环绕通知,使用在方法aspect()上注册的切入点
-	 */
-	@Around("webLog()")
-	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-		log.debug("==========开始执行环绕通知===============");
-		// 执行方法
-		Object result = joinPoint.proceed();
-		log.debug("==========结束执行环绕通知===============");
-		return result;
+		long beginTime = System.currentTimeMillis();
+		startTime.set(beginTime);
 	}
 	
 	/**
 	 * @方法描述: 标注该方法体为后置通知,当目标方法执行成功后执行该方法体,使用在方法aspect()上注册的切入点
 	 */
-	@AfterReturning(returning = "ret", pointcut = "webLog()")
-	public void doAfterReturning(Object ret) throws Throwable {
+	@AfterReturning(returning = "returnValue", pointcut = "webLog()")
+	public void doAfterReturning(JoinPoint joinPoint, Object returnValue) throws Throwable {
 		log.debug("=========执行后置返回通知===============");
-		// 处理完请求，返回内容
-		log.warn("response = {} ", ret);
-		log.warn("spend time = {}", (System.currentTimeMillis() - startTime.get()));
-	}
-	
-	/**
-	 * @方法描述:后置通知 用于拦截层记录用户的操作
-	 */
-	@After("webLog()")
-	public void doAfter(JoinPoint joinPoint) {
-		log.debug("=========执行后置通知===============");
+		saveSysLog(joinPoint, returnValue, null);
 	}
 	
 	/**
 	 * @方法描述: 异常通知 用于拦截记录异常日志
 	 */
 	@AfterThrowing(pointcut = "webLog()", throwing = "e")
-	public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
+	public void doAfterAdvice(JoinPoint joinPoint, Throwable e) {
 		log.debug("=========执行异常通知===============");
+		saveSysLog(joinPoint, null, e);
+	}
+	
+	private void saveSysLog(JoinPoint joinPoint, Object returnValue, Throwable throwable) {
+		long finishTime = System.currentTimeMillis();
+		// 接收到请求，记录请求内容
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		
+		requestLog.setStartTime(new Timestamp(startTime.get()));
+		requestLog.setSessionId(request.getRequestedSessionId());
+		requestLog.setRequestMethod(request.getMethod());
+		if (WebHelperUtils.isAjaxRequest(request)) {
+			requestLog.setRequestType(1);
+		} else {
+			requestLog.setRequestType(0);
+		}
+		
+		// 从切面织入点处通过反射机制获取织入点处的方法
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		requestLog.setRequestClass(signature.getDeclaringTypeName());
+		// 获取切入点所在的方法
+		requestLog.setOperateMethod(signature.getMethod().getName());
+		requestLog.setClientIp(request.getRemoteAddr());
+		// 请求的参数
+		Object[] args = joinPoint.getArgs();
+		if (args != null && args.length > 0) {
+			requestLog.setRequestParameter(
+					JSON.toJSONString(args, SerializerFeature.DisableCircularReferenceDetect,
+							SerializerFeature.WriteMapNullValue));
+		}
+		
+		requestLog.setRequestUrl(request.getRequestURI());
+		
+		if (throwable != null) {
+			requestLog.setReturnData(
+					JSON.toJSONString(throwable, SerializerFeature.DisableCircularReferenceDetect,
+							SerializerFeature.WriteMapNullValue));
+			requestLog.setExceptionMessage(throwable.getMessage());
+			requestLog.setHttpStatusCode(WebHelperUtils.getErrorHttpStatus(request).value());
+			requestLog.setLogType(1);
+		} else {
+			// 处理完请求，返回内容
+			requestLog.setReturnTime(new Timestamp(finishTime));
+			requestLog.setReturnData(
+					JSON.toJSONString(returnValue, SerializerFeature.DisableCircularReferenceDetect,
+							SerializerFeature.WriteMapNullValue));
+			requestLog.setTimeConsuming(finishTime - startTime.get());
+			requestLog.setLogType(0);
+			requestLog.setHttpStatusCode(200);
+		}
+		// 加入队列
+		auditLogQueue.produce(requestLog);
 	}
 }
