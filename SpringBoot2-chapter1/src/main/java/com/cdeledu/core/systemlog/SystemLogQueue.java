@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.cdeledu.model.LoggerEntity;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 把今天最好的表现当作明天最新的起点．．～
  *
@@ -30,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
  * @since: JDK 1.7
  */
 @Component
-@Slf4j
 public class SystemLogQueue {
 	// 存储客户端（用户）提交的设置控制命令
 	public static BlockingQueue<LoggerEntity> blockingQueue = new LinkedBlockingQueue<LoggerEntity>();
@@ -51,7 +48,6 @@ public class SystemLogQueue {
 	 * @throws InterruptedException
 	 */
 	public LoggerEntity poll() throws InterruptedException {
-		log.debug("正从队列获取数据...");
 		return blockingQueue.poll(1, TimeUnit.SECONDS);
 	}
 }
