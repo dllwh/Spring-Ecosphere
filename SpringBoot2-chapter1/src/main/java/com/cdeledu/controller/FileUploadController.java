@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -26,8 +27,9 @@ import lombok.extern.slf4j.Slf4j;
  * @版本: V1.0.1
  * @since: JDK 1.8
  */
-@Controller
 @Slf4j
+@Controller
+@Api(tags = "文件上传接口")
 public class FileUploadController {
 	
 	@RequestMapping("/uploadPage")

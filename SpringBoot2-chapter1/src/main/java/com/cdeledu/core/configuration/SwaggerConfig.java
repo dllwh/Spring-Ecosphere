@@ -24,7 +24,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * 
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年10月18日 上午12:47:32
- * @版本: V1.0.2
+ * @版本: V1.0.3
  * @since: JDK 1.8
  */
 @Configuration
@@ -48,8 +48,10 @@ public class SwaggerConfig {
 	 */
 	@Bean
 	public Docket customDocket() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()) // 用来创建该Api的基本信息（这些基本信息会展现在文档页面中）
-		// .select()
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select() // 选择那些路径和api会生成document
+				.build() // 创建
+				.apiInfo(apiInfo()) // 用来创建该Api的基本信息（这些基本信息会展现在文档页面中）
 		// .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)
 		// .apis(RequestHandlerSelectors.withMethodAnnotation(Api.class))
 		// .apis(RequestHandlerSelectors.basePackage("com.cdeledu.controller"))
