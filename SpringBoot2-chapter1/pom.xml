@@ -252,6 +252,7 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<compilerVersion>${java.version}</compilerVersion>
 				</configuration>
 			</plugin>
 			<!-- 用于生成JavaDoc 文档文档 -->

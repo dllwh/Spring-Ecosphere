@@ -107,7 +107,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
 			// 设置返回时间
 			loggerEntity.setReturnTime(new Timestamp(currentTime));
 			// 设置返回错误码
-			loggerEntity.setHttpStatusCode(status);
+			loggerEntity.setOperateStatus(status);
 			// 设置返回值
 			loggerEntity.setReturnData(JSON.toJSONString(request.getAttribute(LOGGER_RETURN),SerializerFeature.DisableCircularReferenceDetect,SerializerFeature.WriteMapNullValue));
 			// 执行将日志写入数据库

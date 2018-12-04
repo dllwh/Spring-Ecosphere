@@ -29,5 +29,5 @@ public class RestResult {
 	private String	error;															// 错误类型
 	private String	stackTrace;														// 错误的堆栈轨迹
 	private Object	data;															// 成功时返回的数据息
-	private String	message;														// 请求失败返回的提示信息，给前端进行页面展示的信息
+	private String	message		= "操作成功";											// 请求失败返回的提示信息，给前端进行页面展示的信息
 }

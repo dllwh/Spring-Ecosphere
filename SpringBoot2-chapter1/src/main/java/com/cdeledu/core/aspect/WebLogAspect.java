@@ -18,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cdeledu.core.constant.SysLogConstant;
 import com.cdeledu.core.systemlog.SystemLogQueue;
 import com.cdeledu.model.LoggerEntity;
 import com.cdeledu.utils.WebHelperUtils;
@@ -110,7 +111,7 @@ public class WebLogAspect {
 		
 		// 从切面织入点处通过反射机制获取织入点处的方法
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		requestLog.setRequestClass(signature.getDeclaringTypeName());
+		requestLog.setOperateClass(signature.getDeclaringTypeName());
 		// 获取切入点所在的方法
 		requestLog.setOperateMethod(signature.getMethod().getName());
 		requestLog.setClientIp(request.getRemoteAddr());
@@ -128,9 +129,9 @@ public class WebLogAspect {
 			requestLog.setReturnData(
 					JSON.toJSONString(throwable, SerializerFeature.DisableCircularReferenceDetect,
 							SerializerFeature.WriteMapNullValue));
-			requestLog.setExceptionMessage(throwable.getMessage());
-			requestLog.setHttpStatusCode(WebHelperUtils.getErrorHttpStatus(request).value());
-			requestLog.setLogType(1);
+			requestLog.setExceptionDetail(throwable.getMessage());
+			requestLog.setOperateStatus(WebHelperUtils.getErrorHttpStatus(request).value());
+			requestLog.setLogType(SysLogConstant.type.exception);
 		} else {
 			// 处理完请求，返回内容
 			requestLog.setReturnTime(new Timestamp(finishTime));
@@ -138,8 +139,8 @@ public class WebLogAspect {
 					JSON.toJSONString(returnValue, SerializerFeature.DisableCircularReferenceDetect,
 							SerializerFeature.WriteMapNullValue));
 			requestLog.setTimeConsuming(finishTime - startTime.get());
-			requestLog.setLogType(0);
-			requestLog.setHttpStatusCode(200);
+			requestLog.setLogType(SysLogConstant.type.operate);
+			requestLog.setOperateStatus(200);
 		}
 		// 加入队列
 		auditLogQueue.produce(requestLog);
