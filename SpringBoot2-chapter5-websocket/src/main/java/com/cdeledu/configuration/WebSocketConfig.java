@@ -3,7 +3,6 @@ package com.cdeledu.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
@@ -21,7 +20,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @since: JDK 1.8
  */
 @Configuration
-@EnableWebSocketMessageBroker // 开启使用STOMP协议来传输消息
+// @EnableWebSocketMessageBroker // 开启使用STOMP协议来传输基于代理的消息，支持使用@MessageMapping(类似于@RequestMapping)
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	/**
 	 * @方法描述 : ServerEndpointExporter 用于扫描和注册所有携带 ServerEndPoint 注解的实例，若部署到外部容器
@@ -33,15 +32,25 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		return new ServerEndpointExporter();
 	}
 
-	@Override
+	/**
+	 * 注册STOMP协议节点，并映射指定的URL
+	 * 
+	 * @see registry 添加STOMP协议的端点。提供WebSocket或SockJS客户端访问的地址
+	 * @see withSockJS：使用SockJS协议
+	 */
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// 注册一个stomp的节点，使用SockJS协议
-		registry.addEndpoint("/customendpoint").withSockJS();
+		registry.addEndpoint("/customendpoint").setAllowedOrigins("*") // 添加允许跨域访问
+				.withSockJS();
 	}
 
-	@Override
-	public void configureMessageBroker(MessageBrokerRegistry config) {
+	/**
+	 * 配置消息代理 启动Broker，消息的发送的地址符合配置的前缀来的消息才发送到这个broker
+	 */
+	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		// 使用内置的消息代理进行订阅和广播；路由消息的目标头以“/topic”或“/queue”开头。
-		config.enableSimpleBroker("/topic", "/queue");
+		registry.enableSimpleBroker("/topic", "/queue"); // 推送消息前缀
+		// registry.setApplicationDestinationPrefixes(""); // 应用请求前缀
+		// registry.setUserDestinationPrefix(""); // 推送用户前缀
 	}
 }

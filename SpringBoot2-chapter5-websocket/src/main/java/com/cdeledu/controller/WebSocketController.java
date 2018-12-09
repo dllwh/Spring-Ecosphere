@@ -20,6 +20,6 @@ public class WebSocketController {
 
 	@RequestMapping(value = "/")
 	public String index() {
-		return "webSocket";
+		return "ws";
 	}
 }
