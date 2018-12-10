@@ -20,7 +20,7 @@
 
 * 6、前端控制器(Controller)置于 **com.cdeledu.controller**
 
-* 7、工具类(utils)置于 **com.cdeledu.utils**
+* 7、工具类(util)置于 **com.cdeledu.util**
 
 * 8、常量接口类(constant)置于 **com.cdeledu.constant**
 
