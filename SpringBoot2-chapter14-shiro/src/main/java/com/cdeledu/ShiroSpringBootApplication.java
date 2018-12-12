@@ -2,6 +2,9 @@ package com.cdeledu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -15,6 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since: JDK 1.8
  */
 @SpringBootApplication
+@EnableTransactionManagement
+@EnableSwagger2
 public class ShiroSpringBootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShiroSpringBootApplication.class, args);

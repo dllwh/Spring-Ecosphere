@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.Api;
+
 /**
  * 把今天最好的表现当作明天最新的起点．．～
  *
@@ -17,13 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since: JDK 1.8
  */
 @Controller
+@Api(tags = "登录验证")
 public class LoginController {
 	@ResponseBody
 	@PostMapping("/login")
 	public String ajaxLogin(String username, String password, Boolean rememberMe) {
 		return "";
 	}
-	
+
 	@GetMapping("/unauth")
 	public String unauth() {
 		return "/error/unauth";

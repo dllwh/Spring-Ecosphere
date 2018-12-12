@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.swagger.annotations.Api;
+
 /**
  * 
  * 把今天最好的表现当作明天最新的起点．．～
@@ -18,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/system/menu")
+@Api(tags = "系统菜单，操作权限")
 public class SysMenuController {
 	private String prefix = "system/menu";
-	
+
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";

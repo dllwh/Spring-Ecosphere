@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.swagger.annotations.Api;
+
 /**
  * 把今天最好的表现当作明天最新的起点．．～
  *
@@ -17,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/system/dict")
-public class DicrController {
+@Api(tags = "字典管理")
+public class DictController {
 	private String prefix = "system/dict";
-	
+
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
