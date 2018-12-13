@@ -3,6 +3,7 @@ package com.cdeledu.framework.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -22,12 +23,28 @@ import springfox.documentation.spring.web.plugins.Docket;
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午6:45:15
- * @版本: V 0.1
+ * @版本: V 1.0.5
  * @since: JDK 1.7
  */
 @Configuration
 @ComponentScan(basePackages = { "com.cdeledu" })
 public class SwaggerConfig {
+	/**
+	 * @方法描述:全局默认
+	 * @return
+	 */
+	@Bean
+	public Docket customDocket() {
+		return new Docket(DocumentationType.SWAGGER_2) //
+				.genericModelSubstitutes(DeferredResult.class) //
+				.useDefaultResponseMessages(false) //
+				.forCodeGeneration(false) //
+				.apiInfo(apiInfo()) // 用来创建该Api的基本信息（这些基本信息会展现在文档页面中）
+				.pathMapping("/").select() // 选择那些路径和api会生成document
+				.apis(RequestHandlerSelectors.basePackage("com.cdeledu.modules")) // 指定扫描的包路径
+				.build(); // 创建
+	}
+	
 	@Bean
 	public Docket monitorApi() {
 		return new Docket(DocumentationType.SWAGGER_2).groupName("系统监控接口文档") // 设置栏目名
