@@ -1,13 +1,18 @@
 package com.cdeledu.modules.system.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.modules.system.domain.SysRole;
+import com.cdeledu.modules.system.service.RoleService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,40 +32,63 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/role")
 @Api(tags = "角色管理")
 public class SysRoleController {
-	private String prefix = "system/role";
-	
+	private String		prefix	= "system/role";
+	@Autowired
+	private RoleService	roleService;
+
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
 	}
-	
+
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
+	@ResponseBody
 	public String getList() {
 		return "";
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "add")
 	@ApiOperation(value = "角色管理-新增角色")
-	public RestResult add() {
-		return RestResult.success();
+	public RestResult add(SysRole sysRole) {
+		if (roleService.saveRole(sysRole) > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
-	
+
 	@ResponseBody
-	@DeleteMapping(value = "remove")
+	@DeleteMapping(value = "remove/{roleId}")
 	@ApiOperation(value = "角色管理-删除角色")
-	public RestResult remove() {
-		return RestResult.success();
+	public RestResult remove(@PathVariable("roleId") Integer roleId) {
+		SysRole sysRole = roleService.getRoleById(roleId);
+		if (sysRole == null) {
+			return RestResult.error("角色不存在");
+		}
+
+		if (roleService.countUserRoleByRoleId(roleId) > 0) {
+			return RestResult.error("角色已分配,不能删除");
+		}
+
+		if (roleService.deleteRoleById(roleId) > 0) {
+
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "batchRemove")
 	@ApiOperation(value = "角色管理-批量删除")
-	public RestResult batchRemove() {
-		return RestResult.success();
+	public RestResult batchRemove(@RequestParam("ids[]") Integer[] ids) {
+		int rows = roleService.batchDeleteRole(ids);
+		if (rows > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "edit")
 	@ApiOperation(value = "角色管理-修改角色")

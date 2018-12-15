@@ -19,7 +19,7 @@ import lombok.Data;
 @ApiModel
 public class Job {
 	@ApiModelProperty(value = "任务ID", name = "id", example = "1")
-	private String	jobId;
+	private String	id;
 	@ApiModelProperty(value = "任务名称", name = "jobName")
 	private String	jobName;
 	@ApiModelProperty(value = "任务分组", name = "jobGroup")

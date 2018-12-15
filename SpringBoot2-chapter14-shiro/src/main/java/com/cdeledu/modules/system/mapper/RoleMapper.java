@@ -1,6 +1,11 @@
 package com.cdeledu.modules.system.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.cdeledu.modules.system.domain.SysRole;
 
 /**
  * 
@@ -16,5 +21,56 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoleMapper {
+	/**
+	 * @方法描述 : 查询角色列表
+	 * @return
+	 */
+	@Select("SELECT * FROM sys_role")
+	List<SysRole> getRoleList();
 
+	/**
+	 * @方法描述 : 根据条件查询角色数据
+	 * @param sysRole
+	 * @return
+	 */
+	List<SysRole> getRoleList(SysRole sysRole);
+
+	/**
+	 * @方法描述 : 通过角色ID查询角色
+	 * @param roleId
+	 * @return
+	 */
+	@Select("SELECT * FROM sys_role WHERE id = #{id}")
+	SysRole getRoleById(Integer roleId);
+
+	/**
+	 * @方法描述 : 通过角色ID删除角色
+	 * @param roleId
+	 * @return
+	 */
+	int deleteRoleById(Integer roleId);
+
+	/**
+	 * @方法描述 : 批量角色用户信息
+	 * @param ids
+	 *            需要删除的数据ID
+	 * @return
+	 */
+	int batchDeleteRole(Integer[] ids);
+
+	int countUserRoleByRoleId(Integer roleId);
+
+	/**
+	 * @方法描述 : 修改角色信息
+	 * @param sysRole
+	 * @return
+	 */
+	int updateRole(SysRole sysRole);
+
+	/**
+	 * @方法描述 : 新增角色信息
+	 * @param sysRole
+	 * @return
+	 */
+	int insertRole(SysRole sysRole);
 }

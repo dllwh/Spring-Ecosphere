@@ -1,6 +1,7 @@
 package com.cdeledu.framework.shiro;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
@@ -43,5 +44,11 @@ public class ShiroHelper {
 	
 	public static String getSessionId() {
 		return String.valueOf(getSubjct().getSession().getId());
+	}
+	
+	public static void clearCachedAuthorizationInfo() {
+		RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+		ShiroRealm realm = (ShiroRealm) rsm.getRealms().iterator().next();
+		realm.clearCachedAuthorizationInfo();
 	}
 }

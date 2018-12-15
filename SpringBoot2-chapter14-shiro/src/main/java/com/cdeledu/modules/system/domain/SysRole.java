@@ -1,6 +1,7 @@
 package com.cdeledu.modules.system.domain;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -18,5 +19,10 @@ import lombok.Data;
 @Data
 @ApiModel(value = "角色表实体类")
 public class SysRole {
-
+	@ApiModelProperty(value = "主键：角色ID", name = "id", example = "1")
+	private Integer	id;
+	@ApiModelProperty(value = "角色名称", name = "roleName")
+	private String	roleName;
+	@ApiModelProperty(value = "角色编码", name = "roleCode")
+	private String	roleCode;
 }

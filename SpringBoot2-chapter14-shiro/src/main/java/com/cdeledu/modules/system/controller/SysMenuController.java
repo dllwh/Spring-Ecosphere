@@ -1,13 +1,19 @@
 package com.cdeledu.modules.system.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.modules.system.domain.SysMenu;
+import com.cdeledu.modules.system.service.MenuService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +34,10 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/menu")
 @Api(tags = "系统菜单，操作权限")
 public class SysMenuController {
-	private String prefix = "system/menu";
-	
+	private String		prefix	= "system/menu";
+	@Autowired
+	private MenuService	menuService;
+						
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
@@ -37,35 +45,37 @@ public class SysMenuController {
 	
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
-	public String getList() {
-		return "";
+	@ResponseBody
+	public List<SysMenu> getList() {
+		return menuService.getSysMenuList();
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "add")
-	@ApiOperation(value = "菜单管理-新增菜单")
-	public RestResult add() {
-		return RestResult.success();
+	@PostMapping(value = "save")
+	@ApiOperation(value = "菜单管理-保存菜单(包括创建、更新)")
+	public RestResult save(SysMenu sysMenu) {
+		if (menuService.saveMenu(sysMenu) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
-	@DeleteMapping(value = "remove")
+	@DeleteMapping(value = "remove/{menuId}")
 	@ApiOperation(value = "菜单管理-删除菜单")
-	public RestResult remove() {
-		return RestResult.success();
-	}
-	
-	@ResponseBody
-	@DeleteMapping(value = "batchRemove")
-	@ApiOperation(value = "菜单管理-批量删除")
-	public RestResult batchRemove() {
-		return RestResult.success();
-	}
-	
-	@ResponseBody
-	@PostMapping(value = "edit")
-	@ApiOperation(value = "菜单管理-修改菜单")
-	public RestResult edit() {
-		return RestResult.success();
+	public RestResult remove(@PathVariable("menuId") Integer menuId) {
+		if (menuService.countMenuByParentId(menuId) > 0) {
+			return RestResult.error("存在子菜单,不允许删除");
+		}
+		
+		if (menuService.countRoleMenuByMenuId(menuId) > 0) {
+			return RestResult.error("菜单已分配,不允许删除");
+		}
+		
+		if (menuService.deleteMenuById(menuId) > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
 }

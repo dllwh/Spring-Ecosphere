@@ -1,5 +1,6 @@
 package com.cdeledu.framework.shiro;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -39,4 +40,10 @@ public class ShiroRealm extends AuthorizingRealm {
 		return null;
 	}
 	
+	/**
+	 * 清理缓存权限
+	 */
+	public void clearCachedAuthorizationInfo() {
+		this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+	}
 }

@@ -36,6 +36,7 @@ public class SysUserController {
 	
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
+	@ResponseBody
 	public String getList() {
 		return "";
 	}

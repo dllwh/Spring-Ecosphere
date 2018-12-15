@@ -4,11 +4,16 @@ server:
     uri-encoding: UTF-8
   servlet:
     context-path: /
+logging:
+  level:
+    root: debug
+    org:
+      springframework: info
 spring:
   datasource:
     url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username: test
-    password: test
+    username: #数据库登录账号
+    password: #数据库登录密码
     driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
     cache: false
@@ -23,5 +28,5 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 mybatis:
-  mapper-locations: classpath:mybatis/*Mapper.xml,classpath:mybatis/**/*Mapper.xml
+  mapper-locations: classpath:com/cdeledu/modules/*/mapper/impl/*.xml,classpath:com/cdeledu/modules/*/*/mapper/impl/*.xml
   type-aliases-package: com.cdeledu.modules.**.domain
