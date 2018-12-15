@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cdeledu.modules.monitor.syslog.mapper.SysLogMapper">
+
+	<!-- 异常访问日志模块 -->
+	<insert id="insertExpLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into sys_log_exception
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="clientIp != null">clientIp,</if>
+			<if test="requestType != null">requestType,</if>
+			<if test="sessionId != null and sessionId !='' ">`sessionId`,</if>
+			<if test="startTime != null ">`startTime`,</if>
+			<if test="requestMethod != null and requestMethod != '' ">requestMethod,</if>
+			<if test="logType != null and logType != '' ">logType,</if>
+			<if test="exceptionDetail != null and exceptionDetail != '' ">exceptionDetail,</if>
+			<if test="returnData != null and returnData != '' ">returnData,	</if>
+			<if test="operateStatus != null ">operateStatus,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="clientIp != null">#{clientIp},</if>
+			<if test="requestType != null"> #{requestType},</if>
+			<if test="sessionId != null and sessionId !='' "> #{sessionId},</if>
+			<if test="startTime != null "> #{startTime},</if>
+			<if test="requestMethod != null and requestMethod != '' "> #{requestMethod},</if>
+			<if test="logType != null and logType != '' "> #{logType},</if>
+			<if test="exceptionDetail != null and exceptionDetail != '' "> #{exceptionDetail},</if>
+			<if test="returnData != null and returnData != '' "> #{returnData},</if>
+			<if test="operateStatus != null "> #{operateStatus},</if>
+		</trim>
+	</insert>
+	<select id="getExpLogList" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="com.cdeledu.framework.model.LoggerEntity">
+		SELECT * FROM sys_log_exception
+	</select>
+	<select id="countExpLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="int">
+		SELECT COUNT(*) FROM sys_log_exception
+	</select>
+
+	<!-- 登录日志模块 -->
+	<insert id="insertLoginLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		keyProperty="id" useGeneratedKeys="true">
+
+	</insert>
+	<select id="getLoginLogList" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="com.cdeledu.framework.model.LoggerEntity">
+		SELECT * FROM sys_log_login
+	</select>
+	<select id="getLoginLogByUserID" parameterType="Integer"
+		resultType="com.cdeledu.framework.model.LoggerEntity">
+		SELECT * FROM sys_log_login
+	</select>
+	<select id="countLoginLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="int">
+		SELECT COUNT(*) FROM sys_log_login
+	</select>
+
+	<!-- 操作日志模块 -->
+	<insert id="insertOperateLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		keyProperty="id" useGeneratedKeys="true">
+
+	</insert>
+	<select id="getOperateLogList" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="com.cdeledu.framework.model.LoggerEntity">
+		SELECT * FROM sys_log_operate
+	</select>
+	<select id="countOperateLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+		resultType="int">
+		SELECT COUNT(*) FROM sys_log_operate
+	</select>
+</mapper>
