@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.cdeledu.modules.system.domain.SysRole;
 
@@ -48,6 +49,7 @@ public interface RoleMapper {
 	 * @param roleId
 	 * @return
 	 */
+	@Update("UPDATE sys_upms_role SET ifEnabled = 0 WHERE id = #{roleId}")
 	int deleteRoleById(Integer roleId);
 
 	/**
@@ -58,6 +60,11 @@ public interface RoleMapper {
 	 */
 	int batchDeleteRole(Integer[] ids);
 
+	/**
+	 * @方法描述 : 通过角色ID查询角色使用数量
+	 * @param roleId
+	 */
+	@Select("SELECT * FROM sys_upms_user_role  WHERE roleId = #{roleId}")
 	int countUserRoleByRoleId(Integer roleId);
 
 	/**
@@ -73,4 +80,10 @@ public interface RoleMapper {
 	 * @return
 	 */
 	int insertRole(SysRole sysRole);
+
+	/**
+	 * @方法描述 : 校验角色code是否唯一
+	 */
+	@Select("SELECT COUNT(*) FROM sys_upms_role WHERE roleCode = #{roleCode}")
+	int checkRoleCodeUnique(String roleCode);
 }

@@ -1,6 +1,5 @@
 package com.cdeledu.modules.system.domain;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
@@ -15,7 +14,17 @@ import lombok.Data;
  * @since: JDK 1.8
  */
 @Data
-@ApiModel
 public class SysUserRole {
-
+	/** 管理员id */
+	private Integer	userId;
+	/** 登录名 */
+	private String	userName;
+	/** 用户个数 */
+	private Integer	userCount;
+	/** 角色id */
+	private Integer	roleId;
+	/** 角色名称 */
+	private String	roleName;
+	/** 角色编码 */
+	private String	roleCode;
 }

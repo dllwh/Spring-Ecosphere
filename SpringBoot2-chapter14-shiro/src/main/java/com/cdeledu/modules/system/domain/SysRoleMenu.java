@@ -1,7 +1,7 @@
 package com.cdeledu.modules.system.domain;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
+
 /**
  * 
  * 把今天最好的表现当作明天最新的起点．．～
@@ -15,7 +15,7 @@ import lombok.Data;
  * @since: JDK 1.8
  */
 @Data
-@ApiModel
 public class SysRoleMenu {
-
+	private Integer	roleId;
+	private Integer	menuId;
 }

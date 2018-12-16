@@ -38,5 +38,5 @@ public interface MenuService {
 	/**
 	 * @方法描述:查询菜单使用数量
 	 */
-	int countRoleMenuByMenuId(Integer parentId);
+	int countRoleMenuByMenuId(Integer menuId);
 }

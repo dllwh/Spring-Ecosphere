@@ -3,8 +3,9 @@ package com.cdeledu.modules.system.domain;
 import java.security.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -21,36 +22,39 @@ import lombok.Data;
 @Data
 @ApiModel(value = "菜单表实体类")
 public class SysMenu {
-	@ApiModelProperty(value = "菜单ID", name = "id", example = "1")
+	/** 菜单ID */
 	private String		id;
-	@ApiModelProperty(value = "菜单名称", name = "menuName")
+	/** 菜单名称 */
 	private String		menuName;
-	@ApiModelProperty(value = " 菜单链接地址", name = "menuUrl")
+	/** 菜单链接地址 */
 	private String		menuUrl;
-	@ApiModelProperty(value = "类型。1:目录，默认值；2：菜单；3：按钮；", name = "type", example = "1")
+	/** 排序 */
+	private Integer		sequence;
+	/** 类型。1:目录，默认值；2：菜单；3：按钮 */
 	private Integer		type;
-	@ApiModelProperty(value = "父菜单编号", name = "parentCode", example = "1")
+	/** 父菜单编号 */
 	private Integer		parentCode;
-	@ApiModelProperty(value = "是否可见(启用/禁用),不为空", name = "ifVisible")
+	/** 是否可见(启用/禁用),不为空 */
 	private Integer		ifVisible;
-	@ApiModelProperty(value = "是否有效;-1:删除;0:不可用,默认值;1:可用", name = "ifEnabled")
+	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
 	private String		ifEnabled;
-	@ApiModelProperty(value = "父级菜单名称", name = "parentName")
+	/** 父级菜单名称 */
 	private String		parentName;
-	@ApiModelProperty(value = "菜单图标样式", name = "iconClass")
+	/** 菜单图标样式 */
 	private String		iconClass;
-	@ApiModelProperty(value = "tree属性", name = "open")
+	/** tree属性 */
 	private Boolean		open;
-	@ApiModelProperty(value = "创建人", name = "creator")
+	/** 创建人 */
 	private String		creator;
-	@ApiModelProperty(value = "父级菜单名称", name = "createTime")
+	/** 创建时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	createTime;
-	@ApiModelProperty(value = "最后修改人", name = "modifier")
+	/** 最后修改人 */
 	private String		modifier;
-	@ApiModelProperty(value = "修改日期", name = "updateTime")
+	/** 修改日期 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	updateTime;
-	@ApiModelProperty(value = "备注", name = "remark")
+	/** 备注 */
 	private String		remark;
-	@ApiModelProperty(value = "", name = "childrenList")
 	private List<?>		childrenList;
 }

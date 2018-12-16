@@ -26,28 +26,29 @@ public interface MenuMapper {
 	 * @方法描述:新增菜单信息
 	 */
 	int insertMenu(SysMenu sysMenu);
-	
+
 	/**
 	 * @方法描述:修改菜单信息
 	 */
 	int updateMenu(SysMenu sysMenu);
-	
+
 	/**
 	 * @方法描述:校验菜单名称是否唯一
 	 */
 	int checkMenuNameUnique(String menuName);
-	
+
 	@Select("SELECT * FROM sys_menu")
 	List<SysMenu> getSysMenuList();
-	
+
 	@Update("update sys_menu set ifEnabled = 0 where id = #{id}")
 	int deleteMenuById(Integer menuId);
-	
+
 	@Select("SELECT * FROM sys_menu WHERE id = #{id}")
 	SysMenu getMenuById(Integer menuId);
-	
+
 	@Select("SELECT count(*) FROM sys_menu WHER parentCode = #{id}")
 	int countMenuByParentId(Integer parentId);
-	
-	int countRoleMenuByMenuId(Integer parentId);
+
+	@Select("SELECT COUNT(*) FROM sys_upms_role_menu WHERE menuId = #{menuId}")
+	int countRoleMenuByMenuId(Integer menuId);
 }

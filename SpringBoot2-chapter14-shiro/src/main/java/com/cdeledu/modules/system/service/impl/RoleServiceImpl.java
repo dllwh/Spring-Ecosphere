@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public List<SysRole> getRoleList() {
-		return null;
+		return roleMapper.getRoleList();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public List<SysRole> getRoleList(SysRole sysRole) {
-		return null;
+		return roleMapper.getRoleList(sysRole);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public SysRole getRoleById(Integer roleId) {
-		return null;
+		return roleMapper.getRoleById(roleId);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public int deleteRoleById(Integer roleId) {
-		return 0;
+		return roleMapper.deleteRoleById(roleId);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public int batchDeleteRole(Integer[] ids) {
-		return 0;
+		return roleMapper.batchDeleteRole(ids);
 	}
 
 	/**
@@ -99,6 +99,14 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	@Override
 	public int countUserRoleByRoleId(Integer roleId) {
-		return 0;
+		return roleMapper.countUserRoleByRoleId(roleId);
+	}
+
+	/**
+	 * @方法描述 :校验角色code是否唯一
+	 */
+	@Override
+	public boolean checkRoleCodeUnique(String roleCode) {
+		return roleMapper.checkRoleCodeUnique(roleCode) > 0 ? false : true;
 	}
 }

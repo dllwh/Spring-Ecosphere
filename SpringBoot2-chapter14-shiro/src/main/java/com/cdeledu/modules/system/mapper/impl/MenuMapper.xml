@@ -12,8 +12,6 @@
 			<if test="parentCode != null"> parentCode, </if>
 			<if test="ifVisible != null"> ifVisible, </if>
 			<if test="ifEnabled != null"> igEnabled, </if>
-			<if test="allowEdit != null"> allowEdit, </if>
-			<if test="allowDelete != null"> allowDelete,</if>
 			<if test="iconClass != null and iconClass !='' "> iconClass, </if>
 			<if test="sequence != null"> `sequence`, </if>
 			<if test="creator != null"> creator, </if>
@@ -27,8 +25,6 @@
 			<if test="parentCode != null"> #{parentCode},  </if>
 			<if test="ifVisible != null"> #{ifVisible}, </if>
 			<if test="ifEnabled != null"> #{ifEnabled}, </if>
-			<if test="allowEdit != null"> #{allowedit}, </if>
-			<if test="allowDelete != null"> #{allowdelete}, </if>
 			<if test="iconClass != null and iconClass !='' "> #{iconClass}, </if>
 			<if test="sequence != null"> #{sequence}, </if>
 			<if test="creator != null"> #{creator},</if>
@@ -46,8 +42,6 @@
 			<if test="parentCode != null"> parentCode = #{parentCode}, </if>
 			<if test="ifVisible != null"> ifVisible = #{ifVisible},</if>
 			<if test="ifEnabled != null"> ifEnabled = #{ifEnabled}, </if>
-			<if test="allowEdit != null"> allowEdit = #{allowEdit},</if>
-			<if test="allowDelete != null"> allowDelete = #{allowDelete}, </if>
 			<if test="iconClass != null and iconClass != '' ">iconClass = #{iconClass},</if>
 			<if test="sequence != null"> `sequence` = #{sequence},</if>
 			<if test="modifier != null">modifier = #{modifier},</if>

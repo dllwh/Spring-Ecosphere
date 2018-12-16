@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cdeledu.framework.shiro.ShiroHelper;
 import com.cdeledu.modules.system.domain.SysMenu;
 import com.cdeledu.modules.system.mapper.MenuMapper;
+import com.cdeledu.modules.system.mapper.RoleMenuMapper;
 import com.cdeledu.modules.system.service.MenuService;
 
 /**
@@ -25,8 +26,10 @@ import com.cdeledu.modules.system.service.MenuService;
 @Service
 public class MenuServiceImpl implements MenuService {
 	@Autowired
-	private MenuMapper menuMapper;
-	
+	private MenuMapper		menuMapper;
+	@Autowired
+	private RoleMenuMapper	roleMenuMapper;
+
 	/**
 	 * 保存菜单信息
 	 */
@@ -34,11 +37,15 @@ public class MenuServiceImpl implements MenuService {
 	public int saveMenu(SysMenu sysMenu) {
 		if (sysMenu.getParentCode() == null) { // 主目录也就是根目录
 			sysMenu.setParentCode(-1);
-			menuMapper.insertMenu(sysMenu);
+			int menuID = menuMapper.insertMenu(sysMenu);
+			// 分配给超级管理员
+			roleMenuMapper.saveRoleAccess(1, menuID);
+		} else {
+			return menuMapper.updateMenu(sysMenu);
 		}
-		return menuMapper.updateMenu(sysMenu);
+		return 0;
 	}
-	
+
 	/**
 	 * 校验菜单名称是否唯一
 	 */
@@ -47,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
 		int result = menuMapper.checkMenuNameUnique(menuName);
 		return result > 0 ? false : true;
 	}
-	
+
 	/**
 	 * 查询所有菜单信息
 	 */
@@ -55,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
 	public List<SysMenu> getSysMenuList() {
 		return menuMapper.getSysMenuList();
 	}
-	
+
 	/**
 	 * 删除菜单管理信息
 	 */
@@ -64,7 +71,7 @@ public class MenuServiceImpl implements MenuService {
 		ShiroHelper.clearCachedAuthorizationInfo();
 		return menuMapper.deleteMenuById(menuId);
 	}
-	
+
 	/**
 	 * 根据菜单ID查询信息
 	 */
@@ -72,7 +79,7 @@ public class MenuServiceImpl implements MenuService {
 	public SysMenu getMenuById(Integer menuId) {
 		return menuMapper.getMenuById(menuId);
 	}
-	
+
 	/**
 	 * 查询菜单数量
 	 */
@@ -80,7 +87,7 @@ public class MenuServiceImpl implements MenuService {
 	public int countMenuByParentId(Integer parentId) {
 		return menuMapper.countMenuByParentId(parentId);
 	}
-	
+
 	/**
 	 * 查询菜单使用数量
 	 */

@@ -3,6 +3,7 @@ package com.cdeledu.modules.system.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -22,6 +23,16 @@ import com.cdeledu.modules.system.domain.SysRoleMenu;
  */
 @Mapper
 public interface RoleMenuMapper {
+
+	/**
+	 * @方法描述 : 保存角色、菜单关联
+	 * @param roleId
+	 * @param menuID
+	 * @return
+	 */
+	@Insert("INSERT INTO sys_upms_role_menu(roleId,menuId) VALUES (#{roleId},#{menuID});")
+	int saveRoleAccess(Integer roleId, Integer menuID);
+
 	/**
 	 * @方法描述 : 通过角色ID删除角色和菜单关联
 	 * @param roleId
@@ -35,7 +46,6 @@ public interface RoleMenuMapper {
 	 * @param ids
 	 * @return
 	 */
-	@Delete("delete from sys_upms_role_menu where id in (#{roleId})")
 	int deleteRoleMenu(Long[] ids);
 
 	/**
