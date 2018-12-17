@@ -1,6 +1,11 @@
 package com.cdeledu.modules.system.mapper;
 
 import java.util.List;
+import java.util.Set;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import com.cdeledu.modules.system.domain.SysUserRole;
 
@@ -16,28 +21,49 @@ import com.cdeledu.modules.system.domain.SysUserRole;
  * @版本: V 0.1
  * @since: JDK 1.8
  */
+@Mapper
 public interface UserRoleMapper {
+	/**
+	 * @方法描述:根据用户ID查询用户所属角色
+	 */
+	List<SysUserRole> getRolesByUserId(Integer userId);
+	
+	/**
+	 * @方法描述:根据用户ID查询用户所属角色名字
+	 */
+	Set<String> getUserRoleGroup(Integer userId);
+	
 	/**
 	 * @方法描述 : 通过用户ID删除用户和角色关联
 	 * @param userId
 	 * @return
 	 */
+	@Delete("DELETE FROM sys_upms_user_role WHERE userid = #{userId}")
 	int deleteUserRoleByUserId(Integer userId);
-
+	
 	/**
 	 * @方法描述 : 批量删除用户和角色关联
 	 * @param ids
 	 * @return
 	 */
 	int deleteUserRole(Integer[] ids);
-
+	
 	/**
 	 * @方法描述 : 通过角色ID查询角色使用数量
 	 * @param roleId
 	 * @return
 	 */
+	@Select("SELECT COUNT(*) FROM sys_upms_user_role WHERE roleId = #{roleId}")
 	int countUserRoleByRoleId(Integer roleId);
-
+	
+	/**
+	 * @方法描述 : 通过角色ID查询角色使用数量
+	 * @param roleId
+	 * @return
+	 */
+	@Select("SELECT COUNT(*) FROM sys_upms_user_role WHERE userId = #{userId}")
+	int countUserRoleByUserId(Integer userId);
+	
 	/**
 	 * @方法描述 : 批量新增用户角色信息
 	 * @param userRoleList

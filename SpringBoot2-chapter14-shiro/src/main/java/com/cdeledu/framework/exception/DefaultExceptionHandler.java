@@ -57,7 +57,7 @@ public class DefaultExceptionHandler {
 			HttpRequestMethodNotSupportedException e) {
 		log.error(e.getMessage(), e);
 		saveExceptionLog(request, e);
-		return RestResult.error("不支持' " + e.getMethod() + "'请求");
+		return RestResult.error(405,"不支持' " + e.getMethod() + "'请求");
 	}
 	
 	/**
@@ -108,13 +108,6 @@ public class DefaultExceptionHandler {
 		log.error("运行时异常:", e);
 		saveExceptionLog(request, e);
 		return RestResult.error(500, "运行时异常:" + e.getMessage());
-	}
-	
-	// 405错误
-	@ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
-	public RestResult request405(HttpServletRequest request, Exception e) {
-		saveExceptionLog(request, e);
-		return RestResult.error(405, null);
 	}
 	
 	// 406错误

@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mybatis.UserMapper">
+<mapper namespace="com.cdeledu.modules.system.mapper.UserMapper">
 
+	<select id="getUserList" parameterType="com.cdeledu.modules.system.domain.SysUser"
+		resultType="com.cdeledu.modules.system.domain.SysUser">
+		SELECT * FROM sys_upms_user
+	</select>
+
+	<delete id="batchDeleteUser">
+		delete from sys_upms_user where id in
+		<foreach collection="array" item="userId" open="(" separator=","
+			close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+	<insert id="insertUser" parameterType="com.cdeledu.modules.system.domain.SysUser"
+		useGeneratedKeys="true" keyProperty="id">
+
+	</insert>
+
+	<update id="updateUser" parameterType="com.cdeledu.modules.system.domain.SysUser">
+	
+	</update>
 </mapper>

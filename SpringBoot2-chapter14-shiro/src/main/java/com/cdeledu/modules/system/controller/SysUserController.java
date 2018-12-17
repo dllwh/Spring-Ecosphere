@@ -1,13 +1,21 @@
 package com.cdeledu.modules.system.controller;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +35,10 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("sysUser")
 @Api(tags = "用户管理")
 public class SysUserController {
-	private String prefix = "/system/sysUser";
-	
+	private String		prefix	= "/system/sysUser";
+	@Autowired
+	private UserService	userService;
+						
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
@@ -37,35 +47,66 @@ public class SysUserController {
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
 	@ResponseBody
-	public String getList() {
-		return "";
+	public List<SysUser> getList(SysUser sysUser) {
+		return userService.getUserList(sysUser);
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "add")
-	@ApiOperation(value = "用户管理-新增用户")
-	public RestResult add() {
-		return RestResult.success();
+	@PostMapping(value = "save")
+	@ApiOperation(value = "用户管理-保存用户(包括创建、修改)")
+	public RestResult save(SysUser sysUser) {
+		if (userService.saveUser(sysUser) > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
 	
 	@ResponseBody
-	@DeleteMapping(value = "remove")
+	@DeleteMapping(value = "remove/{userId}")
 	@ApiOperation(value = "用户管理-删除用户")
-	public RestResult remove() {
-		return RestResult.success();
+	public RestResult remove(@PathVariable("userId") Integer userId) {
+		SysUser sysUser = userService.getUserById(userId);
+		if (sysUser == null) {
+			return RestResult.error("用户不存在");
+		}
+		if (userService.deleteUserById(userId) > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
 	
 	@ResponseBody
 	@DeleteMapping(value = "batchRemove")
 	@ApiOperation(value = "用户管理-批量删除")
-	public RestResult batchRemove() {
-		return RestResult.success();
+	public RestResult batchRemove(@RequestParam("ids[]") Integer[] ids) {
+		int rows = userService.batchDeleteUser(ids);
+		if (rows > 0) {
+			return RestResult.success();
+		}
+		return RestResult.error();
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "edit")
-	@ApiOperation(value = "用户管理-修改用户")
-	public RestResult edit() {
-		return RestResult.success();
+	@PostMapping(value = "resetPwd")
+	@ApiOperation(value = "用户管理-重置密码")
+	public RestResult resetPwd(SysUser sysUser) {
+		int rows = userService.resetUserPwd(sysUser);
+		if (rows > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("checkLoginNameUnique")
+	@ApiOperation(value = "用户管理-校验用户名")
+	public boolean checkLoginNameUnique(String userName) {
+		if (StringUtils.isNoneBlank(userName)) {
+			if (userService.checkLoginNameUnique(userName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

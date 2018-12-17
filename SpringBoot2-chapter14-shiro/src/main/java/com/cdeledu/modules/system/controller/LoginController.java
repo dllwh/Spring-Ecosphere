@@ -34,8 +34,8 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "ajaxLogin")
-	public String ajaxLogin(String username, String password, Boolean rememberMe) {
-		return "";
+	public RestResult ajaxLogin(String username, String password, Boolean rememberMe) {
+		return RestResult.success();
 	}
 	
 	/**

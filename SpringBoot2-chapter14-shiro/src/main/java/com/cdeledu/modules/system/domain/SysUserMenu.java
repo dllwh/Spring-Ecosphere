@@ -15,7 +15,6 @@ import lombok.Data;
  * @since: JDK 1.8
 */
 @Data
-@ApiModel
 public class SysUserMenu {
 
 }
