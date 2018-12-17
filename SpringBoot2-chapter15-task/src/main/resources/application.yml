@@ -1,0 +1,11 @@
+server:
+  port: 8215
+  session:
+    timeout: 60   # session最大超时时间(分钟)，默认为30
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    context-path: /quartz
+spring:
+  mvc:
+    static-path-pattern: /** # 静态文件请求匹配方式
