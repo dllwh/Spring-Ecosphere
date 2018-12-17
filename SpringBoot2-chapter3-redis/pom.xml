@@ -51,9 +51,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<!-- redis客户端 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
+		</dependency>
+		
+		<!-- fastjson，解析json视图 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.49</version>
 		</dependency>
 	</dependencies>
 
@@ -73,6 +81,7 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<compilerVersion>${java.version}</compilerVersion>
 				</configuration>
 			</plugin>
 			<!-- 用于生成JavaDoc 文档文档 -->
