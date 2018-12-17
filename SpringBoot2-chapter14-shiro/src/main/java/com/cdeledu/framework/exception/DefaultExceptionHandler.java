@@ -5,7 +5,10 @@ import java.sql.Timestamp;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.AuthorizationException;
+import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -84,11 +87,41 @@ public class DefaultExceptionHandler {
 		return RestResult.error(400, "缺少请求参数");
 	}
 	
+	// 数组越界异常
+	@ExceptionHandler(IndexOutOfBoundsException.class)
+	public RestResult indexOutOfBoundsExceptionHandler(HttpServletRequest request,
+			IndexOutOfBoundsException ex) {
+		saveExceptionLog(request, ex);
+		return RestResult.error(1005, ex.getMessage());
+	}
+	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public RestResult handleHttpMessageNotReadableExceptionHandler(HttpServletRequest request,
 			HttpMessageNotReadableException e) {
 		saveExceptionLog(request, e);
 		return RestResult.error(400, "缺少请求参数");
+	}
+	
+	@ExceptionHandler({ ConversionNotSupportedException.class,
+			HttpMessageNotWritableException.class })
+	public RestResult server500(HttpServletRequest request, Exception e) {
+		log.error("运行时异常:", e);
+		saveExceptionLog(request, e);
+		return RestResult.error(500, "运行时异常:" + e.getMessage());
+	}
+	
+	// 405错误
+	@ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+	public RestResult request405(HttpServletRequest request, Exception e) {
+		saveExceptionLog(request, e);
+		return RestResult.error(405, null);
+	}
+	
+	// 406错误
+	@ExceptionHandler({ HttpMediaTypeNotAcceptableException.class })
+	public RestResult request406(HttpServletRequest request, Exception e) {
+		saveExceptionLog(request, e);
+		return RestResult.error(406, null);
 	}
 	
 	/**
