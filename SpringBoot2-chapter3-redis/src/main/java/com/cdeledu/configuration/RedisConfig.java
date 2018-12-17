@@ -3,7 +3,11 @@ package com.cdeledu.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -16,38 +20,29 @@ import redis.clients.jedis.JedisPoolConfig;
  * @类描述: Redis 基础配置
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年10月27日 下午8:29:23
- * @版本: V1.0
+ * @版本: V1.0.2
  * @since: JDK 1.8
  */
+
 @Configuration
-@PropertySource("classpath:config/redis.properties")
 public class RedisConfig {
-	@Value("${redis.host}")
-	private String host;
-	@Value("${redis.port}")
-	private Integer port;
-	@Value("${redis.password}")
-	private String password;
-	@Value("${redis.database}")
-	private Integer database;
-	@Value("${redis.timeout}")
-	private Integer timeout;
-	@Value("${redis.pool.maxIdle}")
-	private Integer maxIdle;
-	@Value("${redis.pool.maxTotal}")
-	private Integer maxTotal;
-	@Value("${redis.pool.maxWaitMillis}")
-	private Integer maxWaitMillis;
-	@Value("${redis.pool.minEvictableIdleTimeMillis}")
-	private Integer minEvictableIdleTimeMillis;
-	@Value("${redis.pool.numTestsPerEvictionRun}")
-	private Integer numTestsPerEvictionRun;
-	@Value("${redis.pool.timeBetweenEvictionRunsMillis}")
-	private long timeBetweenEvictionRunsMillis;
-	@Value("${redis.pool.testOnBorrow}")
-	private boolean testOnBorrow;
-	@Value("${redis.pool.testWhileIdle}")
-	private boolean testWhileIdle;
+	@Value("${spring.redis.host}")
+	private String	host;
+	@Value("${spring.redis.port}")
+	private Integer	port;
+	@Value("${spring.redis.password}")
+	private String	password;
+	@Value("${spring.redis.database}")
+	private Integer	database;
+	@Value("${spring.redis.timeout}")
+	private Integer	timeout;
+	@Value("${spring.redis.jedis.pool.max-idle}")
+	private Integer	maxIdle;
+	@Value("${spring.redis.jedis.pool.max-active}")
+	private Integer	maxTotal;
+	@Value("${spring.redis.jedis.pool.max-wait}")
+	private Integer	maxWaitMillis;
+
 
 	/**
 	 * @方法描述 :JedisPoolConfig 连接池
@@ -62,17 +57,30 @@ public class RedisConfig {
 		jedisPoolConfig.setMaxTotal(maxTotal);
 		// 最大建立连接等待时间
 		jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
-		// 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
-		jedisPoolConfig.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-		// 每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3
-		jedisPoolConfig.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
-		// 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
-		jedisPoolConfig.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-		// 是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
-		jedisPoolConfig.setTestOnBorrow(testOnBorrow);
-		// 在空闲时检查有效性, 默认false
-		jedisPoolConfig.setTestWhileIdle(testWhileIdle);
 		return jedisPoolConfig;
 	}
 
+	/**
+	 * 
+	 * @方法描述 : RedisTemplate配置
+	 * @param factory
+	 * @return
+	 */
+	@Bean
+	public RedisTemplate<String, Object> getRedisTemplate(RedisConnectionFactory factory) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+		redisTemplate.setConnectionFactory(factory);
+
+		// 使用fastjson序列化
+		FastJsonRedisSerializer redisSerializer = new FastJsonRedisSerializer<>(Object.class);
+		// value值的序列化采用fastJsonRedisSerializer
+		redisTemplate.setValueSerializer(redisSerializer);
+		redisTemplate.setHashValueSerializer(redisSerializer);
+		// key的序列化采用StringRedisSerializer
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+
+		redisTemplate.afterPropertiesSet();
+		return redisTemplate;
+	}
 }
