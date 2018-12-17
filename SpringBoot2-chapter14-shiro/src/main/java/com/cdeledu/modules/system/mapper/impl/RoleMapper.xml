@@ -17,7 +17,7 @@
 		</trim>
 	</select>
 	
-	<insert id="insertRole" parameterType="com.cdeledu.model.rbac.SysRole">
+	<insert id="insertRole" parameterType="com.cdeledu.modules.system.domain.SysRole">
 		insert into sys_upms_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="roleCode != null and roleCode != '' ">roleCode,</if>
@@ -41,7 +41,7 @@
 		</trim>
 	</insert>
 	
-	<update id="updateRole" parameterType="com.cdeledu.model.rbac.SysRole">
+	<update id="updateRole" parameterType="com.cdeledu.modules.system.domain.SysRole">
 		update sys_upms_role
 		<set>
 			<if test="roleCode != null and roleName != '' "> roleCode = #{roleCode}, </if>

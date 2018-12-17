@@ -24,16 +24,24 @@ public class SysRole {
 	private Integer		id;
 	/** 角色名称 */
 	private String		roleName;
-	/** 角色编码 */	
+	/** 角色编码 */
 	private String		roleCode;
+	/** 排序 */
+	private Integer		sequence;
+	/** 是否可见(启用/禁用),不为空 */
+	private Integer		ifVisible;
+	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
+	private Integer		ifEnabled;
 	/** 创建人 */
-	private String		creator;
+	private Integer		creator;
 	/** 创建时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	createTime;
 	/** 最后修改人 */
-	private String		modifier;
+	private Integer		modifier;
 	/** 修改日期 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	updateTime;
+	/** 备注 */
+	private String		remark;
 }

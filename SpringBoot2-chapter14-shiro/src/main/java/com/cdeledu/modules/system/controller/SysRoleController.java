@@ -1,5 +1,7 @@
 package com.cdeledu.modules.system.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,8 +46,8 @@ public class SysRoleController {
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
 	@ResponseBody
-	public String getList() {
-		return "";
+	public List<SysRole> getList() {
+		return roleService.getRoleList(null);
 	}
 
 	@ResponseBody

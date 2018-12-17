@@ -23,13 +23,6 @@ import com.cdeledu.modules.system.domain.SysRole;
 @Mapper
 public interface RoleMapper {
 	/**
-	 * @方法描述 : 查询角色列表
-	 * @return
-	 */
-	@Select("SELECT * FROM sys_role")
-	List<SysRole> getRoleList();
-
-	/**
 	 * @方法描述 : 根据条件查询角色数据
 	 * @param sysRole
 	 * @return

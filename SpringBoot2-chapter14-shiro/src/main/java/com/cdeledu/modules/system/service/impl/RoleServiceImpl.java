@@ -27,15 +27,6 @@ public class RoleServiceImpl implements RoleService {
 	private RoleMapper roleMapper;
 
 	/**
-	 * @方法描述 : 查询所有角色
-	 * @return 角色列表
-	 */
-	@Override
-	public List<SysRole> getRoleList() {
-		return roleMapper.getRoleList();
-	}
-
-	/**
 	 * @方法描述 : 根据条件查询角色数据
 	 * @param sysRole
 	 * @return 角色数据集合信息

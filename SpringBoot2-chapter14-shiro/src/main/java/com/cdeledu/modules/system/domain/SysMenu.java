@@ -45,12 +45,12 @@ public class SysMenu {
 	/** tree属性 */
 	private Boolean		open;
 	/** 创建人 */
-	private String		creator;
+	private Integer		creator;
 	/** 创建时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	createTime;
 	/** 最后修改人 */
-	private String		modifier;
+	private Integer		modifier;
 	/** 修改日期 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp	updateTime;
