@@ -1,6 +1,5 @@
 package com.cdeledu.modules.system.domain;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
