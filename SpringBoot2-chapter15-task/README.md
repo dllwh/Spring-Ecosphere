@@ -2,6 +2,8 @@
 
 基于spring-boot 2.x + quartz 的CRUD任务管理系统。
 
+> 即使你是天才，如果你不努力，你也会被其它人超越。
+
 ## 开发环境
 
 JDK1.8、Maven、Eclipse

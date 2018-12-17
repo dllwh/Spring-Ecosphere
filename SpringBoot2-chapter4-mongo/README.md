@@ -1,5 +1,7 @@
 # SpringBoot2-chapter4-mongo
 
+> 即使你是天才，如果你不努力，你也会被其它人超越。
+
 ![](pic/mongodb.png)
 
 ## 开发环境
