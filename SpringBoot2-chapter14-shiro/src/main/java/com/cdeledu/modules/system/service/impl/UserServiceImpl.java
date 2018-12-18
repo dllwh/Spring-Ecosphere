@@ -1,6 +1,5 @@
 package com.cdeledu.modules.system.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdeledu.modules.system.domain.SysUser;
-import com.cdeledu.modules.system.domain.SysUserRole;
 import com.cdeledu.modules.system.mapper.UserMapper;
 import com.cdeledu.modules.system.mapper.UserRoleMapper;
 import com.cdeledu.modules.system.service.UserService;
@@ -86,15 +84,9 @@ public class UserServiceImpl implements UserService {
 		if (userId != null) {
 			// 修改用户信息
 			count = updateUser(sysUser);
-			// 删除用户与角色关联
-			userRoleMapper.deleteUserRoleByUserId(userId);
-			// 新增用户与角色管理
-			insertUserRole(sysUser);
 		} else {
 			// 新增用户信息
 			count = userMapper.insertUser(sysUser);
-			// 新增用户与角色管理
-			insertUserRole(sysUser);
 		}
 		return count;
 	}
@@ -117,32 +109,15 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
-	 * 新增用户角色信息
-	 */
-	public void insertUserRole(SysUser sysUser) {
-		// 新增用户与角色管理
-		List<SysUserRole> userRoleList = new ArrayList<SysUserRole>();
-		for (Integer roleId : sysUser.getRoleIds()) {
-			SysUserRole userRole = new SysUserRole();
-			userRole.setUserId(sysUser.getId());
-			userRole.setRoleId(roleId);
-			userRoleList.add(userRole);
-		}
-		if (userRoleList != null & userRoleList.size() > 0) {
-			userRoleMapper.batchUserRole(userRoleList);
-		}
-	}
-	
-	/**
 	 * 校验用户名称是否唯一
 	 */
 	@Override
 	public boolean checkLoginNameUnique(String loginName) {
 		int count = userMapper.checkLoginNameUnique(loginName);
 		if (count > 0) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**

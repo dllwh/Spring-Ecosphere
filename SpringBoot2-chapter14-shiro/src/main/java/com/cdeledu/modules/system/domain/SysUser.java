@@ -28,12 +28,15 @@ public class SysUser {
 	/** 密码(真正的密码与用户名加密之后的结果) */
 	private String		password;
 	/** 用户类型(超级管理员、系统管理员、管理员) */
+	private Integer userType;
 	/** 昵称 */
 	private String		nickName;
 	/** 用户邮箱 */
 	private String		email;
 	/** email是否经过验证 */
 	private Integer		emailstatus;
+	/** 联系方式*/
+	private String mobile;
 	/** 是否锁定(1:不锁定;0：锁定) */
 	private Integer		ifLocked;
 	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */

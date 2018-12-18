@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,19 +39,19 @@ public class SysUserController {
 	private String		prefix	= "/system/sysUser";
 	@Autowired
 	private UserService	userService;
-						
+
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
 	}
-	
+
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
 	@ResponseBody
 	public List<SysUser> getList(SysUser sysUser) {
 		return userService.getUserList(sysUser);
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "save")
 	@ApiOperation(value = "用户管理-保存用户(包括创建、修改)")
@@ -60,7 +61,7 @@ public class SysUserController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "remove/{userId}")
 	@ApiOperation(value = "用户管理-删除用户")
@@ -69,12 +70,15 @@ public class SysUserController {
 		if (sysUser == null) {
 			return RestResult.error("用户不存在");
 		}
+		if (userId == 1) {
+			return RestResult.error("超级管理员账号不支持删除");
+		}
 		if (userService.deleteUserById(userId) > 0) {
 			return RestResult.success();
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "batchRemove")
 	@ApiOperation(value = "用户管理-批量删除")
@@ -85,7 +89,7 @@ public class SysUserController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "resetPwd")
 	@ApiOperation(value = "用户管理-重置密码")
@@ -97,9 +101,10 @@ public class SysUserController {
 			return RestResult.error();
 		}
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("checkLoginNameUnique")
+	@RequestMapping(value = "checkLoginNameUnique", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	@ApiOperation(value = "用户管理-校验用户名")
 	public boolean checkLoginNameUnique(String userName) {
 		if (StringUtils.isNoneBlank(userName)) {

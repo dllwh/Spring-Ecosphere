@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import com.cdeledu.modules.system.domain.SysRoleMenu;
@@ -31,6 +32,7 @@ public interface RoleMenuMapper {
 	 * @return
 	 */
 	@Insert("INSERT INTO sys_upms_role_menu(roleId,menuId) VALUES (#{roleId},#{menuID});")
+	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id") 
 	int saveRoleAccess(Integer roleId, Integer menuID);
 
 	/**

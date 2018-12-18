@@ -31,7 +31,7 @@
 	</select>
 
 	<delete id="deleteUserRole" parameterType="Integer">
-		DELETE FROM sys_upms_user_role
+		DELETE FROM sys_upms_user_role WHERE  userId IN 
 		<foreach collection="array" item="userId" open="(" separator=","
 			close=")">
 			#{userId}
