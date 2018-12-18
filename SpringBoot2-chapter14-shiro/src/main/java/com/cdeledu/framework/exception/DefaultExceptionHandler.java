@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @类描述: 自定义全局异常处理器,异常增强，以JSON的形式返回给客服端
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午10:47:57
- * @版本: V1.0.1
+ * @版本: V1.0.2
  * @since: JDK 1.8
  */
 @Slf4j
@@ -48,7 +48,7 @@ public class DefaultExceptionHandler {
 		saveExceptionLog(request, e);
 		return RestResult.error("您没有数据的权限，请联系管理员添加");
 	}
-	
+
 	/**
 	 * @方法描述:请求方式不支持
 	 */
@@ -57,9 +57,9 @@ public class DefaultExceptionHandler {
 			HttpRequestMethodNotSupportedException e) {
 		log.error(e.getMessage(), e);
 		saveExceptionLog(request, e);
-		return RestResult.error(405,"不支持' " + e.getMethod() + "'请求");
+		return RestResult.error(405, "不支持' " + e.getMethod() + "'请求");
 	}
-	
+
 	/**
 	 * @方法描述:空指针异常
 	 */
@@ -69,7 +69,7 @@ public class DefaultExceptionHandler {
 		saveExceptionLog(request, ex);
 		return RestResult.error(404, "空指针异常");
 	}
-	
+
 	/**
 	 * @方法描述:未知方法异常
 	 */
@@ -79,14 +79,14 @@ public class DefaultExceptionHandler {
 		saveExceptionLog(request, ex);
 		return RestResult.error(404, "未知方法异常");
 	}
-	
+
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public RestResult handleMissingServletRequestParameterException(HttpServletRequest request,
 			MissingServletRequestParameterException e) {
 		saveExceptionLog(request, e);
 		return RestResult.error(400, "缺少请求参数");
 	}
-	
+
 	// 数组越界异常
 	@ExceptionHandler(IndexOutOfBoundsException.class)
 	public RestResult indexOutOfBoundsExceptionHandler(HttpServletRequest request,
@@ -94,14 +94,14 @@ public class DefaultExceptionHandler {
 		saveExceptionLog(request, ex);
 		return RestResult.error(1005, ex.getMessage());
 	}
-	
+
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public RestResult handleHttpMessageNotReadableExceptionHandler(HttpServletRequest request,
 			HttpMessageNotReadableException e) {
 		saveExceptionLog(request, e);
 		return RestResult.error(400, "缺少请求参数");
 	}
-	
+
 	@ExceptionHandler({ ConversionNotSupportedException.class,
 			HttpMessageNotWritableException.class })
 	public RestResult server500(HttpServletRequest request, Exception e) {
@@ -109,24 +109,34 @@ public class DefaultExceptionHandler {
 		saveExceptionLog(request, e);
 		return RestResult.error(500, "运行时异常:" + e.getMessage());
 	}
-	
+
 	// 406错误
 	@ExceptionHandler({ HttpMediaTypeNotAcceptableException.class })
 	public RestResult request406(HttpServletRequest request, Exception e) {
 		saveExceptionLog(request, e);
 		return RestResult.error(406, null);
 	}
-	
+
 	/**
 	 * @方法描述: 拦截未知的运行时异常
 	 */
 	@ExceptionHandler(RuntimeException.class)
-	public RestResult notFount(HttpServletRequest request, RuntimeException e) {
+	public RestResult runtimeExceptionHandler(HttpServletRequest request, RuntimeException e) {
 		log.error("运行时异常:", e);
 		saveExceptionLog(request, e);
 		return RestResult.error("运行时异常:" + e.getMessage());
 	}
-	
+
+	/**
+	 * @方法描述: 处理未定义的其他异常信息
+	 */
+	@ExceptionHandler(Exception.class)
+	public RestResult exceptionHandler(HttpServletRequest request, Exception e) {
+		log.error("处理未定义的其他异常信息:", e);
+		saveExceptionLog(request, e);
+		return RestResult.error("运行时异常:" + e.getMessage());
+	}
+
 	private void saveExceptionLog(HttpServletRequest request, Throwable throwable) {
 		LoggerEntity requestLog = new LoggerEntity();
 		requestLog.setStartTime(new Timestamp(System.currentTimeMillis()));
@@ -145,7 +155,7 @@ public class DefaultExceptionHandler {
 		requestLog.setExceptionDetail(throwable.getMessage());
 		requestLog.setOperateStatus(WebHelper.getErrorHttpStatus(request).value());
 		requestLog.setLogType(SysLogConstant.type.exception);
-		
+
 		ScheduledManager.getInstance().executeLog(TaskFactory.exceptionLog(requestLog));
 	}
 }
