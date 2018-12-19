@@ -228,12 +228,18 @@
 			<version>4.1</version>
 		</dependency>
 		<!-- 导入Apache (结束) -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-
-
+		
+		<!-- 解析客户端操作系统、浏览器等 -->
+		<dependency>
+			<groupId>eu.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>1.20</version>
+		</dependency>
 	</dependencies>
 
 	<build>
