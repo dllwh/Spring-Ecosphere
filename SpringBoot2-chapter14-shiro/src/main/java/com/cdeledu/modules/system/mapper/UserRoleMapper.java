@@ -41,8 +41,16 @@ public interface UserRoleMapper {
 	 * @return
 	 */
 	@Delete("DELETE FROM sys_upms_user_role WHERE userid = #{userId}")
-	int deleteUserRoleByUserId(Integer userId);
-
+	int deleteUserRoleByUserId(@Param("userId") Integer userId);
+	
+	/**
+	 * @方法描述 : 通过角色ID删除用户和角色关联
+	 * @param userId
+	 * @return
+	 */
+	@Delete("DELETE FROM sys_upms_user_role WHERE roleId = #{roleId}")
+	int deleteUserRoleByRoleId(@Param("roleId") Integer roleId);
+	
 	/**
 	 * @方法描述 : 批量删除用户和角色关联
 	 * @param ids
@@ -71,7 +79,7 @@ public interface UserRoleMapper {
 	 */
 	@Insert("INSERT INTO sys_upms_user_role(userId,roleId) VALUES(#{userId},#{roleId})")
 	int saveRoleUser(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
-
+	
 	/**
 	 * @方法描述 : 批量新增用户角色信息
 	 * @param userRoleList
