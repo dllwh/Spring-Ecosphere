@@ -1,6 +1,5 @@
 package com.cdeledu.modules.monitor.job.controller;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * @类描述:调度任务信息操作处理
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月9日 下午7:14:57
- * @版本: V1.0.1
+ * @版本: V1.0.2
  * @since: JDK 1.8
  */
 @Slf4j
@@ -80,9 +79,9 @@ public class JobController extends BaseController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/edit/{jobId}")
+	@GetMapping("/update")
 	@ApiOperation(value = "定时任务-修改任务")
-	public RestResult edit(@PathVariable("jobId") Long jobId, Model model) {
+	public RestResult update() {
 		return RestResult.success();
 	}
 	
@@ -92,6 +91,16 @@ public class JobController extends BaseController {
 		if (log.isDebugEnabled()) {
 			log.debug("任务列表");
 		}
+		return "";
+	}
+	
+	/**
+	 * @方法描述:定时任务信息
+	 * @param jobId
+	 * @return
+	 */
+	@RequestMapping("/info/{jobId}")
+	public String info(@PathVariable("jobId") Long jobId) {
 		return "";
 	}
 	
