@@ -2,6 +2,8 @@ package com.cdeledu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -20,8 +22,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableSwagger2
-public class ShiroSpringBootApplication {
+public class ShiroSpringBootApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(ShiroSpringBootApplication.class, args);
+	}
+	
+	/**
+	 * 如此配置打包后可以用tomcat下使用
+	 */
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ShiroSpringBootApplication.class);
 	}
 }
