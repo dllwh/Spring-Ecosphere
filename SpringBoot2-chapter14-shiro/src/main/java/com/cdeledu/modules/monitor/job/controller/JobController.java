@@ -1,5 +1,9 @@
 package com.cdeledu.modules.monitor.job.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.cdeledu.common.RestResult;
 import com.cdeledu.framework.controller.BaseController;
 import com.cdeledu.modules.monitor.job.domain.Job;
+import com.cdeledu.modules.monitor.job.service.JobService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,12 +36,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since: JDK 1.8
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/monitor/job")
 @Api(tags = "Quartz任务")
 public class JobController extends BaseController {
-	private String prefix = "monitor/job";
-	
+	private String		prefix	= "monitor/job";
+	@Autowired
+	private JobService	scheduleJobService;
+						
 	@GetMapping()
 	public String index() {
 		return prefix + "/jobInit";
@@ -46,11 +52,15 @@ public class JobController extends BaseController {
 	@ResponseBody
 	@PostMapping(value = "create")
 	@ApiOperation(value = "定时任务-新建任务")
-	public RestResult create(Job quartz) {
+	public RestResult create(Job scheduleJob) {
 		if (log.isDebugEnabled()) {
 			log.debug("新增任务");
 		}
-		return RestResult.success();
+		if (scheduleJobService.save(scheduleJob) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
@@ -65,7 +75,12 @@ public class JobController extends BaseController {
 		if (log.isDebugEnabled()) {
 			log.debug("触发任务");
 		}
-		return RestResult.success();
+		
+		if (scheduleJobService.delete(jobId) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
@@ -75,23 +90,33 @@ public class JobController extends BaseController {
 		if (log.isDebugEnabled()) {
 			log.debug("定时任务-批量删除");
 		}
-		return RestResult.success();
+		
+		if (scheduleJobService.deleteBatch(ids) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
 	@GetMapping("/update")
 	@ApiOperation(value = "定时任务-修改任务")
-	public RestResult update() {
-		return RestResult.success();
+	public RestResult update(Job scheduleJob) {
+		if (scheduleJobService.update(scheduleJob) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "getList", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiOperation(value = "定时任务-任务列表")
-	public String getList(Job quartz, Integer pageNo, Integer pageSize) {
+	public List<Job> getList(Job scheduleJob, Integer pageNo, Integer pageSize) {
 		if (log.isDebugEnabled()) {
 			log.debug("任务列表");
 		}
-		return "";
+		return scheduleJobService.getJobList(scheduleJob);
 	}
 	
 	/**
@@ -99,38 +124,54 @@ public class JobController extends BaseController {
 	 * @param jobId
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/info/{jobId}")
-	public String info(@PathVariable("jobId") Long jobId) {
-		return "";
+	public Job info(@PathVariable("jobId") Integer jobId) {
+		return scheduleJobService.getJobById(jobId);
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "trigger")
 	@ApiOperation(value = "定时任务-触发任务")
-	public RestResult trigger(Job quartz) {
+	public RestResult trigger(@RequestParam(name = "jobId") int jobId) {
 		if (log.isDebugEnabled()) {
 			log.debug("触发任务");
 		}
-		return RestResult.success();
+		
+		if (scheduleJobService.run(jobId) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "pause")
 	@ApiOperation(value = "定时任务-停止任务")
-	public RestResult pause(Job quartz) {
+	public RestResult pause(@RequestParam(name = "jobId") int jobId) {
 		if (log.isDebugEnabled()) {
 			log.debug("停止任务");
 		}
-		return RestResult.success();
+		
+		if (scheduleJobService.pause(jobId) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "resume")
 	@ApiOperation(value = "定时任务-恢复任务")
-	public RestResult resume(Job quartz) {
+	public RestResult resume(@RequestParam(name = "jobId") int jobId) {
 		if (log.isDebugEnabled()) {
 			log.debug("恢复任务");
 		}
-		return RestResult.success();
+		
+		if (scheduleJobService.resume(jobId) > 0) {
+			return RestResult.success();
+		} else {
+			return RestResult.error();
+		}
 	}
 }
