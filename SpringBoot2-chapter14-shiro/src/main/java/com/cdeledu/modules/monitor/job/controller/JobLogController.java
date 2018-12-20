@@ -37,7 +37,14 @@ public class JobLogController {
 	
 	@ResponseBody
 	@GetMapping(value = "getList")
+	@ApiOperation(value = "定时任务日志列表")
 	public String getList() {
+		return "";
+	}
+	
+	@ApiOperation(value = "定时任务日志信息")
+	@RequestMapping("/info/{logId}")
+	public String info(@PathVariable("logId") Long logId) {
 		return "";
 	}
 	
