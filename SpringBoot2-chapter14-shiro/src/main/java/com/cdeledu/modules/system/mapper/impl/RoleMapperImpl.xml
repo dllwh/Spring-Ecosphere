@@ -6,10 +6,10 @@
 		SELECT * from sys_upms_role
 		<trim prefix="where" prefixOverrides="and">
 			<if test="roleName != null and roleName != '' ">  
-				and roleName  LIKE CONCAT(CONCAT('%', #{roleName}),'%') 
+				and roleName  LIKE CONCAT(#{roleName},'%') 
 			</if>
 			<if test="roleCode != null and roleCode != '' ">  
-				and roleCode  LIKE CONCAT(CONCAT('%', #{roleCode}),'%') 
+				and roleCode  LIKE CONCAT(#{roleCode},'%') 
 			</if>
 			<if test="ifVisible != null and ifVisible != '' ">  
 				and ifVisible = #{ifVisible}
