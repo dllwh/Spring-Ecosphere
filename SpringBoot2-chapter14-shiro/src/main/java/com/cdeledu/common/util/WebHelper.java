@@ -4,8 +4,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -22,6 +28,40 @@ import org.springframework.web.util.WebUtils;
  * @since: JDK 1.8
  */
 public final class WebHelper {
+
+	/**
+	 * @方法描述 : 获取ServletRequestAttributes
+	 * @return
+	 */
+	public static ServletRequestAttributes getRequestAttributes() {
+		RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+		return (ServletRequestAttributes) attributes;
+	}
+
+	/**
+	 * @方法描述 : 获取request
+	 * @return
+	 */
+	public static HttpServletRequest getRequest() {
+		return getRequestAttributes().getRequest();
+	}
+
+	/**
+	 * @方法描述 : 获取response
+	 * @return
+	 */
+	public static HttpServletResponse getResponse() {
+		return getRequestAttributes().getResponse();
+	}
+
+	/**
+	 * @方法描述 : 获取session
+	 * @return
+	 */
+	public static HttpSession getSession() {
+		return getRequest().getSession();
+	}
+
 	/**
 	 * 获取客户端ip地址
 	 * 
@@ -39,7 +79,7 @@ public final class WebHelper {
 		if (ip == null || ip.trim() == "" || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		
+
 		// 多个路由时，取第一个非unknown的ip
 		final String[] arr = ip.split(",");
 		for (final String str : arr) {
@@ -50,7 +90,7 @@ public final class WebHelper {
 		}
 		return ip;
 	}
-	
+
 	/**
 	 * @方法描述 : 获取错误状态码,可以根据异常对象返回对应的错误信息
 	 * @param request
@@ -65,7 +105,7 @@ public final class WebHelper {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 	}
-	
+
 	/**
 	 * @方法描述 : 获取堆栈轨迹
 	 * @param error
@@ -82,7 +122,7 @@ public final class WebHelper {
 			return "omitted";
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @方法描述 : 判断是否是AJAX请求
@@ -90,6 +130,26 @@ public final class WebHelper {
 	 * @return
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
-		return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
+		String accept = request.getHeader("accept");
+		if (accept != null && accept.indexOf("application/json") != -1) {
+			return true;
+		}
+
+		String xRequestedWith = request.getHeader("X-Requested-With");
+		if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
+			return true;
+		}
+
+		String uri = request.getRequestURI();
+		if (StringUtils.containsAny(uri, ".json", ".xml")) {
+			return true;
+		}
+
+		String ajax = request.getParameter("__ajax");
+		if (StringUtils.containsAny(ajax, "json", "xml")) {
+			return true;
+		}
+
+		return false;
 	}
 }

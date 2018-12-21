@@ -19,12 +19,20 @@ public interface SysLogConstant {
 		final String	Y	= "Y";	// 成功
 		final String	N	= "N";	// 失败
 	}
-	
+
 	/**
 	 * @类描述: 日志类型
 	 */
 	static interface type {
 		final String	operate		= "operate";	// 操作日志
 		final String	exception	= "exception";	// 异常日志
+		final String	login		= "login";		// 登录日志
+		final String	logout		= "logout";		// 退出日志
+	}
+
+	static interface login {
+		public static final String	LOGIN_SUCCESS	= "Success";	// 登录成功
+		public static final String	LOGOUT			= "Logout";		// 注销
+		public static final String	LOGIN_FAIL		= "Error";		// 登录失败
 	}
 }
