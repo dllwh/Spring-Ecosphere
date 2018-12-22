@@ -1,5 +1,8 @@
 package com.cdeledu.framework.controller;
 
+import com.cdeledu.framework.shiro.ShiroHelper;
+import com.cdeledu.modules.system.domain.SysUser;
+
 /**
  * 把今天最好的表现当作明天最新的起点．．～
  *
@@ -12,5 +15,27 @@ package com.cdeledu.framework.controller;
  * @since: JDK 1.8
  */
 public class BaseController {
-
+	public static SysUser getUser() {
+		return ShiroHelper.getCurrenLoginUser();
+	}
+	
+	public static void setUser(SysUser sysUser) {
+		ShiroHelper.setCurrenLoginUser(sysUser);
+	}
+	
+	/**
+	 * @方法描述: 获取当前获取授权用户id.
+	 * @return
+	 */
+	public static Integer getCurrentUserId() {
+		return getUser().getId();
+	}
+	
+	/**
+	 * @方法描述: 获取当前获取授权用户用户名
+	 * @return
+	 */
+	public static String getCurrentUserName() {
+		return getUser().getUserName();
+	}
 }
