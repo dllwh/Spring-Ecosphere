@@ -3,6 +3,8 @@ package com.cdeledu.modules.system.service;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.cdeledu.modules.system.domain.SysUser;
 
 public interface UserService {
@@ -29,7 +31,7 @@ public interface UserService {
 	/**
 	 * @方法描述:批量删除用户信息
 	 */
-	Integer batchDeleteUser(Integer[] ids);
+	Integer batchDeleteUser(Integer[] userIds);
 	
 	/**
 	 * @方法描述:保存用户信息
@@ -55,4 +57,17 @@ public interface UserService {
 	 * @方法描述:根据用户ID查询用户所属角色
 	 */
 	Set<String> selectUserRoleGroup(Integer userId);
+	
+	/**
+	 * @方法描述 : 通过用户ID查询角色使用数量
+	 */
+	int countUserRoleByUserId(Integer userId);
+	
+	/**
+	 * 
+	 * @方法描述:创建用户-角色 关联
+	 */
+	int saveUserRole(Integer userId, Integer[] roleIds);
+	
+	int deleteUserRoleByUserId(@Param("userId") Integer userId);
 }

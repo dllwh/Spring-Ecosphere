@@ -8,7 +8,6 @@
 				and userName  LIKE CONCAT(#{userName},'%') 
 			</if>
 			<if test="password != null and password != '' ">  and password =#{password}  </if>
-			<if test="userType != null "> and userType=#{userType} </if>
 			<if test="nickName != null and nickName != '' ">  
 				and nickName  LIKE CONCAT(#{nickName},'%')
 			</if>
@@ -40,6 +39,7 @@
 			close=")">
 			#{userId}
 		</foreach>
+		and id != 1
 	</delete>
 
 	<insert id="insertUser" parameterType="com.cdeledu.modules.system.domain.SysUser"
@@ -48,7 +48,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userName != null and userName != '' ">userName,</if>
 			<if test="password != null and password != '' ">password,</if>
-			<if test="userType != null">userType,</if>
+			<if test="avatar != null and avatar !='' ">avatar,</if>
 			<if test="nickName != null and nickName != '' ">nickName,</if>
 			<if test="email != null and email != '' ">email,</if>
 			<if test="emailstatus != null">emailstatus,</if>
@@ -61,7 +61,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userName != null and userName != '' ">#{userName},</if>
 			<if test="password != null and password != '' ">#{password},</if>
-			<if test="usertype != null">#{usertype},</if>
+			<if test="avatar != null and avatar !='' ">#{avatar},</if>
 			<if test="nickName != null and nickName != '' ">#{nickName},</if>
 			<if test="email != null and  != '' ">#{email},</if>
 			<if test="emailstatus != null">#{emailstatus},</if>
@@ -77,7 +77,7 @@
 		<trim prefix="SET" suffix="" suffixOverrides=",">
 			<if test="userName != null and userName != '' "> userName = #{userName}, </if>
 			<if test="password != null and password != '' "> password = #{password}, </if>
-			<if test="userType != null "> userType = #{usertype}, </if>
+			<if test="avatar != null and avatar != '' "> avatar = #{avatar}, </if>
 			<if test="nickName != null and nickName != '' "> nickName = #{nickName}, </if>
 			<if test="email != null and email != '' "> email = #{email}, </if>
 			<if test="emailstatus != null "> emailstatus = #{emailstatus}, </if>

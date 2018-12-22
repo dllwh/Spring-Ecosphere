@@ -27,8 +27,8 @@ public class SysUser {
 	private String		userName;
 	/** 密码(真正的密码与用户名加密之后的结果) */
 	private String		password;
-	/** 用户类型(超级管理员、系统管理员、管理员) */
-	private Integer userType;
+	/** 用户头像 */
+	private Integer avatar;
 	/** 昵称 */
 	private String		nickName;
 	/** 用户邮箱 */

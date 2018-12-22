@@ -85,5 +85,5 @@ public interface UserRoleMapper {
 	 * @param userRoleList
 	 * @return
 	 */
-	int batchUserRole(List<SysUserRole> userRoleList);
+	int batchInsertUserRole(List<SysUserRole> userRoleList);
 }

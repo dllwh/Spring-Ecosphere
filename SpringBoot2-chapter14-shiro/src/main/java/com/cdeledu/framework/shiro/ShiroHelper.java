@@ -3,7 +3,11 @@ package com.cdeledu.framework.shiro;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
+
+import com.cdeledu.modules.system.domain.SysUser;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -18,10 +22,6 @@ import org.apache.shiro.subject.Subject;
  */
 public class ShiroHelper {
 	
-	public static void login(String userName, String passWord) {
-	
-	}
-	
 	/**
 	 * @方法描述:获取认证授权组件Subject,其为我们提供了当前用户、角色和授权的相关信息
 	 * @return
@@ -32,6 +32,19 @@ public class ShiroHelper {
 	
 	public static Session getSession() {
 		return SecurityUtils.getSubject().getSession();
+	}
+	
+	public static SysUser getCurrenLoginUser() {
+		return (SysUser) getSubjct().getPrincipal();
+	}
+	
+	public static void setCurrenLoginUser(SysUser user) {
+		Subject subject = getSubjct();
+		PrincipalCollection principalCollection = subject.getPrincipals();
+		String realmName = principalCollection.getRealmNames().iterator().next();
+		PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(user, realmName);
+		// 重新加载Principal
+		subject.runAs(newPrincipalCollection);
 	}
 	
 	public static void logout() {

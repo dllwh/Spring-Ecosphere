@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.domain.SysUserRole;
 import com.cdeledu.modules.system.mapper.UserMapper;
 import com.cdeledu.modules.system.mapper.UserRoleMapper;
 import com.cdeledu.modules.system.service.UserService;
+import com.google.common.collect.Lists;
 
 /**
  * 
@@ -83,6 +85,7 @@ public class UserServiceImpl implements UserService {
 		int count = 0;
 		if (userId != null) {
 			// 修改用户信息
+			sysUser.setUserName("");// 不能更新userName
 			count = updateUser(sysUser);
 		} else {
 			// 新增用户信息
@@ -126,5 +129,35 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Set<String> selectUserRoleGroup(Integer userId) {
 		return userRoleMapper.getUserRoleGroup(userId);
+	}
+	
+	/**
+	 * 通过用户ID查询角色使用数量
+	 */
+	@Override
+	public int countUserRoleByUserId(Integer userId) {
+		return userRoleMapper.countUserRoleByUserId(userId);
+	}
+	
+	@Override
+	public int saveUserRole(Integer userId, Integer[] roleIds) {
+		
+		List<SysUserRole> userRoleList = Lists.newArrayList();
+		for (Integer roleId : roleIds) {
+			SysUserRole sysUserRole = new SysUserRole();
+			sysUserRole.setUserId(userId);
+			sysUserRole.setRoleId(roleId);
+		}
+		if (userRoleList != null && userRoleList.size() > 0) {
+			userRoleMapper.deleteUserRoleByUserId(userId);
+			return userRoleMapper.batchInsertUserRole(userRoleList);
+		} else {
+			return 0;
+		}
+	}
+	
+	@Override
+	public int deleteUserRoleByUserId(Integer userId) {
+		return userRoleMapper.deleteUserRoleByUserId(userId);
 	}
 }
