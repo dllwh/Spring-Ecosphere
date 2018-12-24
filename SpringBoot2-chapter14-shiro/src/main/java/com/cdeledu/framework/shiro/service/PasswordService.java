@@ -16,7 +16,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PasswordService {
+	/** 密钥 */
+	private static final String PRIVATE_KEY = "237c038cd985c0f75e38756af2d54de9";
+
+	public String encryptPassword(String username, String password) {
+		return new Md5Hash(username + password + PRIVATE_KEY).toHex();
+	}
+
 	public String encryptPassword(String username, String password, String salt) {
-		return new Md5Hash(username + password + salt).toHex().toString();
+		return new Md5Hash(username + password + salt).toHex();
 	}
 }
