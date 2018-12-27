@@ -6,11 +6,13 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.common.exception.user.UserNotExistsException;
 import com.cdeledu.common.util.SystemLogHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * @类描述: 自定义全局异常处理器,异常增强，以JSON的形式返回给客服端
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午10:47:57
- * @版本: V1.0.2
+ * @版本: V1.0.3
  * @since: JDK 1.8
  */
 @Slf4j
@@ -32,6 +34,7 @@ public class DefaultExceptionHandler {
 	/**
 	 * @方法描述:权限校验失败
 	 */
+	@ExceptionHandler(AuthorizationException.class)
 	public RestResult handleAuthorizationException(AuthorizationException e) {
 		log.error(e.getMessage(), e);
 		SystemLogHelper.expLog(e);
@@ -87,6 +90,12 @@ public class DefaultExceptionHandler {
 		return RestResult.error(400, "缺少请求参数");
 	}
 
+	@ExceptionHandler(UserNotExistsException.class)
+	public RestResult userNotExistExceptionHandler(UserNotExistsException ex) {
+		SystemLogHelper.expLog(ex);
+		return RestResult.error(ex.getMessage());
+	}
+
 	@ExceptionHandler({ ConversionNotSupportedException.class,
 			HttpMessageNotWritableException.class })
 	public RestResult server500(Exception e) {
@@ -100,6 +109,13 @@ public class DefaultExceptionHandler {
 	public RestResult request406(Exception e) {
 		SystemLogHelper.expLog(e);
 		return RestResult.error(406, null);
+	}
+
+	// 非法参数
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public RestResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException mane) {
+		SystemLogHelper.expLog(mane);
+		return RestResult.error(mane.getMessage());
 	}
 
 	/**
