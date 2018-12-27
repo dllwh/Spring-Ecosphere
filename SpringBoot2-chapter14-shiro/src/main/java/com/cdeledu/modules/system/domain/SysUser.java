@@ -1,6 +1,6 @@
 package com.cdeledu.modules.system.domain;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,7 +16,7 @@ import lombok.Data;
  * @类描述: 系统管理员用户表
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午11:56:24
- * @版本: V1.0.1
+ * @版本: V1.0.2
  * @since: JDK 1.8
  */
 @Data
@@ -28,17 +28,19 @@ public class SysUser {
 	/** 密码(真正的密码与用户名加密之后的结果) */
 	private String		password;
 	/** 用户头像 */
-	private Integer avatar;
+	private Integer		avatar;
 	/** 昵称 */
 	private String		nickName;
 	/** 用户邮箱 */
 	private String		email;
 	/** email是否经过验证 */
 	private Integer		emailstatus;
-	/** 联系方式*/
-	private String mobile;
+	/** 联系方式 */
+	private String		mobile;
 	/** 是否锁定(1:不锁定;0：锁定) */
 	private Integer		ifLocked;
+	/** 审核状态(-1：审核未通过；0：待审核或新用户；1：审核成功) */
+	private Integer		IfVisible;
 	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
 	private Integer		ifEnabled;
 	/** 创建人 */
@@ -53,7 +55,6 @@ public class SysUser {
 	private Timestamp	updateTime;
 	/** 备注 */
 	private String		remark;
-						
 	/** 拒绝登录描述 */
 	private String		refuseDes;
 	/** 角色组 */
