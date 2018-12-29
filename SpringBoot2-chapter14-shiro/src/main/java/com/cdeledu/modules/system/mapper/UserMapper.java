@@ -36,13 +36,25 @@ public interface UserMapper {
 	 * @方法描述:通过用户名查询用户
 	 */
 	@Select("SELECT * FROM sys_upms_user WHERE userName = #{loginName}")
-	SysUser selectUserByLoginName(String userName);
+	SysUser selectUserByLoginName(@Param(value = "userName") String userName);
+
+	/**
+	 * @方法描述:通过手机号查询用户
+	 */
+	@Select("SELECT * FROM sys_upms_user WHERE mobile = #{phoneNumber}")
+	SysUser getUserByPhoneNumber(@Param(value = "phoneNumber") String phoneNumber);
+
+	/**
+	 * @方法描述:通过邮件查询用户
+	 */
+	@Select("SELECT * FROM sys_upms_user WHERE email = #{email}")
+	SysUser getUserByEmail(@Param(value = "email") String email);
 
 	/**
 	 * @方法描述:通过用户ID查询用户
 	 */
 	@Select("SELECT * FROM sys_upms_user WHERE id = #{userId}")
-	SysUser selectUserById(Integer userId);
+	SysUser selectUserById(@Param(value = "userId") Integer userId);
 
 	/**
 	 * @方法描述:通过用户ID删除用户
