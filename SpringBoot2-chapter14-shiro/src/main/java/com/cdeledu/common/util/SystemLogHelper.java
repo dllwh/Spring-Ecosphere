@@ -9,11 +9,10 @@ import org.aspectj.lang.JoinPoint;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cdeledu.common.constant.SysLogConstant;
-import com.cdeledu.common.util.WebHelper;
 import com.cdeledu.framework.factory.TaskFactory;
 import com.cdeledu.framework.model.LoggerEntity;
 import com.cdeledu.framework.scheduled.ScheduledManager;
-import com.cdeledu.modules.monitor.syslog.domain.SysLog;
+import com.cdeledu.modules.monitor.syslog.domain.SysLoginLog;
 
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -26,7 +25,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年12月19日 上午8:45:13
- * @版本: V 0.1
+ * @版本: V 1.0.2
  * @since: JDK 1.8
  */
 public final class SystemLogHelper {
@@ -48,19 +47,23 @@ public final class SystemLogHelper {
 	 *            错误消息
 	 * @param args
 	 */
-	public static void loginLog(String userNmae, String state, String msg, Object... args) {
+	public static void loginLog(String userNmae, Integer state, String msg) {
+		// HttpServletRequest request = WebHelper.getRequest();
 		UserAgent userAgent = UserAgent
 				.parseUserAgentString(WebHelper.getRequest().getHeader("User-Agent"));
 		// 获取客户端操作系统
 		String os = userAgent.getOperatingSystem().getName();
 		// 获取客户端浏览器
 		String browser = userAgent.getBrowser().getName();
-		SysLog logininfor = new SysLog();
-		logininfor.setLoginName(userNmae);
-		logininfor.setStatus(state);
-		logininfor.setIpaddr(WebHelper.getCliectIp(WebHelper.getRequest()));
-		logininfor.setOs(os);
-		logininfor.setBrowser(browser);
+		// requestLog.setSessionId(request.getRequestedSessionId());
+		SysLoginLog loginInfor = new SysLoginLog();
+		loginInfor.setLoginName(userNmae);
+		loginInfor.setLoginStatus(state);
+		loginInfor.setClientIp(WebHelper.getCliectIp(WebHelper.getRequest()));
+		loginInfor.setOs(os);
+		loginInfor.setBrowser(browser);
+
+		ScheduledManager.getInstance().executeLog(TaskFactory.loginLog(loginInfor));
 	}
 
 	/**
