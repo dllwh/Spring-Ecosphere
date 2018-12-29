@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * @类描述: 自定义全局异常处理器,异常增强，以JSON的形式返回给客服端
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午10:47:57
- * @版本: V1.0.4
+ * @版本: V1.0.5
  * @since: JDK 1.8
  */
 @Slf4j
@@ -113,10 +113,9 @@ public class DefaultExceptionHandler {
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public RestResult handleMissingServletRequestParameterException(
-			MissingServletRequestParameterException e) {
+	public RestResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
 		SystemLogHelper.expLog(e);
-		return RestResult.error(400, "缺少请求参数");
+		return RestResult.error(400, e.getMessage());
 	}
 
 	/**
@@ -132,8 +131,7 @@ public class DefaultExceptionHandler {
 	 * @方法描述 : TODO(这里用一句话描述这个方法的作用)
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public RestResult handleHttpMessageNotReadableExceptionHandler(
-			HttpMessageNotReadableException e) {
+	public RestResult handleHttpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
 		SystemLogHelper.expLog(e);
 		return RestResult.error(400, "缺少请求参数");
 	}
@@ -141,8 +139,7 @@ public class DefaultExceptionHandler {
 	/**
 	 * @方法描述 : TODO(这里用一句话描述这个方法的作用)
 	 */
-	@ExceptionHandler({ ConversionNotSupportedException.class,
-			HttpMessageNotWritableException.class })
+	@ExceptionHandler({ ConversionNotSupportedException.class, HttpMessageNotWritableException.class })
 	public RestResult server500(Exception e) {
 		log.error("运行时异常:", e);
 		SystemLogHelper.expLog(e);
