@@ -35,7 +35,7 @@ public interface UserMapper {
 	/**
 	 * @方法描述:通过用户名查询用户
 	 */
-	@Select("SELECT * FROM sys_upms_user WHERE userName = #{loginName}")
+	@Select("SELECT * FROM sys_upms_user WHERE userName = #{userName}")
 	SysUser selectUserByLoginName(@Param(value = "userName") String userName);
 
 	/**
