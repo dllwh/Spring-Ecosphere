@@ -1,5 +1,7 @@
 package com.cdeledu.framework.shiro.service;
 
+import java.util.Map;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -14,8 +16,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.cdeledu.common.util.SystemLogHelper;
 import com.cdeledu.framework.model.LoggerEntity;
+import com.google.common.collect.Maps;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,14 +41,14 @@ public class LoginService {
 	@Autowired
 	PasswordService passwordService;
 
-	public boolean login(String userName, String password) throws AuthenticationException {
-
+	public String login(String userName, String password) throws AuthenticationException {
+		Map<String, Object> resultMap = Maps.newConcurrentMap();
 		password = passwordService.encryptPassword(userName, password);
 		// 将用户名和密码封装到UsernamePasswordToken
 		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
 		// 获得当前登录用户对象Subject，现在状态为 “未认证”
 		Subject subject = SecurityUtils.getSubject();
-		String logMsg = "";
+		String logMsg = "", resultMsg = "";
 		boolean suc = false;
 		LoggerEntity loginEntity = new LoggerEntity();
 		loginEntity.setLoginName(userName);
@@ -53,20 +57,28 @@ public class LoginService {
 			subject.login(token);
 		} catch (UnknownAccountException uae) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,未知账户";
+			resultMsg = "未知账户";
 		} catch (IncorrectCredentialsException ice) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,错误的凭证";
+			resultMsg = "用户或密码错误";
 		} catch (LockedAccountException lae) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,账户已锁定";
+			resultMsg = "账户已锁定";
 		} catch (DisabledAccountException dae) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,帐号已被禁用";
+			resultMsg = "帐号已被禁用";
 		} catch (ExpiredCredentialsException ece) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,帐号已过期";
+			resultMsg = "帐号已过期";
 		} catch (ExcessiveAttemptsException eae) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,用户名或密码错误次数过多";
+			resultMsg = "用户名或密码错误次数过多";
 		} catch (UnauthorizedException e) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,您没有得到相应的授权！";
+			resultMsg = "未授权";
 		} catch (AuthenticationException ae) {
 			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过," + ae.getMessage();
+			resultMsg = ae.getMessage();
 		}
 
 		if (subject.isAuthenticated()) {
@@ -86,6 +98,9 @@ public class LoginService {
 		} else {
 			SystemLogHelper.loginLog(userName, 0, logMsg);
 		}
-		return suc;
+		resultMap.put("result", suc);
+		resultMap.put("msg", resultMsg);
+
+		return JSON.toJSONString(resultMap);
 	}
 }

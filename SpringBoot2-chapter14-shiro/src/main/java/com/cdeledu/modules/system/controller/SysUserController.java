@@ -45,19 +45,19 @@ public class SysUserController extends BaseController {
 	private UserService	userService;
 	@Autowired
 	PasswordService		passwordService;
-						
+
 	@GetMapping()
 	public String index() {
 		return prefix + "/index";
 	}
-	
+
 	@GetMapping(value = "getList")
 	@ApiOperation(value = "")
 	@ResponseBody
 	public List<SysUser> getList(SysUser sysUser) {
 		return userService.getUserList(sysUser);
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "save")
 	@ApiOperation(value = "用户管理-保存用户(包括创建、修改)")
@@ -67,7 +67,7 @@ public class SysUserController extends BaseController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "remove/{userId}")
 	@ApiOperation(value = "用户管理-删除用户")
@@ -80,7 +80,7 @@ public class SysUserController extends BaseController {
 		if (userId == 1 || getCurrentUserId() == userId) {
 			return RestResult.error("账号不支持删除");
 		}
-		
+
 		if (userService.countUserRoleByUserId(userId) > 0) {
 			return RestResult.error("删除失败，该用户已分配角色");
 		}
@@ -89,7 +89,7 @@ public class SysUserController extends BaseController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "batchRemove")
 	@ApiOperation(value = "用户管理-批量删除")
@@ -104,7 +104,7 @@ public class SysUserController extends BaseController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "resetPwd")
 	@ApiOperation(value = "用户管理-重置密码")
@@ -119,9 +119,9 @@ public class SysUserController extends BaseController {
 			return RestResult.error();
 		}
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("/checkPassword")
+	@RequestMapping(value = "checkPassword", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiOperation(value = "密码检验")
 	public boolean checkPassword(String password) {
 		String encrypt = passwordService.encryptPassword(getUser().getUserName(), password, "");
@@ -130,10 +130,9 @@ public class SysUserController extends BaseController {
 		}
 		return false;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "checkLoginNameUnique", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "checkLoginNameUnique", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiOperation(value = "用户管理-校验用户名")
 	public boolean checkLoginNameUnique(String userName) {
 		if (StringUtils.isNoneBlank(userName)) {
@@ -143,7 +142,7 @@ public class SysUserController extends BaseController {
 		}
 		return false;
 	}
-	
+
 	@PostMapping(value = "lockUser/{userId}/")
 	@ApiOperation(value = "锁定/解锁用户")
 	public RestResult lockUser(@PathVariable("userId") int userId,
@@ -158,7 +157,7 @@ public class SysUserController extends BaseController {
 			return RestResult.error();
 		}
 	}
-	
+
 	@PostMapping(value = "roleAssign", params = "saveUserRole")
 	@ApiOperation(value = "用户-角色录入")
 	public RestResult saveUserRole(@RequestParam("userId") Integer userId,
@@ -178,7 +177,7 @@ public class SysUserController extends BaseController {
 			return RestResult.success();
 		}
 	}
-	
+
 	@PostMapping(value = "roleAssign", params = "clearUserRole")
 	@ApiOperation(value = "根据用户ID清除角色(不包含超级管理)")
 	public RestResult clearUserRole(@RequestParam("userId") Integer userId) {
@@ -187,7 +186,7 @@ public class SysUserController extends BaseController {
 			if (1 == userId || getCurrentUserId() == userId) {
 				return RestResult.error();
 			}
-			
+
 			// 后期会加上当前所有在线用户也不能删除
 			if (userService.deleteUserRoleByUserId(userId) > 0) {
 				return RestResult.success();
@@ -195,7 +194,7 @@ public class SysUserController extends BaseController {
 		}
 		return RestResult.error();
 	}
-	
+
 	@PostMapping("/updateAvatar")
 	@ApiOperation(value = "个人信息-保存头像(待完善)")
 	public RestResult updateAvatar(SysUser user, @RequestParam("avatarfile") MultipartFile file) {

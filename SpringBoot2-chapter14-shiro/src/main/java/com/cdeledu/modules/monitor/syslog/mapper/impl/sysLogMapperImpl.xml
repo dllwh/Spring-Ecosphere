@@ -9,6 +9,7 @@
 		insert into sys_log_exception
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="clientIp != null">clientIp,</if>
+			<if test="requestUrl != null">requestUrl,</if>
 			<if test="requestType != null">requestType,</if>
 			<if test="sessionId != null and sessionId !='' ">`sessionId`,</if>
 			<if test="startTime != null ">`startTime`,</if>
@@ -20,6 +21,7 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="clientIp != null">#{clientIp},</if>
+			<if test="requestUrl != null"> #{requestUrl},</if>
 			<if test="requestType != null"> #{requestType},</if>
 			<if test="sessionId != null and sessionId !='' "> #{sessionId},</if>
 			<if test="startTime != null "> #{startTime},</if>
