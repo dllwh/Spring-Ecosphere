@@ -17,6 +17,14 @@ public interface UserService {
 	 * @方法描述:通过用户名查询用户
 	 */
 	SysUser getUserByLoginName(String userName);
+	/**
+	 * @方法描述:通过手机号查询用户
+	 */
+	SysUser getUserByPhoneNumber(String phoneNumber);
+	/**
+	 * @方法描述:通过邮件查询用户
+	 */
+	SysUser getUserByEmail(String email);
 	
 	/**
 	 * @方法描述:通过用户ID查询用户
