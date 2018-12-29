@@ -2,6 +2,10 @@ package com.cdeledu.common.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +28,7 @@ import org.springframework.web.util.WebUtils;
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年10月24日 上午8:32:52
- * @版本: V1.1.2
+ * @版本: V1.1.3
  * @since: JDK 1.8
  */
 public final class WebHelper {
@@ -63,21 +67,42 @@ public final class WebHelper {
 	}
 
 	/**
-	 * 获取客户端ip地址
+	 * @方法描述 : 获取IP地址
+	 * 
+	 *       <pre>
+	 *  Cdn-Src-Ip : 网宿cdn的真实ip 
+	 *  HTTP_CLIENT_IP : 蓝讯cdn的真实ip 
+	 *  X-Forwarded-For :获取代理ip 
+	 *  Proxy-Client-IP : 获取代理ip 
+	 *  WL-Proxy-Client-IP : 获取代理ip
+	 *       </pre>
 	 * 
 	 * @param request
 	 * @return
 	 */
 	public static String getCliectIp(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.trim() == "" || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
+		String ip = "";
+		String proxs[] = { "Cdn-Src-Ip", "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP",
+				"HTTP_X_FORWARDED_FOR", "x-real-ip" };
+		for (String prox : proxs) {
+			ip = request.getHeader(prox);
+			if (StringUtils.isBlank(ip) || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				continue;
+			} else {
+				break;
+			}
 		}
-		if (ip == null || ip.trim() == "" || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
+
+		if (StringUtils.isBlank(ip)) {
+			ip = request.getRemoteAddr();// 获取真实ip
 		}
-		if (ip == null || ip.trim() == "" || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
+
+		if (ip.equals("0:0:0:0:0:0:0:1")) {
+			try {
+				ip = getRealIp();
+			} catch (Exception e) {
+				ip = "127.0.0.1";
+			}
 		}
 
 		// 多个路由时，取第一个非unknown的ip
@@ -99,8 +124,7 @@ public final class WebHelper {
 	public static HttpStatus getErrorHttpStatus(HttpServletRequest request) {
 		Integer statusCode = (Integer) request.getAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE);
 		try {
-			return statusCode != null ? HttpStatus.valueOf(statusCode.intValue())
-					: HttpStatus.INTERNAL_SERVER_ERROR;
+			return statusCode != null ? HttpStatus.valueOf(statusCode.intValue()) : HttpStatus.INTERNAL_SERVER_ERROR;
 		} catch (Exception ex) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
@@ -151,5 +175,38 @@ public final class WebHelper {
 		}
 
 		return false;
+	}
+
+	private static String getRealIp() throws SocketException {
+		String localip = null;// 本地IP，如果没有配置外网IP则返回它
+		String netip = null;// 外网IP
+
+		Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
+
+		InetAddress ip;
+		boolean finded = false;// 是否找到外网IP
+
+		while (netInterfaces.hasMoreElements() && !finded) {
+			NetworkInterface ni = netInterfaces.nextElement();
+			Enumeration<InetAddress> address = ni.getInetAddresses();
+			while (address.hasMoreElements()) {
+				ip = address.nextElement();
+				// 外网IP
+				if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1) {
+					netip = ip.getHostAddress();
+					finded = true;
+					break;
+				} else if (ip.isSiteLocalAddress() && !ip.isLoopbackAddress()
+						&& ip.getHostAddress().indexOf(":") == -1) {// 内网IP
+					localip = ip.getHostAddress();
+				}
+			}
+		}
+
+		if (netip != null && !"".equals(netip)) {
+			return netip;
+		} else {
+			return localip;
+		}
 	}
 }
