@@ -62,7 +62,8 @@ public final class SystemLogHelper {
 		loginInfor.setClientIp(WebHelper.getCliectIp(WebHelper.getRequest()));
 		loginInfor.setOs(os);
 		loginInfor.setBrowser(browser);
-
+		loginInfor.setLogContent(msg);
+		
 		ScheduledManager.getInstance().executeLog(TaskFactory.loginLog(loginInfor));
 	}
 
