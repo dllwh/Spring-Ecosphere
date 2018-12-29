@@ -40,12 +40,19 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getUserList(sysUser);
 	}
 	
-	/**
-	 * 通过用户名查询用户
-	 */
 	@Override
 	public SysUser getUserByLoginName(String userName) {
 		return userMapper.selectUserByLoginName(userName);
+	}
+	
+	@Override
+	public SysUser getUserByPhoneNumber(String phoneNumber) {
+		return null;
+	}
+
+	@Override
+	public SysUser getUserByEmail(String email) {
+		return null;
 	}
 	
 	/**
