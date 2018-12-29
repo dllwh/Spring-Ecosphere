@@ -1,6 +1,23 @@
 package com.cdeledu.framework.shiro.service;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.cdeledu.common.util.SystemLogHelper;
+import com.cdeledu.framework.model.LoggerEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -14,6 +31,61 @@ import org.springframework.stereotype.Component;
  * @since: JDK 1.8
  */
 @Component
+@Slf4j
 public class LoginService {
 
+	@Autowired
+	PasswordService passwordService;
+
+	public boolean login(String userName, String password) throws AuthenticationException {
+
+		password = passwordService.encryptPassword(userName, password);
+		// 将用户名和密码封装到UsernamePasswordToken
+		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+		// 获得当前登录用户对象Subject，现在状态为 “未认证”
+		Subject subject = SecurityUtils.getSubject();
+		String logMsg = "";
+		boolean suc = false;
+		LoggerEntity loginEntity = new LoggerEntity();
+		loginEntity.setLoginName(userName);
+
+		try {
+			subject.login(token);
+		} catch (UnknownAccountException uae) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,未知账户";
+		} catch (IncorrectCredentialsException ice) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,错误的凭证";
+		} catch (LockedAccountException lae) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,账户已锁定";
+		} catch (DisabledAccountException dae) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,帐号已被禁用";
+		} catch (ExpiredCredentialsException ece) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,帐号已过期";
+		} catch (ExcessiveAttemptsException eae) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,用户名或密码错误次数过多";
+		} catch (UnauthorizedException e) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过,您没有得到相应的授权！";
+		} catch (AuthenticationException ae) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证未通过," + ae.getMessage();
+		}
+
+		if (subject.isAuthenticated()) {
+			logMsg = "对用户[" + userName + "]进行登录验证..验证通过";
+			suc = true;
+		} else {
+			token.clear();
+		}
+
+		if (log.isDebugEnabled()) {
+			log.debug("此次登录结果，{}", logMsg);
+		}
+
+		// 存储登录日志
+		if (suc) {
+			SystemLogHelper.loginLog(userName, 1, logMsg);
+		} else {
+			SystemLogHelper.loginLog(userName, 0, logMsg);
+		}
+		return suc;
+	}
 }
