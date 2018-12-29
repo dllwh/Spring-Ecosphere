@@ -40,19 +40,36 @@
 	</select>
 
 	<!-- 登录日志模块 -->
-	<insert id="insertLoginLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+	<insert id="insertLoginLog" parameterType="com.cdeledu.modules.monitor.syslog.domain.SysLoginLog"
 		keyProperty="id" useGeneratedKeys="true">
-
+		INSERT INTO sys_log_login
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginName != null"> loginName,</if>
+			<if test="clientIp != null"> clientIp,</if>
+			<if test="loginStatus != null"> loginStatus,</if>
+			<if test="browser != null"> browser,</if>
+			<if test="logContent != null"> logContent,</if>
+			<if test="os != null"> os,</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginName != null"> #{loginName},</if>
+			<if test="clientIp != null"> #{clientIp},</if>
+			<if test="loginStatus != null"> #{loginStatus},</if>
+			<if test="browser != null"> #{browser},</if>
+			<if test="logContent != null"> #{logContent},</if>
+			<if test="os != null"> #{os},</if>
+		</trim>
 	</insert>
-	<select id="getLoginLogList" parameterType="com.cdeledu.framework.model.LoggerEntity"
-		resultType="com.cdeledu.framework.model.LoggerEntity">
+	<select id="getLoginLogList" parameterType="com.cdeledu.modules.monitor.syslog.domain.SysLoginLog"
+		resultType="com.cdeledu.modules.monitor.syslog.domain.SysLoginLog">
 		SELECT * FROM sys_log_login
 	</select>
 	<select id="getLoginLogByUserID" parameterType="Integer"
-		resultType="com.cdeledu.framework.model.LoggerEntity">
+		resultType="com.cdeledu.modules.monitor.syslog.domain.SysLoginLog">
 		SELECT * FROM sys_log_login
 	</select>
-	<select id="countLoginLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
+	<select id="countLoginLog" parameterType="com.cdeledu.modules.monitor.syslog.domain.SysLoginLog"
 		resultType="int">
 		SELECT COUNT(*) FROM sys_log_login
 	</select>
@@ -60,14 +77,68 @@
 	<!-- 操作日志模块 -->
 	<insert id="insertOperateLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
 		keyProperty="id" useGeneratedKeys="true">
-
+		INSERT INTO  sys_log_operate 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginName != null"> loginName,</if>
+			<if test="clientIp != null"> clientIp,</if>
+			<if test="requestUrl != null"> requestUrl,</if>
+			<if test="requestType != null"> requestType,</if>
+			<if test="requestParameter != null"> requestParameter,</if>
+			<if test="returnData != null"> returnData,</if>
+			<if test="operateClass != null"> operateClass,</if>
+			<if test="sessionId != null"> sessionId,</if>
+			<if test="operateMethod != null"> operateMethod,</if>
+			<if test="requestSource != null"> requestSource,</if>
+			<if test="operateStatus != null"> operateStatus,</if>
+			<if test="startTime != null"> startTime,</if>
+			<if test="returnTime != null"> returnTime,</if>
+			<if test="timeConsuming != null"> timeConsuming,</if>
+			<if test="logType != null"> logType,</if>
+			<if test="exceptionDetail != null"> exceptionDetail,</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginName != null"> #{loginName},</if>
+			<if test="clientIp != null"> #{clientIp},</if>
+			<if test="requestUrl != null"> #{requestUrl},</if>
+			<if test="requestType != null"> #{requestType},</if>
+			<if test="requestParameter != null"> #{requestParameter},</if>
+			<if test="returnData != null"> #{returnData},</if>
+			<if test="operateClass != null"> #{operateClass},</if>
+			<if test="sessionId != null"> #{sessionId},</if>
+			<if test="operateMethod != null"> #{operateMethod},</if>
+			<if test="requestSource != null"> #{requestSource},</if>
+			<if test="operateStatus != null"> #{operateStatus},</if>
+			<if test="startTime != null"> #{startTime},</if>
+			<if test="returnTime != null"> #{returnTime},</if>
+			<if test="timeConsuming != null"> ${timeConsuming},</if>
+			<if test="logType != null"> #{logType},</if>
+			<if test="exceptionDetail != null"> #{exceptionDetail},</if>
+		</trim>
 	</insert>
+	
+	<sql id="getOperateLog_body">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="loginName != null"> and loginName =#{loginName} </if>
+			<if test="clientIp != null">  and clientIp like LIKE CONCAT(#{clientIp},'%') </if>
+			<if test="requestUrl != null"> and requestUrl = #{requestUrl}</if>
+			<if test="requestType != null"> and requestType = #{requestType} </if>
+			<if test="requestParameter != null"> and requestParameter like LIKE CONCAT(#{requestParameter},'%') </if>
+			<if test="operateClass != null"> and operateClass like LIKE CONCAT(#{operateClass},'%) </if>
+			<if test="operateMethod != null">  and operateMethod like LIKE CONCAT(#{operateMethod},'%) </if>
+			<if test="requestSource != null"> and requestSource = #{requestSource} </if>
+			<if test="operateStatus != null">  and operateStatus=#{operateStatus} </if>
+			<if test="logType != null"> and logType = #{logType} </if>
+		</trim>
+	</sql>
 	<select id="getOperateLogList" parameterType="com.cdeledu.framework.model.LoggerEntity"
 		resultType="com.cdeledu.framework.model.LoggerEntity">
 		SELECT * FROM sys_log_operate
+		<include refid="getOperateLog_body"/>
 	</select>
 	<select id="countOperateLog" parameterType="com.cdeledu.framework.model.LoggerEntity"
 		resultType="int">
 		SELECT COUNT(*) FROM sys_log_operate
+		<include refid="getOperateLog_body"/>
 	</select>
 </mapper>
