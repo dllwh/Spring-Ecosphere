@@ -7,6 +7,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,11 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.cdeledu.common.RestResult;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -31,6 +37,7 @@ import org.springframework.web.util.WebUtils;
  * @版本: V1.1.3
  * @since: JDK 1.8
  */
+@Slf4j
 public final class WebHelper {
 
 	/**
@@ -82,8 +89,8 @@ public final class WebHelper {
 	 */
 	public static String getCliectIp(HttpServletRequest request) {
 		String ip = "";
-		String proxs[] = { "Cdn-Src-Ip", "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP",
-				"HTTP_X_FORWARDED_FOR", "x-real-ip" };
+		String proxs[] = { "Cdn-Src-Ip", "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP",
+				"HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "x-real-ip" };
 		for (String prox : proxs) {
 			ip = request.getHeader(prox);
 			if (StringUtils.isBlank(ip) || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -124,7 +131,8 @@ public final class WebHelper {
 	public static HttpStatus getErrorHttpStatus(HttpServletRequest request) {
 		Integer statusCode = (Integer) request.getAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE);
 		try {
-			return statusCode != null ? HttpStatus.valueOf(statusCode.intValue()) : HttpStatus.INTERNAL_SERVER_ERROR;
+			return statusCode != null ? HttpStatus.valueOf(statusCode.intValue())
+					: HttpStatus.INTERNAL_SERVER_ERROR;
 		} catch (Exception ex) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
@@ -177,6 +185,18 @@ public final class WebHelper {
 		return false;
 	}
 
+	public static void out(ServletResponse hresponse, RestResult restResult) {
+		try {
+			hresponse.setCharacterEncoding("UTF-8");
+			PrintWriter out = hresponse.getWriter();
+			out.println(JSON.toJSONString(restResult));
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			log.error(null, e);
+		}
+	}
+
 	private static String getRealIp() throws SocketException {
 		String localip = null;// 本地IP，如果没有配置外网IP则返回它
 		String netip = null;// 外网IP
@@ -192,7 +212,8 @@ public final class WebHelper {
 			while (address.hasMoreElements()) {
 				ip = address.nextElement();
 				// 外网IP
-				if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1) {
+				if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress()
+						&& ip.getHostAddress().indexOf(":") == -1) {
 					netip = ip.getHostAddress();
 					finded = true;
 					break;
