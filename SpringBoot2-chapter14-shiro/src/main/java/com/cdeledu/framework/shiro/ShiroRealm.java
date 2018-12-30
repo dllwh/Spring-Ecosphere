@@ -63,15 +63,15 @@ public class ShiroRealm extends AuthorizingRealm {
 	/**
 	 * 登录认证
 	 */
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authtoken)
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
 			throws AuthenticationException {
 		log.info("登录认证");
 
 		// 加这一步的目的是在Post请求的时候会先进认证，然后在到请求
-		if (authtoken.getPrincipal() == null) {
+		if (authenticationToken.getPrincipal() == null) {
 			return null;
 		}
-		UsernamePasswordToken token = (UsernamePasswordToken) authtoken;
+		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 		String userName = token.getUsername();
 		String passWord = String.valueOf(token.getPassword());
 
@@ -86,6 +86,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		// 查询用户信息
 		SysUser sysUser = userService.getUserByLoginName(userName);
 		if (sysUser == null) {
+			log.error("用户 { " + userName + " } 不存在 ");
 			sysUser = userService.getUserByPhoneNumber(userName);
 		}
 		if (sysUser == null) {
@@ -107,10 +108,12 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
 
 		if (sysUser.getIfVisible() != 1) {
+			log.error("用户 { " + userName + " } 被禁止登录 ");
 			throw new DisabledAccountException("账号未通过审核");
 		}
 
 		if (sysUser.getIfLocked() != 1) {
+			log.error("用户 { " + userName + " } 被禁止登录 ");
 			throw new LockedAccountException("账号被锁定，无法登录");
 		}
 
