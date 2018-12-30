@@ -3,6 +3,6 @@
 <mapper namespace="com.cdeledu.dao.RoleMapper">
 	<select id="getRoleList" parameterType="java.util.HashMap"
 		resultType="java.util.HashMap">
-		select * from sys_role
+		select * from sys_upms_role
 	</select>
 </mapper>

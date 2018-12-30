@@ -45,27 +45,30 @@ public class ShiroRealm extends AuthorizingRealm {
 	 * 权限认证
 	 */
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		log.info("权限认证");
+		log.info("---------------- 执行 Shiro 权限获取 ---------------------");
 		// 获取登录用户名
 		// String userName = (String) principals.getPrimaryPrincipal();
 		// SysUser token = ShiroHelper.getCurrenLoginUser();
 		// SysUser sysUser = userService.getUserByLoginName(userName);
 		// 添加角色和权限
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
 		// 添加角色
 		// info .addRole();
 		// 添加权限
 		// info .addStringPermission("");
-		return info;
+		log.info("---- 获取到以下权限 ----");
+		log.info(authorizationInfo.getStringPermissions().toString());
+		log.info("---------------- Shiro 权限获取成功 ----------------------");
+		return authorizationInfo;
 	}
 
 	/**
-	 * 登录认证
+	 * 认证信息.(身份验证) : Authentication 是用来验证用户身份
 	 */
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
 			throws AuthenticationException {
-		log.info("登录认证");
+		log.info("---------------- 执行 Shiro 凭证认证 ----------------------");
 
 		// 加这一步的目的是在Post请求的时候会先进认证，然后在到请求
 		if (authenticationToken.getPrincipal() == null) {
