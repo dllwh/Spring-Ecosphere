@@ -49,8 +49,7 @@ public final class SystemLogHelper {
 	 */
 	public static void loginLog(String userNmae, Integer state, String msg) {
 		// HttpServletRequest request = WebHelper.getRequest();
-		UserAgent userAgent = UserAgent
-				.parseUserAgentString(WebHelper.getRequest().getHeader("User-Agent"));
+		UserAgent userAgent = UserAgent.parseUserAgentString(WebHelper.getRequest().getHeader("User-Agent"));
 		// 获取客户端操作系统
 		String os = userAgent.getOperatingSystem().getName();
 		// 获取客户端浏览器
@@ -63,7 +62,7 @@ public final class SystemLogHelper {
 		loginInfor.setOs(os);
 		loginInfor.setBrowser(browser);
 		loginInfor.setLogContent(msg);
-		
+
 		ScheduledManager.getInstance().executeLog(TaskFactory.loginLog(loginInfor));
 	}
 
@@ -82,11 +81,10 @@ public final class SystemLogHelper {
 		} else {
 			requestLog.setRequestType(0);
 		}
-		requestLog.setClientIp(request.getRemoteAddr());
+		requestLog.setClientIp(WebHelper.getCliectIp(request));
 		requestLog.setRequestUrl(request.getRequestURI());
-		requestLog.setReturnData(
-				JSON.toJSONString(throwable, SerializerFeature.DisableCircularReferenceDetect,
-						SerializerFeature.WriteMapNullValue));
+		requestLog.setReturnData(JSON.toJSONString(throwable,
+				SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue));
 		requestLog.setExceptionDetail(throwable.getMessage());
 		requestLog.setOperateStatus(WebHelper.getErrorHttpStatus(request).value());
 		requestLog.setLogType(SysLogConstant.type.exception);
