@@ -78,4 +78,10 @@ public class LoginController {
 	public RestResult doLogout() {
 		return RestResult.success();
 	}
+
+	@GetMapping(value = "/kickout")
+	@ApiOperation(value="被踢出后跳转的页面")
+	public String kickOut() {
+		return "kickout";
+	}
 }
