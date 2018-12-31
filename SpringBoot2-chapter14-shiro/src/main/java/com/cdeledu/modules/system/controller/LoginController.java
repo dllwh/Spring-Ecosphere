@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cdeledu.common.RestResult;
+import com.cdeledu.framework.shiro.ShiroHelper;
 import com.cdeledu.framework.shiro.service.LoginService;
+import com.cdeledu.modules.system.domain.SysUser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
  * @类描述:登录控制器
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月9日 下午7:23:43
- * @版本: V1.0.2
+ * @版本: V1.0.3
  * @since: JDK 1.8
  */
 @RestController
@@ -51,7 +53,7 @@ public class LoginController {
 		if (StringUtils.isBlank(password)) { // 密码为空 错误
 			throw new HttpMessageNotReadableException("密码不能为空");
 		}
-		String msg = "用户或密码错误";
+		String msg = "用户名或密码错误,请重新登录!";
 		try {
 			JSONObject loginRespnse = JSONObject.parseObject(loginService.login(userName, password));
 			if (loginRespnse.getBoolean("result") == true) {
@@ -70,17 +72,32 @@ public class LoginController {
 	@ApiOperation(value = "登录验证")
 	@GetMapping(value = "checkuser")
 	public RestResult checkuser() {
+		SysUser sysUser = ShiroHelper.getCurrenLoginUser();
+		if (sysUser == null) {
+			return RestResult.error("由于长时间未操作，请重新登录");
+		}
 		return RestResult.success();
+	}
+
+	@RequestMapping(value = "notLogin", method = RequestMethod.GET)
+	public RestResult notLogin() {
+		return RestResult.error("您尚未登陆！");
+	}
+
+	@RequestMapping(value = "notRole", method = RequestMethod.GET)
+	public RestResult notRole() {
+		return RestResult.error("您没有权限！");
 	}
 
 	@ApiOperation(value = "退出")
 	@GetMapping(value = "doLogout")
 	public RestResult doLogout() {
-		return RestResult.success();
+		ShiroHelper.logout();
+		return RestResult.success("成功注销！");
 	}
 
 	@GetMapping(value = "/kickout")
-	@ApiOperation(value="被踢出后跳转的页面")
+	@ApiOperation(value = "被踢出后跳转的页面")
 	public String kickOut() {
 		return "kickout";
 	}
