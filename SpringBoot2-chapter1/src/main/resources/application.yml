@@ -37,9 +37,9 @@ spring:
 #### 数据库配置
 spring: 
   datasource: 
-    url: jdbc:mysql://rm-2zevys7thq96t31s4no.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username: test
-    password: test
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: develop
+    password: djx159357
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid: 
