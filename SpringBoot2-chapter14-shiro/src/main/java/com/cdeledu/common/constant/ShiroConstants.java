@@ -20,7 +20,7 @@ public interface ShiroConstants {
 	/** 登录请求 */
 	public final static String	LOGIN_ACTION		= "/login/ajaxLogin";
 	/** 登录验证 */
-	public final static String	LOGIN_CHECK			= "/login?checkuser";
+	public final static String	LOGIN_CHECK			= "/login/checkuser";
 	/** 踢出登录提示 */
 	public final static String	KICKED_OUT			= "/login/kickout";
 	/** 没有权限提醒 */
