@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.framework.controller.BaseController;
 import com.cdeledu.modules.system.domain.SysRole;
 import com.cdeledu.modules.system.service.RoleService;
 
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/system/role")
 @Api(tags = "角色管理")
-public class SysRoleController {
+public class SysRoleController extends BaseController{
 	private String		prefix	= "system/role";
 	@Autowired
 	private RoleService	roleService;

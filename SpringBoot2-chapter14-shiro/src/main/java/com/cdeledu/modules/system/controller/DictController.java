@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.framework.controller.BaseController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/system/dict")
 @Api(tags = "字典管理")
-public class DictController {
+public class DictController  extends BaseController {
 	private String prefix = "system/dict";
 
 	@GetMapping()

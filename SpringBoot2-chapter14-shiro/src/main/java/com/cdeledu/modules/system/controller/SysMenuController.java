@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdeledu.common.RestResult;
+import com.cdeledu.framework.controller.BaseController;
 import com.cdeledu.modules.system.domain.SysMenu;
 import com.cdeledu.modules.system.service.MenuService;
 
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/system/menu")
 @Api(tags = "系统菜单，操作权限")
-public class SysMenuController {
+public class SysMenuController extends BaseController{
 	private String		prefix	= "system/menu";
 	@Autowired
 	private MenuService	menuService;
