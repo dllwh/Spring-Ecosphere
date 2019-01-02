@@ -18,13 +18,13 @@ public interface SysLogService {
 	/**
 	 * 登录日志
 	 */
-	int insertLoginLog(SysLoginLog expLog);
+	int insertLoginLog(SysLoginLog loginLog);
 	
-	List<SysLoginLog> getLoginLogList(SysLoginLog expLog);
+	List<SysLoginLog> getLoginLogList(SysLoginLog loginLog);
 	
 	List<SysLoginLog> getLoginLogByUserName(String userName);
 	
-	int countLoginLog(SysLoginLog expLog);
+	int countLoginLog(SysLoginLog loginLog);
 	
 	/**
 	 * 操作日志
