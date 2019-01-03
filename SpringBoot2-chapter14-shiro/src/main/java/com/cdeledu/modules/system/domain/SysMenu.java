@@ -1,12 +1,13 @@
 package com.cdeledu.modules.system.domain;
 
-import java.security.Timestamp;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.cdeledu.common.BaseEntity;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -20,8 +21,10 @@ import lombok.Data;
  * @since: JDK 1.8
  */
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "菜单表实体类")
-public class SysMenu {
+public class SysMenu  extends BaseEntity{
 	/** 菜单ID */
 	private String		id;
 	/** 菜单名称 */
@@ -44,17 +47,8 @@ public class SysMenu {
 	private String		iconClass;
 	/** tree属性 */
 	private Boolean		open;
-	/** 创建人 */
-	private Integer		creator;
-	/** 创建时间 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Timestamp	createTime;
-	/** 最后修改人 */
-	private Integer		modifier;
-	/** 修改日期 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Timestamp	updateTime;
-	/** 备注 */
-	private String		remark;
 	private List<?>		childrenList;
+	
+	/** 权限字符串,menu例子：role:*，button例子：role:create */
+	private String		permission;
 }

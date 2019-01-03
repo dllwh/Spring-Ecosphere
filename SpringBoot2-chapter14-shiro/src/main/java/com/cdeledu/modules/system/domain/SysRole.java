@@ -1,11 +1,13 @@
 package com.cdeledu.modules.system.domain;
 
-import java.security.Timestamp;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.cdeledu.common.BaseEntity;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -19,29 +21,21 @@ import lombok.Data;
  * @since: JDK 1.8
  */
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "角色表实体类")
-public class SysRole {
-	private Integer		id;
+public class SysRole extends BaseEntity {
+	private Integer			id;
 	/** 角色名称 */
-	private String		roleName;
+	private String			roleName;
 	/** 角色编码 */
-	private String		roleCode;
+	private String			roleCode;
 	/** 排序 */
-	private Integer		sequence;
+	private Integer			sequence;
 	/** 是否可见(启用/禁用),不为空 */
-	private Integer		ifVisible;
+	private Integer			ifVisible;
 	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
-	private Integer		ifEnabled;
-	/** 创建人 */
-	private Integer		creator;
-	/** 创建时间 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Timestamp	createTime;
-	/** 最后修改人 */
-	private Integer		modifier;
-	/** 修改日期 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Timestamp	updateTime;
-	/** 备注 */
-	private String		remark;
+	private Integer			ifEnabled;
+	/** 一个角色对应多个用户 */
+	private List<SysUser>	userInfos;
 }
