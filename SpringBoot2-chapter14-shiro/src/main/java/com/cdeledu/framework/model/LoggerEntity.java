@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoggerEntity {
 	
-	private Long		id;					// 编号
+	private Integer		id;					// 编号
 						
 	private String		loginName;			// 操作人员登录账号
 	private String		clientIp;			// 客户端请求ip
