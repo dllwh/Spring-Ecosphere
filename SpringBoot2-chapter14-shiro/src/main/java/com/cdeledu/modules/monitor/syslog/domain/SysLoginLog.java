@@ -25,8 +25,8 @@ public class SysLoginLog {
 	private String		loginName;
 	/** 登录的IP地址 */
 	private String		clientIp;
-	/** 登录是否成功；1为成功，0为失败 */
-	private Integer		loginStatus;
+	/** 日志类型 */
+	private String		logType;
 	/** 登录浏览器 */
 	private String		browser;
 	/** 操作系统 */

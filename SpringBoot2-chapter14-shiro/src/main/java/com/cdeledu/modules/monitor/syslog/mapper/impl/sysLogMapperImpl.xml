@@ -48,7 +48,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="loginName != null"> loginName,</if>
 			<if test="clientIp != null"> clientIp,</if>
-			<if test="loginStatus != null"> loginStatus,</if>
+			<if test="logType != null"> logType,</if>
 			<if test="browser != null"> browser,</if>
 			<if test="logContent != null"> logContent,</if>
 			<if test="os != null"> os,</if>
@@ -57,7 +57,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="loginName != null"> #{loginName},</if>
 			<if test="clientIp != null"> #{clientIp},</if>
-			<if test="loginStatus != null"> #{loginStatus},</if>
+			<if test="logType != null"> #{logType},</if>
 			<if test="browser != null"> #{browser},</if>
 			<if test="logContent != null"> #{logContent},</if>
 			<if test="os != null"> #{os},</if>
