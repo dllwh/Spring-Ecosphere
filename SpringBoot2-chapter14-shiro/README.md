@@ -13,37 +13,49 @@
 - 业务功能，按照用户数据权限，查询、操作数据
 
 **项目结构** 
+
 ```
-SpringBoot2-chapter14-shiro
-│    ├─com.cdeledu
-│       ├─common     公共模块
-│       ├─framework   项目结构
-│           ├─aspectj
-│           ├─config
-│           ├─controller
-│           ├─exception
-│           ├─factory
-│           ├─model
-│           ├─queue
-│           ├─scheduled
-│           ├─shiro
-│       ├─modules     模块
-│           ├─monitor   监控
-|           ├─system    系统相关，主要是权限管理以及相关
-│       ├─ShiroSpringBootApplication     项目启动类
-│    └─resources 
-│        ├─mapper   MyBatis文件
-│        ├─statics  静态资源
-│        ├─webviews 系统页面
-│           ├─error      通用错误页面
-│           ├─system
-│               ├─dict      字典管理模块
-│               ├─sysMenu   菜单模块
-│               ├─sysRole   角色模块
-│               ├─sysUser   管理员模块
-│           ├─monitor
-│           ├─index.html layui 主题风格（默认主题）
-│        └─application.yml   全局配置文件
+├── src/main/java
+│   ├── com.cdeledu
+│      ├── common// 公共模块
+│          ├── constants                   // 通用常量
+│          ├── exception                   // 通用异常
+│          ├── util                        // 通用工具
+│          ├── BaseEntity.java             // 基础pojo类
+│          ├── RestResult.java             // 返回结果
+│      ├── framework                       // 项目
+│          ├── aspectj						// 注解实现
+│          ├── config						// 系统配置
+│          ├── controller					// 基础controller
+│          ├── exception					// 全局异常配置
+│          ├── factory						// 工厂
+│          ├── model						// 日志
+│          ├── mongoDB						// MongoDB
+│          ├── queue						// 队列(生产者-消费者模式)
+│          ├── scheduled					// 调整中心
+│          ├── shiro						// 权限控制
+│      ├── modules                         // 功能模块
+│         ├── monitor
+│         ├── system
+│         ├── 
+│      ├── ShiroSpringBootApplication
+├── src/main/resource
+│   ├── static                              // 静态资源
+│   ├── webviews                            // 系统页面
+│   ├── error
+│      ├── include
+│      ├── monitor
+│          ├── job                         // 任务调度(定时任务)
+│          ├── log                         // 系统日志
+│      ├── system
+│          ├── dict                        // 字典管理模块
+│          ├── sysMenu                     // 菜单模块
+│          ├── sysRole                     // 角色模块
+│          ├── sysUser                     // 管理员模块
+│      ├── index.html
+│      ├── kickout.html
+│   ├── application.yml                   //全局配置文件
+
 ```
 
 
