@@ -49,8 +49,6 @@ public class SysUser extends BaseEntity {
 	private Integer			IfVisible;
 	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
 	private Integer			ifEnabled;
-	/** 备注 */
-	private String			remark;
 	/** 拒绝登录描述 */
 	private String			refuseDes;
 	/** 角色组 */
