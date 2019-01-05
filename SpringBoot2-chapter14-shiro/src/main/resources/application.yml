@@ -1,20 +1,30 @@
+#开发环境配置
 server:
   port: 8214
   tomcat:
     uri-encoding: UTF-8
   servlet:
     context-path: /
+#日志配置
 logging:
   level:
     root: debug
     org:
-      springframework: info
-spring:
-  datasource:
-    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username: #数据库登录账号
-    password:  #数据库登录密码
-    driver-class-name: com.mysql.jdbc.Driver
+      springframework: warn
+      spring:
+        springboot:
+          dao: debug
+#Spring配置
+spring: 
+  profiles:
+    active:
+      - datasource # 数据库配置
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths:
+        - src/main/java
+      exclude: webviews/** # #classpath目录下的webviews文件夹内容修改不重启
   thymeleaf:
     cache: false
     check-template: true
@@ -27,6 +37,7 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-mybatis:
-  mapper-locations: classpath:com/cdeledu/modules/*/mapper/impl/*.xml,classpath:com/cdeledu/modules/*/*/mapper/impl/*.xml
-  type-aliases-package: com.cdeledu.modules.**.domain
+  redis:
+    host: localhost # Redis服务器地址
+    port: 6379 # Redis服务器连接端口
+    timeout: 0 # 连接超时时间（毫秒）

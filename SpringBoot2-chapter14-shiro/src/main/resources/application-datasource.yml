@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username:  #数据库登录账号
+    password:  #数据库登录密码
+    driver-class-name: com.mysql.jdbc.Driver
+---
+mybatis:
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath:com/cdeledu/modules/*/mapper/impl/*.xml,classpath:com/cdeledu/modules/*/*/mapper/impl/*.xml
+  # 搜索指定包别名
+  type-aliases-package: com.cdeledu.modules.**.domain
