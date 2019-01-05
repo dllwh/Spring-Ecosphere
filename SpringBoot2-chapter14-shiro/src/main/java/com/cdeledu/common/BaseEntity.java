@@ -14,21 +14,25 @@ import lombok.Data;
  * @类描述:
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月9日 下午7:16:41
- * @版本: V1.0.2
+ * @版本: V1.0.3
  * @since: JDK 1.8
  */
 @Data
 public class BaseEntity {
 	/** 创建人 */
 	protected Integer	creator;
+	
 	/** 创建时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Timestamp	createTime;
+	
 	/** 最后修改人 */
 	protected Integer	modifier;
+	
 	/** 修改日期 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	protected Timestamp	updateTime;
+
 	/** 备注 */
 	private String		remark;
 }
