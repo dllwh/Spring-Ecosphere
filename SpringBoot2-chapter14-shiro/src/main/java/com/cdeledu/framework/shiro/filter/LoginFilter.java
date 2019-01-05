@@ -5,7 +5,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.springframework.stereotype.Component;
 
 import com.cdeledu.common.RestResult;
 import com.cdeledu.common.util.WebHelper;
@@ -26,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
  * @since: JDK 1.8
  */
 @Slf4j
-@Component
 public class LoginFilter extends AccessControlFilter {
 
 	/**
@@ -44,14 +42,17 @@ public class LoginFilter extends AccessControlFilter {
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
 		if (log.isDebugEnabled()) {
-			log.debug("当前用户没有登录，并且是Ajax请求！");
+			log.debug("当前用户没有登录");
 		}
+		
+		log.debug("----------{}----------",((HttpServletRequest)request).getRequestURI());
 		SysUser token = ShiroHelper.getCurrenLoginUser();
 		if (token != null || isLoginRequest(request, response)) {
 			return Boolean.TRUE;
 		}
 
 		if (WebHelper.isAjaxRequest((HttpServletRequest) request)) {
+			log.debug("当前用户没有登录，并且是Ajax请求！");
 			WebHelper.out(response, RestResult.error(201, "当前用户没有登录，需要重新登录"));
 			return Boolean.FALSE;
 		}
