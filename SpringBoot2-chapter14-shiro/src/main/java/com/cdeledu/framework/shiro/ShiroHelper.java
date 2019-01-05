@@ -115,6 +115,45 @@ public class ShiroHelper {
 	}
 
 	/**
+	 * 
+	 * @方法描述:验证当前用户是否属于以下任意一个角色
+	 * @param roleCodes
+	 * @return
+	 */
+	public static boolean hasAnyRole(String roleCodes) {
+		boolean hasAnyRole = false;
+		Subject subject = getSubject();
+		if (subject != null && roleCodes != null && roleCodes.length() > 0) {
+			for (String role : roleCodes.split(",")) {
+				if (subject.hasRole(role.trim())) {
+					hasAnyRole = false;
+					break;
+				}
+			}
+		}
+		return hasAnyRole;
+	}
+
+	/**
+	 * @方法描述:验证当前用户是否属于以下所有角色
+	 * @param roleNames
+	 * @return
+	 */
+	public static boolean hasAllRoles(String roleNames) {
+		boolean hasAllRole = true;
+		Subject subject = getSubject();
+		if (subject != null && roleNames != null && roleNames.length() > 0) {
+			for (String role : roleNames.split(",")) {
+				if (!subject.hasRole(role.trim())) {
+					hasAllRole = false;
+					break;
+				}
+			}
+		}
+		return hasAllRole;
+	}
+
+	/**
 	 * @方法:验证当前用户是否拥有指定权限,使用时与lacksPermission 搭配使用
 	 * @创建人:独泪了无痕
 	 * @param permission

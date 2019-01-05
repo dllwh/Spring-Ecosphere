@@ -3,6 +3,7 @@ package com.cdeledu.framework.shiro.filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.web.filter.AccessControlFilter;
 
@@ -53,6 +54,8 @@ public class LoginFilter extends AccessControlFilter {
 
 		if (WebHelper.isAjaxRequest((HttpServletRequest) request)) {
 			log.debug("当前用户没有登录，并且是Ajax请求！");
+			HttpServletResponse httpresponse = (HttpServletResponse) response; 
+			httpresponse.setHeader("sessionstatus", "timeout"); 
 			WebHelper.out(response, RestResult.error(201, "当前用户没有登录，需要重新登录"));
 			return Boolean.FALSE;
 		}

@@ -1,5 +1,6 @@
 package com.cdeledu.framework.shiro.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +21,8 @@ import com.alibaba.fastjson.JSON;
 import com.cdeledu.common.constant.SysLogConstant;
 import com.cdeledu.common.util.SystemLogHelper;
 import com.cdeledu.framework.model.LoggerEntity;
+import com.cdeledu.framework.shiro.ShiroHelper;
+import com.cdeledu.modules.system.domain.SysUser;
 import com.google.common.collect.Maps;
 
 import lombok.extern.slf4j.Slf4j;
@@ -103,5 +106,61 @@ public class LoginService {
 		resultMap.put("msg", resultMsg);
 
 		return JSON.toJSONString(resultMap);
+	}
+
+	/**
+	 * @方法描述:初始化权限
+	 * @return
+	 */
+	public Map<String, String> loadFilterChainDefinitions() {
+		return null;
+	}
+
+	/**
+	 * @方法描述:重新加载权限
+	 * @return
+	 */
+	public void updatePermission() {
+
+	}
+
+	/**
+	 * @方法描述:通过角色id获取权限列表
+	 * @return
+	 */
+	public List<String> getPermissionsByRoleId(Integer roleId) {
+		return null;
+	}
+
+	/**
+	 * @方法描述:根据角色id获取角色名称
+	 * @return
+	 */
+	public String getRoleNameByRoleId(Integer roleId) {
+		return null;
+	}
+
+	/**
+	 * @方法描述:检查指定角色
+	 * @return
+	 */
+	public boolean check(Object[] permissions) {
+		SysUser user = ShiroHelper.getCurrenLoginUser();
+		if (user == null) {
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * @方法描述:检查全体角色
+	 * @return
+	 */
+	public boolean checkAll() {
+		SysUser user = ShiroHelper.getCurrenLoginUser();
+		if (user == null) {
+			return false;
+		}
+		return false;
 	}
 }
