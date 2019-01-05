@@ -4,10 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cdeledu.common.RestResult;
@@ -31,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @版本: V1.0.3
  * @since: JDK 1.8
  */
-@RestController
+@Controller
 @Api(tags = "登录验证")
 @RequestMapping("login")
 public class LoginController {
@@ -39,6 +40,12 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
+	@GetMapping("")
+	public String login() {
+		return "index";
+	}
+
+	@ResponseBody
 	@ApiOperation(value = "登录")
 	@RequestMapping(value = "ajaxLogin", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiImplicitParams({ @ApiImplicitParam(name = "userName", value = "登录账号", dataType = "String"),
@@ -69,6 +76,7 @@ public class LoginController {
 		}
 	}
 
+	@ResponseBody
 	@ApiOperation(value = "登录验证")
 	@GetMapping(value = "checkuser")
 	public RestResult checkuser() {
@@ -79,6 +87,7 @@ public class LoginController {
 		return RestResult.success();
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "notLogin", method = RequestMethod.GET)
 	public RestResult notLogin() {
 		return RestResult.error("您尚未登陆！");
@@ -89,6 +98,7 @@ public class LoginController {
 		return RestResult.error("您没有权限！");
 	}
 
+	@ResponseBody
 	@ApiOperation(value = "退出")
 	@GetMapping(value = "doLogout")
 	public RestResult doLogout() {
