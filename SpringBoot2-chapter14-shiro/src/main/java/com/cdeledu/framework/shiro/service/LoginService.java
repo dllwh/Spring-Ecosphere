@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.cdeledu.common.constant.SysLogConstant;
 import com.cdeledu.common.util.SystemLogHelper;
 import com.cdeledu.framework.model.LoggerEntity;
 import com.google.common.collect.Maps;
@@ -94,9 +95,9 @@ public class LoginService {
 
 		// 存储登录日志
 		if (suc) {
-			SystemLogHelper.loginLog(userName, 1, logMsg);
+			SystemLogHelper.loginLog(userName, SysLogConstant.login.LOGIN_SUCCESS, logMsg);
 		} else {
-			SystemLogHelper.loginLog(userName, 0, logMsg);
+			SystemLogHelper.loginLog(userName, SysLogConstant.login.LOGIN_FAIL, logMsg);
 		}
 		resultMap.put("result", suc);
 		resultMap.put("msg", resultMsg);
