@@ -1,5 +1,8 @@
 package com.cdeledu.modules.system.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @类描述:登录控制器
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月9日 下午7:23:43
- * @版本: V1.0.3
+ * @版本: V1.0.4
  * @since: JDK 1.8
  */
 @Controller
@@ -40,7 +44,7 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-	@GetMapping("")
+	@GetMapping({ "", "/" })
 	public String login() {
 		return "index";
 	}
@@ -50,8 +54,12 @@ public class LoginController {
 	@RequestMapping(value = "ajaxLogin", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiImplicitParams({ @ApiImplicitParam(name = "userName", value = "登录账号", dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "登录密码", dataType = "String"),
+			@ApiImplicitParam(name = "code", value = "验证码", dataType = "String"),
 			@ApiImplicitParam(name = "rememberMe", value = "是否记住我", dataType = "boolean") })
-	public RestResult ajaxLogin(String userName, String password, Boolean rememberMe) throws Exception {
+	public RestResult ajaxLogin(HttpServletRequest request,
+			@RequestParam(name = "userName", required = true) String userName,
+			@RequestParam(name = "password", required = true) String password,
+			@RequestParam(name = "code") String code, Boolean rememberMe) throws Exception {
 
 		if (StringUtils.isBlank(userName)) { // 用户名为空 错误
 			throw new HttpMessageNotReadableException("用户名不能为空");
@@ -60,6 +68,22 @@ public class LoginController {
 		if (StringUtils.isBlank(password)) { // 密码为空 错误
 			throw new HttpMessageNotReadableException("密码不能为空");
 		}
+
+		boolean codeFlag = false;
+		Cookie[] cookie = request.getCookies();
+		for (Cookie cook : cookie) {
+			if (cook.getName().equalsIgnoreCase("AdminCode")) {
+				if (cook.getValue().equalsIgnoreCase(code)) {
+					codeFlag = true;
+					break;
+				}
+			}
+		}
+
+		if (!codeFlag) {
+			return RestResult.error(222, "验证码错误");
+		}
+
 		String msg = "用户名或密码错误,请重新登录!";
 		try {
 			JSONObject loginRespnse = JSONObject.parseObject(loginService.login(userName, password));
