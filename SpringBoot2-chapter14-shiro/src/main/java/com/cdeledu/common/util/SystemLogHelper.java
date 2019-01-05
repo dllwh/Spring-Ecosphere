@@ -47,7 +47,7 @@ public final class SystemLogHelper {
 	 *            错误消息
 	 * @param args
 	 */
-	public static void loginLog(String userNmae, Integer state, String msg) {
+	public static void loginLog(String userName, String logType, String msg) {
 		// HttpServletRequest request = WebHelper.getRequest();
 		UserAgent userAgent = UserAgent.parseUserAgentString(WebHelper.getRequest().getHeader("User-Agent"));
 		// 获取客户端操作系统
@@ -56,8 +56,8 @@ public final class SystemLogHelper {
 		String browser = userAgent.getBrowser().getName();
 		// requestLog.setSessionId(request.getRequestedSessionId());
 		SysLoginLog loginInfor = new SysLoginLog();
-		loginInfor.setLoginName(userNmae);
-		loginInfor.setLoginStatus(state);
+		loginInfor.setLoginName(userName);
+		loginInfor.setLogType(logType);
 		loginInfor.setClientIp(WebHelper.getCliectIp(WebHelper.getRequest()));
 		loginInfor.setOs(os);
 		loginInfor.setBrowser(browser);

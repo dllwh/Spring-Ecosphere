@@ -31,8 +31,8 @@ public interface SysLogConstant {
 	}
 
 	static interface login {
-		public static final String	LOGIN_SUCCESS	= "Success";	// 登录成功
+		public static final String	LOGIN_SUCCESS	= "loginSuccess";	// 登录成功
 		public static final String	LOGOUT			= "Logout";		// 注销
-		public static final String	LOGIN_FAIL		= "Error";		// 登录失败
+		public static final String	LOGIN_FAIL		= "loginError";		// 登录失败
 	}
 }
