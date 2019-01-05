@@ -67,20 +67,15 @@
 	</div>
 	<div class="OverWindows"></div>
 
-	<link href="../static/layui/css/layui.css" rel="stylesheet" th:href="@{/static/layui/css/layui.css}" type="text/css" />
-	<script type="text/javascript" src="../static/layui/layui.all.js" th:src="@{/static/layui/layui.all.js}"></script>
-	
 	<script type="text/javascript" src="../static/jquery/jquery.min.js" th:src="@{/static/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" src="../static/jquery/jquery-ui.min.js" th:src="@{/static/jquery/jquery-ui.min.js}"></script>
 	<script type="text/javascript" src='../static/js/stopExecutionOnTimeout.js?t=1' th:src="@{/static/js/stopExecutionOnTimeout.js?t=1}"></script>
 	<script type="text/javascript" src="../static/js/Particleground.js" th:src="@{/static/js/Particleground.js}"></script>
-	<script type="text/javascript" src="../static/js/Treatment.js" th:src="@{/static/js/Treatment.js}"></script>
-	<script type="text/javascript" src="../static/jquery/jquery.mockjax.js" th:src="@{/static/jquery/jquery.mockjax.js}"></script>
-
+	<div th:replace="include/layui.html"></div>
 	<script type="text/javascript" th:inline="javascript">
 		$("#curentYear").html(new Date().getFullYear());
-		var canGetCookie = 0;//是否支持存储Cookie 0 不支持 1 支持
-		var ajaxmockjax = 1;//是否启用虚拟Ajax的请求响 0 不启用  1 启用
+		var canGetCookie = 1;//是否支持存储Cookie 0 不支持 1 支持
+		var ajaxmockjax = 0;//是否启用虚拟Ajax的请求响 0 不启用  1 启用
 		var truelogin = "123456"; //默认账号
 		var truepwd = "123456"; //默认密码
 
@@ -165,15 +160,17 @@
 			//非空验证
 			$('input[type="button"]').click(
 					function() {
-						var login = $('input[name="login"]').val();
+						var userName = $('input[name="login"]').val();
 						var pwd = $('input[name="pwd"]').val();
 						var code = $('input[name="code"]').val();
-						if (login == '') {
+						if (userName == '') {
 							ErroAlert('请输入您的账号');
 						} else if (pwd == '') {
 							ErroAlert('请输入密码');
-						} else if (code == '' || code.length != 4) {
+						} else if (code == '' || code.length != 6) {
 							ErroAlert('输入验证码');
+						} else if(code.toUpperCase() != CodeVal.toUpperCase()){
+							ErroAlert('验证码输入错误');
 						} else {
 							//认证中..
 							// fullscreen();
@@ -199,24 +196,27 @@
 
 							//登录
 							var JsonData = {
-								login : login,
-								pwd : pwd,
+								userName : userName,
+								password : pwd,
 								code : code
 							};
 							//此处做为ajax内部判断
-							var url = "";
-							if (JsonData.login == truelogin
+							var url = "/login/ajaxLogin";
+							/* if (JsonData.password == truelogin
 									&& JsonData.pwd == truepwd
 									&& JsonData.code.toUpperCase() == CodeVal
 											.toUpperCase()) {
 								url = "Ajax/Login";
 							} else {
 								url = "Ajax/LoginFalse";
-							}
+							} */
 
 							AjaxPost(url, JsonData, function() {
 								//ajax加载中
 							}, function(data) {
+								console.dir(data);
+								console.info("----------------");
+								console.dir(data.message);
 								//ajax返回 
 								//认证完成
 								setTimeout(function() {
@@ -235,18 +235,23 @@
 									}).addClass('visible');
 									$('.login').removeClass('testtwo'); //平移特效
 								}, 2000);
+								
 								setTimeout(function() {
 									$('.authent').hide();
 									$('.login').removeClass('test');
-									if (data.Status == 'ok') {
+									
+									if (data.statusCode == 200) {
 										//登录成功
 										$('.login div').fadeOut(100);
 										$('.success').fadeIn(1000);
 										$('.success').html(data.Text);
 										//跳转操作
-
+										alert(1);
 									} else {
-										AjaxErro(data);
+										AjaxErro({ 
+											"Status": "Erro", 
+											"Erro": data.message 
+										});
 									}
 								}, 2400);
 							})
@@ -286,7 +291,7 @@
 					"Erro" : "账号名或密码或验证码有误"
 				}
 			});
-		}
+		} 
 	</script>
 </body>
 </html>
