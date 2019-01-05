@@ -32,7 +32,12 @@ public interface ShiroConstants {
 	/** 同步session到数据库的周期（默认1分钟） */
 	public final static int		dbSyncPeriod		= 1;
 	/** 当前在线会话 */
-	public String				ONLINE_SESSION		= "online_session";
+	public final static String	ONLINE_SESSION		= "online_session";
+
+	/** session的失效时长，设置为2个小时 */
+	public final static long	TIMEOUT				= 72000000L;
+	/** 定时清理失效session,设置为半小时 */
+	public final static long	INTERVAL			= 1800000L;
 
 	/** 用户状态 */
 	public static enum OnlineStatus {
