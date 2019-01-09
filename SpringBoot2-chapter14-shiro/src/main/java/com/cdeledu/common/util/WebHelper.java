@@ -168,7 +168,7 @@ public final class WebHelper {
 		}
 
 		String xRequestedWith = request.getHeader("X-Requested-With");
-		if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
+		if (xRequestedWith != null && xRequestedWith.toLowerCase().indexOf("xmlhttprequest") != -1) {
 			return true;
 		}
 
