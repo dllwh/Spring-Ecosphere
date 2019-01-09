@@ -47,8 +47,8 @@ public class SysMenu  extends BaseEntity{
 	private String		iconClass;
 	/** tree属性 */
 	private Boolean		open;
+	/** 子菜单 */
 	private List<?>		childrenList;
-	
 	/** 权限字符串,menu例子：role:*，button例子：role:create */
 	private String		permission;
 }

@@ -16,6 +16,8 @@ import lombok.Data;
  */
 @Data
 public class SysRoleMenu {
+	/** 角色ID */
 	private Integer	roleId;
+	/** 菜单ID */
 	private Integer	menuId;
 }
