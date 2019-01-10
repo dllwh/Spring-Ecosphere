@@ -20,8 +20,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cdeledu.modules.system.domain.SysUser;
-import com.cdeledu.modules.system.service.UserService;
+import com.cdeledu.modules.system.upms.domain.SysUser;
+import com.cdeledu.modules.system.upms.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 

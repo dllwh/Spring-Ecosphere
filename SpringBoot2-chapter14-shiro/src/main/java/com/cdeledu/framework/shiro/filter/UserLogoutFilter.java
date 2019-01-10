@@ -10,7 +10,7 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import com.cdeledu.common.constant.SysLogConstant;
 import com.cdeledu.common.util.SystemLogHelper;
 import com.cdeledu.framework.shiro.ShiroHelper;
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 
 import lombok.extern.slf4j.Slf4j;
 

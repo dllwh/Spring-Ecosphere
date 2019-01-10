@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdeledu.modules.system.upms.mapper.MenuMapper">
+
+	<insert id="insertMenu" parameterType="com.cdeledu.modules.system.upms.domain.SysMenu"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="menuName != null and menuName !='' "> menuName, </if>
+			<if test="menuUrl != null and menuUrl !='' "> menuUrl, </if>
+			<if test="type != null"> `type`, </if>
+			<if test="parentCode != null"> parentCode, </if>
+			<if test="ifVisible != null"> ifVisible, </if>
+			<if test="ifEnabled != null"> igEnabled, </if>
+			<if test="iconClass != null and iconClass !='' "> iconClass, </if>
+			<if test="sequence != null"> `sequence`, </if>
+			<if test="creator != null"> creator, </if>
+			<if test="modifier != null"> modifier, </if>
+			<if test="remark != null and remark !='' "> remark, </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="menuName != null and menuName !='' "> #{menuName},  </if>
+			<if test="menuUrl != null and menuUrl !='' "> #{menuUrl}, </if>
+			<if test="type != null"> #{type}, </if>
+			<if test="parentCode != null"> #{parentCode},  </if>
+			<if test="ifVisible != null"> #{ifVisible}, </if>
+			<if test="ifEnabled != null"> #{ifEnabled}, </if>
+			<if test="iconClass != null and iconClass !='' "> #{iconClass}, </if>
+			<if test="sequence != null"> #{sequence}, </if>
+			<if test="creator != null"> #{creator},</if>
+			<if test="modifier != null"> #{modifier}, </if>
+			<if test="remark != null and remark !='' "> #{remark}, </if>
+		</trim>
+	</insert>
+	
+	<update id="updateMenu" parameterType="com.cdeledu.modules.system.upms.domain.SysMenu">
+		update sys_menu
+		<set>
+			<if test="menuName != null and menuName != '' "> menuName = #{menuName},</if>
+			<if test="menuUrl != null and menuUrl != '' "> menuUrl = #{menuUrl}, </if>
+			<if test="type != null"> `type` = #{type}, </if>
+			<if test="parentCode != null"> parentCode = #{parentCode}, </if>
+			<if test="ifVisible != null"> ifVisible = #{ifVisible},</if>
+			<if test="ifEnabled != null"> ifEnabled = #{ifEnabled}, </if>
+			<if test="iconClass != null and iconClass != '' ">iconClass = #{iconClass},</if>
+			<if test="sequence != null"> `sequence` = #{sequence},</if>
+			<if test="modifier != null">modifier = #{modifier},</if>
+			<if test="remark != null and remark != '' ">remark = #{remark},</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

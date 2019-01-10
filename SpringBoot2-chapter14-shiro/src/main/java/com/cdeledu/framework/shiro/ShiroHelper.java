@@ -8,7 +8,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～

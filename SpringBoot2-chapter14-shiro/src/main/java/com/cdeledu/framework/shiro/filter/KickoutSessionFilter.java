@@ -18,7 +18,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.cdeledu.common.RestResult;
 import com.cdeledu.common.util.WebHelper;
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～

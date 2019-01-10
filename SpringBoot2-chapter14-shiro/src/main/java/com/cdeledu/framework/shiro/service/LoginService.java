@@ -22,7 +22,7 @@ import com.cdeledu.common.constant.SysLogConstant;
 import com.cdeledu.common.util.SystemLogHelper;
 import com.cdeledu.framework.model.LoggerEntity;
 import com.cdeledu.framework.shiro.ShiroHelper;
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 import com.google.common.collect.Maps;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.cdeledu.framework.controller;
 
 import com.cdeledu.framework.shiro.ShiroHelper;
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～

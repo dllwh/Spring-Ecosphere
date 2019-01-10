@@ -10,7 +10,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import com.cdeledu.common.RestResult;
 import com.cdeledu.common.util.WebHelper;
 import com.cdeledu.framework.shiro.ShiroHelper;
-import com.cdeledu.modules.system.domain.SysUser;
+import com.cdeledu.modules.system.upms.domain.SysUser;
 
 import lombok.extern.slf4j.Slf4j;
 
