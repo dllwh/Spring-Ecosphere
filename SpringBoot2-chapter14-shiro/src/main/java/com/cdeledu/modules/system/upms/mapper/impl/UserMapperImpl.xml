@@ -23,7 +23,7 @@
 	</sql>
 
 	<select id="getUserList" parameterType="com.cdeledu.modules.system.upms.domain.SysUser"
-		resultType="com.cdeledu.modules.system.domain.SysUser">
+		resultType="com.cdeledu.modules.system.upms.domain.SysUser">
 		SELECT * FROM sys_upms_user
 		<include refid="getUserList_body" />
 	</select>

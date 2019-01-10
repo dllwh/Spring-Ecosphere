@@ -57,12 +57,34 @@ public class SwaggerConfig {
 	}
 	
 	@Bean
-	public Docket systemApi() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("系统相关接口文档") // 设置栏目名
+	public Docket dbmsApi() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("数据库管理接口文档") // 设置栏目名
 				.apiInfo(apiInfo())// 构建 api文档的详细信息函数
 				.pathMapping("/")// 设置api根路径
 				.select() // 初始化并返回一个API选择构造器
-				.apis(RequestHandlerSelectors.basePackage("com.cdeledu.modules.system"))// 指定扫描的包路径
+				.apis(RequestHandlerSelectors.basePackage("com.cdeledu.modules.system.dbms"))// 指定扫描的包路径
+				.paths(PathSelectors.any()) // 指定路径处理PathSelectors.any()代表所有的路径
+				.build(); // 创建
+	}
+	
+	@Bean
+	public Docket upmsApi() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("权限管理接口文档") // 设置栏目名
+				.apiInfo(apiInfo())// 构建 api文档的详细信息函数
+				.pathMapping("/")// 设置api根路径
+				.select() // 初始化并返回一个API选择构造器
+				.apis(RequestHandlerSelectors.basePackage("com.cdeledu.modules.system.upms"))// 指定扫描的包路径
+				.paths(PathSelectors.any()) // 指定路径处理PathSelectors.any()代表所有的路径
+				.build(); // 创建
+	}
+	
+	@Bean
+	public Docket sysConfigApi() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("系统配置接口文档") // 设置栏目名
+				.apiInfo(apiInfo())// 构建 api文档的详细信息函数
+				.pathMapping("/")// 设置api根路径
+				.select() // 初始化并返回一个API选择构造器
+				.apis(RequestHandlerSelectors.basePackage("com.cdeledu.modules.system.sysconfig"))// 指定扫描的包路径
 				.paths(PathSelectors.any()) // 指定路径处理PathSelectors.any()代表所有的路径
 				.build(); // 创建
 	}

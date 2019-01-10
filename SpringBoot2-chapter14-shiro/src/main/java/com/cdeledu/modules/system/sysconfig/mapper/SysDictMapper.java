@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.cdeledu.modules.system.upms.domain.SysDict;
+import com.cdeledu.modules.system.sysconfig.domain.SysDict;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdeledu.modules.system.upms.mapper.RoleMapper">
 	<select id="getRoleList" parameterType="com.cdeledu.modules.system.upms.domain.SysRole"
-		resultType="com.cdeledu.modules.system.domain.SysRole">
+		resultType="com.cdeledu.modules.system.upms.domain.SysRole">
 		SELECT * from sys_upms_role
 		<trim prefix="where" prefixOverrides="and">
 			<if test="roleName != null and roleName != '' ">  

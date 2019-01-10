@@ -1,4 +1,4 @@
-package com.cdeledu.modules.system.upms.domain;
+package com.cdeledu.modules.system.sysconfig.domain;
 
 import com.cdeledu.common.BaseEntity;
 
