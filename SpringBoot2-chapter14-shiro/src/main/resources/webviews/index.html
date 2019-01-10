@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta th:replace="include/meta.html">
-<title>SpringBoot2整合Shiro管理系统 -登录界面</title>
+	<meta th:replace="include/meta.html">
+	<title>SpringBoot2整合Shiro管理系统 - 登录界面</title>
+	
+	<link href="../static/login/css/default.css" th:href="@{/static/login/css/default.css}" rel="stylesheet" type="text/css" />
+	<!--必要样式-->
+	<link href="../static/login/css/styles.css" th:href="@{/static/login/css/styles.css}" rel="stylesheet" type="text/css" />
+	<link href="../static/login/css/demo.css" th:href="@{/static/login/css/demo.css}" rel="stylesheet" type="text/css" />
+	<link href="../static/login/css/loaders.css" th:href="@{/static/login/css/loaders.css}" rel="stylesheet" type="text/css" />
 
-<link href="../static/login/css/default.css" th:href="@{/static/login/css/default.css}" rel="stylesheet" type="text/css" />
-<!--必要样式-->
-<link href="../static/login/css/styles.css" th:href="@{/static/login/css/styles.css}" rel="stylesheet" type="text/css" />
-<link href="../static/login/css/demo.css" th:href="@{/static/login/css/demo.css}" rel="stylesheet" type="text/css" />
-<link href="../static/login/css/loaders.css" th:href="@{/static/login/css/loaders.css}" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../static/jquery/jquery.min.js" th:src="@{/static/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" src="../static/jquery/jquery-ui.min.js" th:src="@{/static/jquery/jquery-ui.min.js}"></script>
+	
+	<script type="text/javascript">
+		// 判断如果当前页面不为主框架，则将主框架进行跳转
+		if (self != top) {
+			
+		} else {
+			
+		}
+	</script>
 </head>
 <body>
 	<div class='login'>
@@ -67,8 +79,6 @@
 	</div>
 	<div class="OverWindows"></div>
 
-	<script type="text/javascript" src="../static/jquery/jquery.min.js" th:src="@{/static/jquery/jquery.min.js}"></script>
-	<script type="text/javascript" src="../static/jquery/jquery-ui.min.js" th:src="@{/static/jquery/jquery-ui.min.js}"></script>
 	<script type="text/javascript" src='../static/js/stopExecutionOnTimeout.js?t=1' th:src="@{/static/js/stopExecutionOnTimeout.js?t=1}"></script>
 	<script type="text/javascript" src="../static/js/Particleground.js" th:src="@{/static/js/Particleground.js}"></script>
 	<div th:replace="include/layui.html"></div>
@@ -167,7 +177,7 @@
 							ErroAlert('请输入您的账号');
 						} else if (pwd == '') {
 							ErroAlert('请输入密码');
-						} else if (code == '' || code.length != 6) {
+						} else if (code == '' || code.length != 4) {
 							ErroAlert('输入验证码');
 						} else if(code.toUpperCase() != CodeVal.toUpperCase()){
 							ErroAlert('验证码输入错误');
@@ -201,22 +211,19 @@
 								code : code
 							};
 							//此处做为ajax内部判断
-							var url = "/login/ajaxLogin";
-							/* if (JsonData.password == truelogin
-									&& JsonData.pwd == truepwd
-									&& JsonData.code.toUpperCase() == CodeVal
-											.toUpperCase()) {
-								url = "Ajax/Login";
+							if (ajaxmockjax == 0) {
+								var url = "/login/ajaxLogin";
 							} else {
-								url = "Ajax/LoginFalse";
-							} */
+								if (JsonData.userName == truelogin && JsonData.password == truepwd && JsonData.code.toUpperCase() == CodeVal.toUpperCase()) {
+									url = "Ajax/Login";
+								} else {
+									url = "Ajax/LoginFalse";
+								} 
+							}
 
 							AjaxPost(url, JsonData, function() {
 								//ajax加载中
 							}, function(data) {
-								console.dir(data);
-								console.info("----------------");
-								console.dir(data.message);
 								//ajax返回 
 								//认证完成
 								setTimeout(function() {
@@ -244,9 +251,9 @@
 										//登录成功
 										$('.login div').fadeOut(100);
 										$('.success').fadeIn(1000);
-										$('.success').html(data.Text);
+										$('.success').html(data.message+"<br /><br />欢迎回来");
 										//跳转操作
-										alert(1);
+									
 									} else {
 										AjaxErro({ 
 											"Status": "Erro", 
@@ -278,8 +285,8 @@
 				status : 200,
 				responseTime : 50,
 				responseText : {
-					"Status" : "ok",
-					"Text" : "登录成功<br /><br />欢迎回来"
+					"statusCode" : "200",
+					"message" : "登录成功<br /><br />欢迎回来"
 				}
 			});
 			$.mockjax({
@@ -287,8 +294,8 @@
 				status : 200,
 				responseTime : 50,
 				responseText : {
-					"Status" : "Erro",
-					"Erro" : "账号名或密码或验证码有误"
+					"statusCode" : "500",
+					"message" : "账号名或密码或验证码有误"
 				}
 			});
 		} 
