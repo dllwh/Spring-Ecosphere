@@ -171,4 +171,12 @@ public class UserServiceImpl implements UserService {
 	public int deleteUserRoleByUserId(Integer userId) {
 		return userRoleMapper.deleteUserRoleByUserId(userId);
 	}
+
+	/**
+	 * 根据用户获取角色列表
+	 */
+	@Override
+	public List<SysUserRole> getRoleByUser(Integer userId) {
+		return userRoleMapper.getRolesByUserId(userId);
+	}
 }
