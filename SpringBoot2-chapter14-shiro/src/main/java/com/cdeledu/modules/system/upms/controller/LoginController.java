@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cdeledu.common.RestResult;
+import com.cdeledu.common.constant.ShiroConstants;
 import com.cdeledu.framework.controller.BaseController;
 import com.cdeledu.framework.shiro.ShiroHelper;
 import com.cdeledu.framework.shiro.service.LoginService;
@@ -51,7 +52,7 @@ public class LoginController extends BaseController {
 		if(sysUser == null){
 			return "index";
 		} else {
-			return "main/home";
+			return ShiroConstants.SUCCESS_URL;
 		}
 	}
 
