@@ -75,6 +75,17 @@ dllwh.isExitsFunction = function (funcName){
 	return false;
 }
 
+/**
+ * 判断是否登录，没登录刷新当前页，促使Shiro拦截后跳转登录页
+ * @param result	ajax请求返回的值
+ * @returns {如果没登录、登录失效，刷新当前页}
+ */
+dllwh.isLogin = function(result) {
+	if (result && result.code && (result.code == '201' || result.code == '201')) {
+		window.location.reload(true);// 刷新当前页
+	}
+	return true;// 返回true
+}
 
 /** 是否存在指定变量 */
 dllwh.isExitsVariable = function (variableName){
