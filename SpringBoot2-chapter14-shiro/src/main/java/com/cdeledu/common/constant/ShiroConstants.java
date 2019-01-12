@@ -40,7 +40,8 @@ public interface ShiroConstants {
 	public final static long	TIMEOUT				= 72000000L;
 	/** 定时清理失效session,设置为半小时 */
 	public final static long	INTERVAL			= 1800000L;
-
+	/** 登录用户密码输入错误次数 */
+	public final static Integer	ERRORCOUNT			= 5;
 	/** 用户状态 */
 	public static enum OnlineStatus {
 
