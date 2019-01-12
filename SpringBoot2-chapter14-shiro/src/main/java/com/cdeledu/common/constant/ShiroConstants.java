@@ -25,6 +25,8 @@ public interface ShiroConstants {
 	public final static String	LOGIN_ACTION		= "/login/ajaxLogin";
 	/** 登录验证 */
 	public final static String	LOGIN_CHECK			= "/login/checkuser";
+	/** 登录成功后要跳转的链接 */
+	public final static String	SUCCESS_URL			= "main/hom";
 	/** 踢出登录提示 */
 	public final static String	KICKED_OUT			= "/login/kickout";
 	/** 权限认证失败地址 */
