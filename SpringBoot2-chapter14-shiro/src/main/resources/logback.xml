@@ -24,7 +24,9 @@
 			</pattern>
 			<charset>UTF-8</charset>
 		</encoder>
+		<!-- 按照日志级别进行过滤 -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 只收集INFO级别的日志，其他高级别和低级别的日志都放弃 -->
 			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>	
 			<onMismatch>DENY</onMismatch>
@@ -41,10 +43,10 @@
 			<pattern>${log.pattern}</pattern>
 			<charset>UTF-8</charset>
 		</encoder>
+		<!-- 按照日志级别进行过滤 -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 只收集ERROR级别的日志，其他高级别和低级别的日志都放弃 -->
 			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>	
-			<onMismatch>DENY</onMismatch>
 		</filter>
 	</appender>
 
@@ -61,6 +63,7 @@
 		</encoder>
 	</appender>
 	
+	<!-- root是根日志打印器，只有一个，负责整个系统的日志输出  -->
 	<logger name="root" level="debug" />
 	
 	<!--系统操作日志-->
