@@ -8,6 +8,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
+import com.cdeledu.common.constant.StatusMessage;
 import com.cdeledu.modules.system.upms.domain.SysUser;
 
 /**
@@ -23,6 +24,9 @@ import com.cdeledu.modules.system.upms.domain.SysUser;
  */
 public class ShiroHelper {
 
+	public static void main(String[] args) {
+		System.out.println(StatusMessage.SystemStatus.getMessage(200));
+	}
 	/**
 	 * @方法描述:获取认证授权组件Subject,其为我们提供了当前用户、角色和授权的相关信息
 	 * @return

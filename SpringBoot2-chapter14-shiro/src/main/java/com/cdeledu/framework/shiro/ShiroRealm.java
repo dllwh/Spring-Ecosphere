@@ -55,16 +55,18 @@ public class ShiroRealm extends AuthorizingRealm {
 		log.info("---------------- 执行 Shiro 权限获取 ---------------------");
 
 		// 获取登录用户名
-		// String userName = (String) principals.getPrimaryPrincipal();
+		SysUser sysUser = ShiroHelper.getCurrenLoginUser();
 		// SysUser token = ShiroHelper.getCurrenLoginUser();
 		// SysUser sysUser = userService.getUserByLoginName(userName);
 		// 添加角色和权限
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-
-		// 添加角色
-		// info .addRole();
-		// 添加权限
-		// info .addStringPermission("");
+		// 超级管理员，添加所有角色、添加所有权限
+		if(sysUser.getId() == 1){
+			authorizationInfo.addRole("*");
+			authorizationInfo.addStringPermission("*");
+		} else {
+			// userService.get
+		}
 		log.info("---- 获取到以下权限 ----");
 		log.info(authorizationInfo.getStringPermissions().toString());
 		log.info("---------------- Shiro 权限获取成功 ----------------------");
@@ -134,7 +136,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		// 清除授权信息
 		// clearCachedAuthorizationInfo();
 		// 这里验证authenticationToken和simpleAuthenticationInfo的信息
-		authcInfo = new SimpleAuthenticationInfo(userName, passWord, getName());
+		authcInfo = new SimpleAuthenticationInfo(sysUser, passWord, getName());
 		return authcInfo;
 	}
 
