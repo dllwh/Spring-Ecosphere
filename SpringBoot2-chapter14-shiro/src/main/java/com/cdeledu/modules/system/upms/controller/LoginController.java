@@ -66,7 +66,8 @@ public class LoginController extends BaseController {
 	public RestResult ajaxLogin(HttpServletRequest request,
 			@RequestParam(name = "userName", required = true) String userName,
 			@RequestParam(name = "password", required = true) String password,
-			@RequestParam(name = "code") String code, Boolean rememberMe) throws Exception {
+			@RequestParam(name = "code") String code, 
+			@RequestParam(value="rememberMe",required = false) boolean rememberMe) throws Exception {
 
 		if (StringUtils.isBlank(userName)) { // 用户名为空 错误
 			throw new HttpMessageNotReadableException("用户名不能为空");
