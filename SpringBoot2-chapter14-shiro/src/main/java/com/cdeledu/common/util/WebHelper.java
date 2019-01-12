@@ -185,15 +185,21 @@ public final class WebHelper {
 		return false;
 	}
 
-	public static void out(ServletResponse hresponse, RestResult restResult) {
+	public static void out(ServletResponse response, RestResult restResult) {
+		PrintWriter out = null;
 		try {
-			hresponse.setCharacterEncoding("UTF-8");
-			PrintWriter out = hresponse.getWriter();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");// 设置返回类型
+			out = response.getWriter();
 			out.println(JSON.toJSONString(restResult));
-			out.flush();
-			out.close();
+			log.error("【-->ShiroFilterUtils.out】响应json信息成功");
 		} catch (Exception e) {
-			log.error(null, e);
+			log.error("【-->ShiroFilterUtils.out】响应json信息出错", e);
+		} finally {
+			if (null != out) {
+				out.flush();
+				out.close();
+			}
 		}
 	}
 
