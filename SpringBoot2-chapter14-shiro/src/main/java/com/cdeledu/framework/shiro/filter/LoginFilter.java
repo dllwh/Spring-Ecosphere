@@ -45,8 +45,8 @@ public class LoginFilter extends AccessControlFilter {
 		if (log.isDebugEnabled()) {
 			log.debug("当前用户没有登录");
 		}
-		
-		log.debug("----------{}----------",((HttpServletRequest)request).getRequestURI());
+
+		log.debug("----------{}----------", ((HttpServletRequest) request).getRequestURI());
 		SysUser token = ShiroHelper.getCurrenLoginUser();
 		if (token != null || isLoginRequest(request, response)) {
 			return Boolean.TRUE;
@@ -54,9 +54,9 @@ public class LoginFilter extends AccessControlFilter {
 
 		if (WebHelper.isAjaxRequest((HttpServletRequest) request)) {
 			log.debug("当前用户没有登录，并且是Ajax请求！");
-			HttpServletResponse httpresponse = (HttpServletResponse) response; 
-			httpresponse.setHeader("sessionstatus", "timeout"); 
-			WebHelper.out(response, RestResult.error(201, "当前用户没有登录，需要重新登录"));
+			HttpServletResponse httpresponse = (HttpServletResponse) response;
+			httpresponse.setHeader("sessionstatus", "timeout");
+			WebHelper.out((HttpServletResponse) response, RestResult.error(201, "当前用户没有登录，需要重新登录"));
 			return Boolean.FALSE;
 		}
 		return Boolean.FALSE;

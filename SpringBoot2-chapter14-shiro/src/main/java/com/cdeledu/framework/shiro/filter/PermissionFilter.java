@@ -54,7 +54,7 @@ public class PermissionFilter extends PermissionsAuthorizationFilter {
 			if (log.isDebugEnabled()) {
 				log.debug("当前用户没有操作权限，并且是Ajax请求！");
 			}
-			WebHelper.out(response,RestResult.error(201, "您未被授权使用该功能，请联系管理员进行处理。"));
+			WebHelper.out((HttpServletResponse) response,RestResult.error(201, "您未被授权使用该功能，请联系管理员进行处理。"));
 			return Boolean.FALSE;
 		}
 		return Boolean.FALSE;
