@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.cdeledu.MongoSpringBootApplication;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MongoSpringBootApplication.class)
 public class MongoDBApplicationTest {
