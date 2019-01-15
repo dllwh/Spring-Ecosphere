@@ -5,3 +5,4 @@ spring:
   profiles:
     active:
       - redis # 数据库配置
+      - datasource # 数据库配置
