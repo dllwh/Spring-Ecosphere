@@ -9,9 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.dllwh.entity.Pictures;
 import org.dllwh.entity.RedisInfoDetail;
-import org.dllwh.service.PicturesService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Client;
@@ -31,17 +29,15 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = RedisSpringBootApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class RedisApplicationTests {
 	@Autowired
-	RedisTemplate<String, Object>	redisTemplate;
+	RedisTemplate		redisTemplate;
 	@Autowired
-	StringRedisTemplate				stringRedisTemplate;
+	StringRedisTemplate	stringRedisTemplate;
 	@Autowired
-	JedisPool						jedisPool;
-	@Autowired
-	PicturesService					picturesService;
+	JedisPool			jedisPool;
 
 	@Test
 	public void ValueOperationsTest() {
@@ -69,12 +65,10 @@ public class RedisApplicationTests {
 		redisTemplate.opsForList().leftPush("list", "c++");
 	}
 
-	@Test
 	public void SetOperationsTest() {
 
 	}
 
-	@Test
 	public void ZSetOperationsTest() {
 
 	}
@@ -97,9 +91,8 @@ public class RedisApplicationTests {
 	}
 
 	/**
-	 * @方法描述:简单计数
+	 * @方法描述:按时间计数
 	 */
-	// 按时间计数
 	@Test
 	public void test2() {
 		String key = "test2_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -118,7 +111,6 @@ public class RedisApplicationTests {
 	/**
 	 * @方法描述:模糊K值查询
 	 */
-	@Test
 	public void test3() {
 		try {
 			ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
@@ -134,7 +126,6 @@ public class RedisApplicationTests {
 	/**
 	 * @方法描述:设置key值的有效时间
 	 */
-	@Test
 	public void test4() {
 		try {
 			ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
@@ -163,10 +154,13 @@ public class RedisApplicationTests {
 	 */
 	@Test
 	public void test5() {
-		Pictures beautifulPictures = picturesService.selectById(1);
-		HashOperations<String, Object, Pictures> hash = redisTemplate.opsForHash();
-		hash.put("test5", beautifulPictures.getId(), beautifulPictures);
-		System.out.println(hash.get("test5", beautifulPictures.getId()));
+		Map<String, Object> userMap = new HashMap<>();
+		userMap.put("userName", "dllwh");
+		userMap.put("age", "30");
+		userMap.put("birthday ", "0605");
+		HashOperations<String, Object, Map> hash = redisTemplate.opsForHash();
+		hash.put("test5", "159357", userMap);
+		System.out.println(hash.get("test5", "159357"));
 	}
 
 	/**

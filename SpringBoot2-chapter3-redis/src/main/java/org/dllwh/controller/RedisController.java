@@ -1,5 +1,9 @@
 package org.dllwh.controller;
 
+import java.util.List;
+
+import org.dllwh.entity.Operate;
+import org.dllwh.entity.RedisInfoDetail;
 import org.dllwh.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +38,16 @@ public class RedisController {
 	@ApiOperation(value = "跳转到监控页面")
 	@RequestMapping(value = "redisMonitor")
 	public String redisMonitor(Model model) {
+		// 获取redis的info
+		List<RedisInfoDetail> ridList = redisService.getRedisInfo();
+		// 获取redis的日志记录
+		List<Operate> logList = redisService.getLogs(1000);
+		// 获取日志总数
+		long logLen = redisService.getLogLen();
+		model.addAttribute("infoList", ridList);
+		model.addAttribute("logList", logList);
+		model.addAttribute("logLen", logLen);
+
 		return "redisMonitor";
 	}
 

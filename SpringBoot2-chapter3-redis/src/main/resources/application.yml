@@ -1,6 +1,10 @@
 server:
   port: 8203
-  ### profile环境配置 
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+### profile环境配置 
 spring: 
   profiles:
     active:
@@ -11,7 +15,7 @@ spring:
       enabled: true #热部署生效
       additional-paths:
         - src/main/java
-      exclude: templates/** # #classpath目录下的webviews文件夹内容修改不重启
+      exclude: templates/** ## classpath目录下的webviews文件夹内容修改不重启
   thymeleaf:
     cache: false
     check-template: true

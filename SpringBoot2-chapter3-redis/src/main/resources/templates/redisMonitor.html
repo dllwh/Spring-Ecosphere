@@ -4,8 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Redis监控</title>
+<link href="/static/css/content-base.css" th:href="@{/static/css/content-base.css}"/>
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.cs}">
 </head>
-<body>
-
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Redis 内存实时占用情况：</h5>
+					</div>
+					<div class="ibox-content">
+						<div id="container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Redis key的实时数量：</h5>
+					</div>
+					<div class="ibox-content">
+						<div id="keysChart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Redis INFO：</h5>
+					</div>
+					<div class="ibox-content">
+						<table class="table table-condensed table-hover" style="word-break: break-all; word-wrap: break-all;">
+							<tbody>
+								<tr th:each="info : ${infoList}">
+									<td th:text="${info.key}" th:title="${info.desctiption }"></td>
+									<td th:text="${info.desctiption}"></td>
+									<td th:text="${info.value}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-7">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Redis实时日志(共[[${logLen}]]条)：</h5>
+						<div class="ibox-tools">
+							<button type="button" onclick="empty();"
+								class="btn btn-warning btn-xs">清空日志</button>
+						</div>
+					</div>
+					<div class="ibox-content">
+						<table class="table table-condensed table-hover">
+							<tbody>
+								<tr th:each="log :${logList}">
+									<td th:text="${log.id}"></td>
+									<td th:text="${log.executeTime}"></td>
+									<td th:text="${log.usedTime}"></td>
+									<td>
+										<p th:text="${log.args }" th:style="width: 600px; word-wrap: break-word; word-break: normal;"></p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+
+<script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+<script src="../static/js/redischarts/highcharts.js" th:src="@{/static/js/redischarts/highcharts.js}"></script>
+<script src="../static/js/redischarts/index.js" th:src="@{/static/js/redischarts/index.js}"></script>
 </html>
