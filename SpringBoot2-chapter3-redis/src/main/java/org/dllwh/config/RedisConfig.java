@@ -7,7 +7,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 @Slf4j
 public class RedisConfig {
+
 	@Value("${spring.redis.host}")
 	private String	host;
 
@@ -45,23 +50,41 @@ public class RedisConfig {
 
 	/**
 	 * 
-	 * @方法描述 : 为避免出现乱码
-	 * @param factory
-	 * @return
+	 * @方法描述 : 配置自定义redisTemplate
 	 */
 	@Bean
-	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-		StringRedisTemplate template = new StringRedisTemplate(factory);
-		// 定义value的序列化方式
-		Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
-		ObjectMapper om = new ObjectMapper();
-		om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-		serializer.setObjectMapper(om);
-		// 设置序列化Key的实例化对象
+	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+		template.setConnectionFactory(factory);
+
+		// 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
+		Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<Object>(
+				Object.class);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+		mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+		serializer.setObjectMapper(mapper);
+
+		// 设置序列化的实例化对象
+		template.setKeySerializer(serializer);
+		template.setHashKeySerializer(serializer);
 		template.setValueSerializer(serializer);
-		// 设置序列化Value的实例化对象
 		template.setHashValueSerializer(serializer);
 		template.afterPropertiesSet();
+		return template;
+	}
+
+	/**
+	 * @方法描述: 配置自定义stringRedisTemplate
+	 */
+	@Bean
+	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
+		StringRedisTemplate template = new StringRedisTemplate(factory);
+		RedisSerializer<String> stringSerializer = new StringRedisSerializer();
+		template.setKeySerializer(stringSerializer);
+		template.setValueSerializer(stringSerializer);
+		template.setHashKeySerializer(stringSerializer);
+		template.setHashValueSerializer(stringSerializer);
 		return template;
 	}
 }
