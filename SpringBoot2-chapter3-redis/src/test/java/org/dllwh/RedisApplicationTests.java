@@ -33,11 +33,11 @@ import redis.clients.jedis.JedisPool;
 @SpringBootTest
 public class RedisApplicationTests {
 	@Autowired
-	RedisTemplate		redisTemplate;
+	RedisTemplate<String, Object>	redisTemplate;
 	@Autowired
-	StringRedisTemplate	stringRedisTemplate;
+	StringRedisTemplate				stringRedisTemplate;
 	@Autowired
-	JedisPool			jedisPool;
+	JedisPool						jedisPool;
 
 	@Test
 	public void ValueOperationsTest() {
@@ -158,7 +158,7 @@ public class RedisApplicationTests {
 		userMap.put("userName", "dllwh");
 		userMap.put("age", "30");
 		userMap.put("birthday ", "0605");
-		HashOperations<String, Object, Map> hash = redisTemplate.opsForHash();
+		HashOperations<String, Object, Map<String, Object>> hash = redisTemplate.opsForHash();
 		hash.put("test5", "159357", userMap);
 		System.out.println(hash.get("test5", "159357"));
 	}
