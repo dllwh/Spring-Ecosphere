@@ -36,4 +36,14 @@ public interface RedisService {
 	 * @方法描述:获取当前redis使用内存大小情况
 	 */
 	public Map<String, Object> getMemeryInfo();
+	
+	/**
+	 * @方法描述:获取当前客户端连接的情况
+	 */
+	public Map<String, Object> getConnectClient();
+
+	/**
+	 * @方法描述:获取当前redisCPU使用大小情况
+	 */
+	public Map<String, Object> getCpuInfo();
 }

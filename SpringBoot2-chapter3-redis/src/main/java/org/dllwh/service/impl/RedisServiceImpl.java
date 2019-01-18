@@ -24,7 +24,7 @@ import redis.clients.util.Slowlog;
  *
  * Today the best performance as tomorrow newest starter!
  *
- * @类描述: TODO(这里用一句话描述这个类的作用)
+ * @类描述: Redis 服务实现类
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月16日 上午12:15:32
  * @版本: V1.0.1
@@ -34,7 +34,7 @@ import redis.clients.util.Slowlog;
 public class RedisServiceImpl implements RedisService {
 
 	@Autowired
-	RedisUtil redisUtil;
+	private RedisUtil redisUtil;
 
 	/**
 	 * 获取redis服务器信息
@@ -137,5 +137,21 @@ public class RedisServiceImpl implements RedisService {
 			}
 		}
 		return map;
+	}
+
+	/**
+	 * 获取当前客户端连接的数量
+	 */
+	@Override
+	public Map<String, Object> getConnectClient() {
+		return null;
+	}
+
+	/**
+	 * 获取当前redisCPU使用大小情况
+	 */
+	@Override
+	public Map<String, Object> getCpuInfo() {
+		return null;
 	}
 }
