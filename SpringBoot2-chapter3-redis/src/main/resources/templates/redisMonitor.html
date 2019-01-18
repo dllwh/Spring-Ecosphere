@@ -1,82 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redis监控</title>
-<link href="/static/css/content-base.css" th:href="@{/static/css/content-base.css}"/>
-<link rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.cs}">
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Redis监控</title>
+	<link rel="stylesheet" href="/static/layui/css/layui.css"
+		th:href="@{/static/layui/css/layui.css}" media="all">
+		
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->   
+	
+	<style type="text/css">
+	 body{margin: 10px;}
+	</style>
 </head>
-<body class="gray-bg">
-	<div class="wrapper wrapper-content">
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Redis 内存实时占用情况：</h5>
-					</div>
-					<div class="ibox-content">
-						<div id="container"></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Redis key的实时数量：</h5>
-					</div>
-					<div class="ibox-content">
-						<div id="keysChart"></div>
-					</div>
+
+<body>
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md6">
+			<div class="layui-card">
+				<div class="layui-card-header">Redis 内存实时占用情况</div>
+				<div class="layui-card-body">
+					<div id="container"></div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-5">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Redis INFO：</h5>
-					</div>
-					<div class="ibox-content">
-						<table class="table table-condensed table-hover" style="word-break: break-all; word-wrap: break-all;">
-							<tbody>
-								<tr th:each="info : ${infoList}">
-									<td th:text="${info.key}" th:title="${info.desctiption }"></td>
-									<td th:text="${info.desctiption}"></td>
-									<td th:text="${info.value}"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+		<div class="layui-col-md6">
+			<div class="layui-card">
+				<div class="layui-card-header">Redis key的实时数量</div>
+				<div class="layui-card-body">
+					<div id="keysChart"></div>
 				</div>
 			</div>
-			<div class="col-sm-7">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Redis实时日志(共[[${logLen}]]条)：</h5>
-						<div class="ibox-tools">
-							<button type="button" onclick="empty();"
-								class="btn btn-warning btn-xs">清空日志</button>
+		</div>
+		
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-tab layui-tab-brief layadmin-latestData">
+					<ul class="layui-tab-title">
+						<li class="layui-this">Redis INFO</li>
+						<li>Redis 实时日志(共[[${logLen}]]条)</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<table lay-filter="infoTable" class="layui-col-md11">
+								<thead>
+									<tr>
+										<th lay-data="{field:'key'}">key</th>
+										<th lay-data="{field:'value'}">value</th>
+										<th lay-data="{field:'desctiption'}">描述</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="info : ${infoList}">
+										<td th:text="${info.key}"></td>
+										<td th:text="${info.value}"></td>
+										<td th:text="${info.desctiption}"></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-					</div>
-					<div class="ibox-content">
-						<table class="table table-condensed table-hover">
-							<tbody>
-								<tr th:each="log :${logList}">
-									<td th:text="${log.id}"></td>
-									<td th:text="${log.executeTime}"></td>
-									<td th:text="${log.usedTime}"></td>
-									<td>
-										<p th:text="${log.args }" th:style="width: 600px; word-wrap: break-word; word-break: normal;"></p>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="layui-tab-item" style="">
+							<table lay-filter="logTable" class="layui-col-md11">
+								<thead>
+									<tr>
+										<th lay-data="{field:'id'}">id</th>
+										<th lay-data="{field:'executeTime'}">executeTime</th>
+										<th lay-data="{field:'usedTime'}">usedTime</th>
+										<th lay-data="{field:'args'}">args</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="log :${logList}">
+										<td th:text="${log.id}"></td>
+										<td th:text="${log.executeTime}"></td>
+										<td th:text="${log.usedTime}"></td>
+										<td>
+											<p th:text="${log.args }" th:style="width: 600px; word-wrap: break-word; word-break: normal;"></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script src="/static/layui/layui.js" th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+	<script type="text/javascript">
+		layui.use(['layer', 'table','element'],function(){
+			var layer = layui.layer; //弹层
+			var table = layui.table; //表格
+			var element = layui.element;
+			
+			table.init('infoTable', {
+				cellMinWidth: 20,
+				page:true
+			});
+			
+			table.init('logTable', {
+				cellMinWidth: 30,
+				page:true
+			});
+		});
+	</script>
 </body>
 
 <script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
