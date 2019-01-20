@@ -14,78 +14,77 @@
 		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->   
-	
-	<style type="text/css">
-	 body{margin: 10px;}
-	</style>
+
 </head>
 
 <body>
-	<div class="layui-row layui-col-space15">
-		<div class="layui-col-md6">
-			<div class="layui-card">
-				<div class="layui-card-header">Redis 内存实时占用情况</div>
-				<div class="layui-card-body">
-					<div id="container"></div>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header">Redis 内存实时占用情况</div>
+					<div class="layui-card-body">
+						<div id="container"></div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="layui-col-md6">
-			<div class="layui-card">
-				<div class="layui-card-header">Redis key的实时数量</div>
-				<div class="layui-card-body">
-					<div id="keysChart"></div>
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header">Redis key的实时数量</div>
+					<div class="layui-card-body">
+						<div id="keysChart"></div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-		<div class="layui-col-md12">
-			<div class="layui-card">
-				<div class="layui-tab layui-tab-brief layadmin-latestData">
-					<ul class="layui-tab-title">
-						<li class="layui-this">Redis INFO</li>
-						<li>Redis 实时日志(共[[${logLen}]]条)</li>
-					</ul>
-					<div class="layui-tab-content">
-						<div class="layui-tab-item layui-show">
-							<table lay-filter="infoTable" class="layui-col-md11">
-								<thead>
-									<tr>
-										<th lay-data="{field:'key'}">key</th>
-										<th lay-data="{field:'value'}">value</th>
-										<th lay-data="{field:'desctiption'}">描述</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="info : ${infoList}">
-										<td th:text="${info.key}"></td>
-										<td th:text="${info.value}"></td>
-										<td th:text="${info.desctiption}"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="layui-tab-item" style="">
-							<table lay-filter="logTable" class="layui-col-md11">
-								<thead>
-									<tr>
-										<th lay-data="{field:'id'}">id</th>
-										<th lay-data="{field:'executeTime'}">executeTime</th>
-										<th lay-data="{field:'usedTime'}">usedTime</th>
-										<th lay-data="{field:'args'}">args</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="log :${logList}">
-										<td th:text="${log.id}"></td>
-										<td th:text="${log.executeTime}"></td>
-										<td th:text="${log.usedTime}"></td>
-										<td>
-											<p th:text="${log.args }"></p>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+			
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-tab layui-tab-brief layadmin-latestData">
+						<ul class="layui-tab-title">
+							<li class="layui-this">Redis INFO</li>
+							<li>Redis 实时日志(共[[${logLen}]]条)</li>
+						</ul>
+						<div class="layui-tab-content">
+							<div class="layui-tab-item layui-show">
+								<table lay-filter="infoTable" class="layui-col-md11">
+									<thead>
+										<tr>
+											<th lay-data="{field:'key'}">key</th>
+											<th lay-data="{field:'value'}">value</th>
+											<th lay-data="{field:'desctiption'}">描述</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="info : ${infoList}">
+											<td th:text="${info.key}"></td>
+											<td th:text="${info.value}"></td>
+											<td th:text="${info.desctiption}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="layui-tab-item" style="">
+								<table lay-filter="logTable" class="layui-col-md11">
+									<thead>
+										<tr>
+											<th lay-data="{field:'id'}">id</th>
+											<th lay-data="{field:'executeTime'}">executeTime</th>
+											<th lay-data="{field:'usedTime'}">usedTime</th>
+											<th lay-data="{field:'args'}">args</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="log :${logList}">
+											<td th:text="${log.id}"></td>
+											<td th:text="${log.executeTime}"></td>
+											<td th:text="${log.usedTime}"></td>
+											<td>
+												<p th:text="${log.args }"></p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -101,14 +100,33 @@
 			var element = layui.element;
 			
 			table.init('infoTable', {
+				title:'Redis INFO',
 				cellMinWidth: 20,
+				toolbar: false, //仅开启工具栏，不显示左侧模板
+				defaultToolbar: ['filter', 'exports'], // 设置头部工具栏右侧的图标
+				totalRow:true,// 是否开启合计行区域,默认是false
 				page:true
 			});
 			
 			table.init('logTable', {
+				title:'Redis 实时日志',
 				cellMinWidth: 30,
 				page:true
 			});
+			
+			// 触发事件
+			var tab = {
+				tabAdd: function(title, url, id) { //新增一个Tab项
+					
+				},
+				tabDelete: function(othis) { // 删除指定Tab项
+					
+				},
+				tabChange: function(id) {// 切换到指定Tab项
+					
+				}
+			};
+		
 		});
 	</script>
 </body>
