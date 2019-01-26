@@ -31,4 +31,6 @@ public interface PicturesService {
 	int selectCount(Pictures entity);
 
 	Pictures selectById(Serializable id);
+	
+	boolean insertOrUpdate(Pictures entity);
 }

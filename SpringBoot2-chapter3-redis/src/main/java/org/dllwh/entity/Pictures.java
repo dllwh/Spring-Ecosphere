@@ -9,7 +9,7 @@ import lombok.Data;
  *
  * Today the best performance as tomorrow newest starter!
  *
- * @类描述: 美女图片爬取
+ * @类描述: 图片爬取
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月15日 下午10:49:32
  * @版本: V1.0.1
@@ -17,12 +17,17 @@ import lombok.Data;
  */
 @Data
 public class Pictures {
-	private String	id;
-	private String	title;
+	private String	_id;
+	/** 创建时间 */
+	private Date	createdAt;
+	/** 对内容的描述 */
+	private String	desc;
+	/** 发布时间 */
+	private Date	publishedAt;
+	/** 来源 */
+	private String	source;
+	/** 数据类型： 福利 | Android | iOS | 休息视频 | 拓展资源 | 前端 | all */
+	private String	type;
+	/** 地址 */
 	private String	url;
-	private Integer	pictureurlsNum;
-	private Integer	zan;
-	private String	biaoqian;
-	private String	keywords;
-	private Date	lastUpdateDate;
 }

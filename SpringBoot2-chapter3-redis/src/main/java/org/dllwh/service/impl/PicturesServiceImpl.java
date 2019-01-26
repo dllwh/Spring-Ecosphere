@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.dllwh.entity.Pictures;
+import org.dllwh.mapper.PicturesMapper;
 import org.dllwh.service.PicturesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PicturesServiceImpl implements PicturesService {
+	@Autowired
+	private PicturesMapper picturesMapper;
 
 	@Override
 	public boolean insert(Pictures entity) {
@@ -54,5 +58,11 @@ public class PicturesServiceImpl implements PicturesService {
 	@Override
 	public Pictures selectById(Serializable id) {
 		return null;
+	}
+
+	@Override
+	public boolean insertOrUpdate(Pictures entity) {
+		picturesMapper.insertOrUpdate(entity);
+		return false;
 	}
 }

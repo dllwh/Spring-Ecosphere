@@ -6,6 +6,10 @@ server:
     context-path: /
 ### profile环境配置 
 spring: 
+  banner:
+    charset: UTF-8
+    image:
+      width: 120
   profiles:
     active:
       - redis # 数据库配置
@@ -28,3 +32,7 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+---
+#### mybatis
+mybatis: 
+  mapperLocations: classpath:org/dllwh/mapper/impl/*.xml
