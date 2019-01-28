@@ -28,10 +28,18 @@ public class MongoController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "login")
-	public void login(
-			@RequestParam(name = "userName", required = true, defaultValue = "") String userName,
+	public void login(@RequestParam(name = "userName", required = true, defaultValue = "") String userName,
 			@RequestParam(name = "pwd", required = true, defaultValue = "") String pwd) {
 		log.info("模拟登录");
+	}
+
+	/**
+	 * @方法描述 : 监控
+	 * @param dbName
+	 */
+	@RequestMapping(value = "monitor")
+	public String Monitor() {
+		return "mongoMonitor";
 	}
 
 	/**
@@ -40,7 +48,7 @@ public class MongoController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "db")
-	public void db(String dbName) {
+	public void db(@RequestParam(name = "dbName") String dbName) {
 	}
 
 	/**
