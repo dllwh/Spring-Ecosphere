@@ -1,0 +1,5 @@
+#### MongoDB 配置
+spring:
+  data:
+    mongodb:
+      uri: 
