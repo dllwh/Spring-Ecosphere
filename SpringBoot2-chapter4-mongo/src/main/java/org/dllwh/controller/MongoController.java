@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
  *
  * Today the best performance as tomorrow newest starter!
  *
- * @类描述: TODO(这里用一句话描述这个类的作用)
+ * @类描述: MongoDB 控制类
  * @创建者: 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2018年11月24日 下午3:18:54
- * @版本: V 0.1
+ * @版本: V 1.0.2
  * @since: JDK 1.8
  */
 @Controller
@@ -39,7 +39,7 @@ public class MongoController {
 	 */
 	@RequestMapping(value = "monitor")
 	public String Monitor() {
-		return "mongoMonitor";
+		return "mongodb/mongoMonitor";
 	}
 
 	/**
