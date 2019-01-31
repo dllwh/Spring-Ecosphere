@@ -2,4 +2,4 @@
 spring:
   data:
     mongodb:
-      uri: 
+      uri: mongodb://localhost:27017/dllwh
