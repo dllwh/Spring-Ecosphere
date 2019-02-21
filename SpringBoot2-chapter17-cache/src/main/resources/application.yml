@@ -1,0 +1,27 @@
+#开发环境配置
+server:
+  port: 8217
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+#日志配置
+logging:
+  level:
+    root: debug
+    org:
+      springframework: warn
+      spring:
+        springboot:
+          dao: debug
+#Spring配置
+spring: 
+  profiles:
+    active:
+      - datasource # 数据库配置
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths:
+        - src/main/java
+      exclude: webviews/** # #classpath目录下的webviews文件夹内容修改不重启
