@@ -11,4 +11,13 @@
 	<artifactId>dllwh-cloud-registry</artifactId>
 	<name>dllwh-cloud-registry</name>
 	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<!-- 引入 Eureka Server 依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+		</dependency>
+
+	</dependencies>
 </project>
