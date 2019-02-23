@@ -6,11 +6,40 @@
 	<artifactId>dllwh-springCloud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
+	<!-- ====================================================================== 
+		项目开发者列表 -->
+	<developers>
+		<!--某个项目开发者的信息 -->
+		<developer>
+			<!--SCM里项目开发者的唯一标识符 -->
+			<id>duleilewuhen</id>
+			<!--项目开发者的全名 -->
+			<name>独泪了无痕</name>
+			<!--项目开发者的email -->
+			<email>duleilewuhen@sina.com</email>
+			<!--项目开发者在项目中扮演的角色，角色元素描述了各种角色 -->
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>GXF5211314</id>
+			<name>皇族灬战狼</name>
+			<email>duleilewuhen@163.com</email>
+			<roles>
+				<role>java developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>springCloud-eureka-server</module>
 		<module>SpringCloud-eureka-provider</module>
 		<module>SpringCloud-eureka-consumer</module>
 		<module>SpringCloud-eureka-Server</module>
+		<module>dllwh-cloud-registry</module>
 	</modules>
 
 	<!-- 生命项目的父项目 -->
@@ -31,7 +60,7 @@
 		<swagger.version>2.9.2</swagger.version>
 	</properties>
 
-	<!-- 添加依赖管理 -->
+	<!--依赖管理，用于管理spring-cloud的依赖，其中Finchley.RELEASE是版本号 -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -50,6 +79,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<!-- Spring 单元测试 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -75,6 +111,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -94,6 +136,7 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<compilerVersion>${java.version}</compilerVersion>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
