@@ -23,7 +23,7 @@
 Spring Cloud 学习路线
 ---
 
-<table border="1" style="border-collapse: collapse;">
+<table border="1" style="border-collapse: collapse;width: 100%;">
 	<tr>
 		<th colspan="3"></th>
 		<th>说明</th>
