@@ -1,5 +1,9 @@
-dllwh-springCloud 组织架构说明
+﻿dllwh-springCloud 组织架构说明
 ---
+
+
+||
+---|---|
 
 | 项目编号  | 模块 | 名称 | 说明 |
 | --- | --- | --- | --- |
@@ -16,6 +20,39 @@ dllwh-springCloud 组织架构说明
 | dllwh-cloud-modules  | notice-service |  通知中心 | 基于RabbitMQ异步通知发送短信、邮件、WebSocket消息  |
 | dllwh-cloud-service  | sysLog  | 日志管理  |   |
 | dllwh-cloud-service  | sysDict | 数据字典  |   |
+
+
+Spring Cloud 学习路线
+---
+
+spring cloud eureka server      注册中心
+spring cloud eureka client      客户端
+spring cloud feign              声明式调用
+            --- HTTP client
+            --- OK HTTP
+spring cloud rabbit             负载均衡
+spring cloud zuul               路由网关
+spring cloud hystrix            熔断器
+spring cloud hystrix dashboard  熔断器监控
+spring cloud config             配置中心
+
+========================================
+
+spring cloud turbine            聚合监控
+spring cloud sleuth             服务链路追踪
+             --- zipkin
+                --- mysql
+                --- elastic search/kibana
+             --- rabbitmq
+                --- mysql
+                --- elastic search/kibana
+spring boot admin               微服务监控--集中管理
+        --- turbine
+        --- security/login
+spring boot security            安全组件
+
+spring cloud oath2              授权协议 结合security使用
+            --- jwt             开放标准 结合oath2使用
 
 		
 [初识Spring Cloud](./SpringCloud.md)
