@@ -20,3 +20,5 @@ spring:
       enabled: true
       additional-paths:
       - src/main/java
+  application:
+    name: eurka-server
