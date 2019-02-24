@@ -40,6 +40,10 @@
 		<module>SpringCloud-eureka-consumer</module>
 		<module>SpringCloud-eureka-Server</module>
 		<module>dllwh-cloud-registry</module>
+		<module>SpringCloud-ribbon-consumer</module>
+		<module>SpringCloud-ribbon</module>
+		<module>SpringCloud-Feign</module>
+		<module>SpringCloud-Zuul</module>
 	</modules>
 
 	<!-- 生命项目的父项目 -->
