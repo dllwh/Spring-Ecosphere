@@ -23,35 +23,118 @@
 Spring Cloud 学习路线
 ---
 
-spring cloud eureka server      注册中心
-spring cloud eureka client      客户端
-spring cloud feign              声明式调用
-            --- HTTP client
-            --- OK HTTP
-spring cloud rabbit             负载均衡
-spring cloud zuul               路由网关
-spring cloud hystrix            熔断器
-spring cloud hystrix dashboard  熔断器监控
-spring cloud config             配置中心
-
-========================================
-
-spring cloud turbine            聚合监控
-spring cloud sleuth             服务链路追踪
-             --- zipkin
-                --- mysql
-                --- elastic search/kibana
-             --- rabbitmq
-                --- mysql
-                --- elastic search/kibana
-spring boot admin               微服务监控--集中管理
-        --- turbine
-        --- security/login
-spring boot security            安全组件
-
-spring cloud oath2              授权协议 结合security使用
-            --- jwt             开放标准 结合oath2使用
-
+<table border="1" style="border-collapse: collapse;">
+	<tr>
+		<th colspan="3"></th>
+		<th>说明</th>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud eureka server</td>
+		<td style="text-align: center;">注册中心</td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud eureka client</td>
+		<td style="text-align: center;">客户端</td>
+	</tr>
+	<tr>
+		<td rowspan="3">spring cloud feign</td>
+		<td colspan="2"></td>
+		<td style="text-align: center;">声明式调用</td>
+	</tr>
+	<tr>
+		<td colspan="2">HTTP client</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="2">OK HTTP</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud rabbit</td>
+		<td style="text-align: center;">负载均衡</td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud zuul </td>
+		<td style="text-align: center;">路由网关</td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud hystrix</td>
+		<td style="text-align: center;">熔断器</td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud hystrix dashboard</td>
+		<td style="text-align: center;">熔断器监控</td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud config </td>
+		<td style="text-align: center;">配置中心</td>
+	</tr>
+	<tr>
+		<td colspan="4"></td>
+	</tr>
+	<tr>
+		<td colspan="3">spring cloud turbine</td>
+		<td style="text-align: center;">聚合监控</td>
+	</tr>
+	<tr>
+		<td rowspan="7">spring cloud sleuth</td>
+		<td colspan="3" style="text-align: center;">服务链路追踪</td>
+	</tr>
+	<tr>
+		<td>zipkin</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td rowspan="2"></td>
+		<td>mysql</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>elastic search/kibana</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>rabbitmq</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td rowspan="2"></td>
+		<td>mysql</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>elastic search/kibana</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td rowspan="3">spring boot admin</td>
+		<td colspan="3" style="text-align: center;">微服务监控--集中管理</td>
+	</tr>
+	<tr>
+		<td>turbine</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>security/login</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>spring boot security </td>
+		<td colspan="3" style="text-align: center;">安全组件</td>
+	</tr>
+	<tr>
+		<td rowspan="2">spring cloud oath2 </td>
+		<td colspan="3" style="text-align: center;">授权协议 结合security使用</td>
+	</tr>
+	<tr>
+		<td>jwt</td>
+		<td colspan="2" style="text-align: center;">开放标准 结合oath2使用</td>
+	</tr>
+</table>
 		
 [初识Spring Cloud](./SpringCloud.md)
 ----------------------
