@@ -137,4 +137,23 @@ Spring Cloud 学习路线
 </table>
 		
 [初识Spring Cloud](./SpringCloud.md)
-----------------------
+---
+
+版本控制
+---
+
+# SpringBoot 
+```
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-parent</artifactId>
+  <version>2.0.5.RELEASE</version>
+  <relativePath/>
+</parent>
+```
+
+# SpringCloud 
+
+```
+<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+```
