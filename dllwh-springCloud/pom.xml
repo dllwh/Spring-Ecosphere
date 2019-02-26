@@ -37,7 +37,7 @@
 	<modules>
 		<module>springCloud-eureka-server</module>
 		<module>SpringCloud-eureka-provider</module>
-		<module>SpringCloud-eureka-consumer</module>
+		
 		<module>SpringCloud-eureka-Server</module>
 		<module>dllwh-cloud-registry</module>
 		<module>SpringCloud-ribbon-consumer</module>
