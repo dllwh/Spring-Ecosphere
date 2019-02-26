@@ -8,7 +8,7 @@
  
 # Spring Cloud 子项目
 
-![Spring Cloud的子项目](dllwh-image/Spring%20Cloud%E7%9A%84%E5%AD%90%E9%A1%B9%E7%9B%AE.png)
+![Spring Cloud的子项目](dllwh-image/SpringCloud.png)
 
 - **Spring Cloud Config**：配置管理开发工具包，支持使用Git存储配置内容，支持应用配置的外部化存储，支持客户端配置信息刷新、加解密配置内容等
 - **Spring Cloud Bus**：事件、消息总线，用于在集群（例如，配置变化事件）中传播状态变化，可与Spring Cloud Config联合实现热部署。
