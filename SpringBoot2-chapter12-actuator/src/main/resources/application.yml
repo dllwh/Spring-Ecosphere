@@ -1,5 +1,41 @@
-management:
-  endpoints:
+server:
+  port: 8212
+spring: 
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths:
+        - src/main/java
+      exclude: templates/** # #classpath目录下的webviews文件夹内容修改不重启
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    enable-spring-el-compiler: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+# 描述信息
+info:
+  auth: 
+    userName : 独泪了无痕
+    email: duleilewuhen@sina.com
+  version: '@project.version@'
+  encoding: '@project.build.sourceEncoding@'
+  java:
+      source: '@java.version@'
+
+management: 
+  security:
+    enabled: true #取消安全权限限制
+    roles:
+      - SUPERADMIN
+  endpoints: ## 运行状态 actuator监控
     web:
       base-path: /actuator # 端点的前缀，只对web服务有用
       cors: ##  跨域支持
@@ -21,13 +57,10 @@ management:
       enabled: false # 禁用shutdown端点
     beans:
       cache:
-        time-to-live: 10s # 缓存时间
-
----
-#### 数据库配置
-spring: 
-  datasource: 
-    url: jdbc:mysql://rm-2zevys7thq96t31s4no.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username: test
-    password: test
-    driver-class-name: com.mysql.jdbc.Driver
+        time-to-live: 10s # 配置端点缓存时间
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin
