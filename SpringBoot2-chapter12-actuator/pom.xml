@@ -104,12 +104,11 @@
 		</dependency>
 
 		<!-- 安全认证 -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
-
 
 	<build>
 		<plugins>
@@ -119,13 +118,6 @@
 				<configuration>
 					<executable>true</executable>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>build-info</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<!-- 制定项目的JDK版本 -->
 			<plugin>

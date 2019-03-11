@@ -19,6 +19,10 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  security:
+    user:
+      name: dllwh
+      password: monitor
 
 # 描述信息
 info:
