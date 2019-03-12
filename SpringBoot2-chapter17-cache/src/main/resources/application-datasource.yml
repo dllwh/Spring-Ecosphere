@@ -7,6 +7,6 @@ spring:
 ---
 mybatis:
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapper-locations: classpath:com/cdeledu/mapper/*.xml,classpath:com/cdeledu/mapper/impl/*.xml
+  mapper-locations: classpath:org/dllwh/mapper/*.xml,classpath:org/dllwh/mapper/impl/*.xml
   # 搜索指定包别名
-  type-aliases-package: com.cdeledu.module
+  type-aliases-package: org.dllwh.module
