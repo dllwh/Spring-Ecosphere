@@ -1,5 +1,7 @@
 server:
   port: 8216
+  tomcat:
+    uri-encoding: UTF-8
   servlet:
     context-path: /
 spring:
@@ -11,6 +13,9 @@ spring:
       additional-paths:
         - src/main/java
       exclude: templates/** # #classpath目录下的webviews文件夹内容修改不重启
+  profiles:
+    active:
+      - datasource # 数据库配置
   thymeleaf:
     cache: false
     check-template: true
