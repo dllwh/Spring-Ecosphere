@@ -3,6 +3,7 @@ package org.dllwh.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,7 +16,7 @@ public interface BlogDao {
 	Blog getBlogById(@Param("id") Integer id);
 
 	// 删
-	@Delete("DELETE t_blog WHERE id = = #{id}")
+	@Delete("DELETE  FROM t_blog WHERE id = #{id}")
 	void deleteBlogById(@Param("id") Integer id);
 
 	// 全
@@ -23,6 +24,7 @@ public interface BlogDao {
 	List<Blog> getAllBlogs();
 
 	// 增
+	@Insert("insert into `t_blog`(`title`,`link`,`author`,`tag`) values(#{title},#{link},#{author},#{tag});")
 	void insertBlog(Blog blog);
 
 	// 改

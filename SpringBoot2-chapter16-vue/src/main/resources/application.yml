@@ -4,6 +4,13 @@ server:
     uri-encoding: UTF-8
   servlet:
     context-path: /
+
+logging: # 日志级别从低到高分为：trace < debug < info < warn < error < fatal
+  level: # 日志级别控制前缀
+    root: debug # 控制root 的日志级别为debug以上
+    org:
+      springframework: info #控制org.springframework包下的日志级别为info以上
+
 spring:
   application:
     name: SpringBoot2-chapter-vue
@@ -25,3 +32,6 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss

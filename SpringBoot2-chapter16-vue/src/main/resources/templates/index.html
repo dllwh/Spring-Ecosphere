@@ -43,12 +43,14 @@
 					<td>{{item.title}}</td>
 					<td>{{item.link}}</td>
 					<td>{{item.author}}</td>
-					<td>{{item.tag}}</td>
-					<th><a class="layui-btn layui-btn-normal"
-						@click.prevent="upd(item.id)">修改</a></th>
+					<td>
+						<span v-if="item.tag == 0">隐藏</span>
+						<span v-if="item.tag == 1">展示</span>
+					</td>
 					<th>
-						<button class="layui-btn layui-btn-danger"
-							@click.prevent="del(item.id)">删除</button>
+						<a class="layui-btn layui-btn-normal" @click.prevent="upd(item.id)">修改</a></th>
+					<th>
+						<button class="layui-btn layui-btn-danger" @click.prevent="del(item.id)">删除</button>
 					</th>
 				</tr>
 			</tbody>
@@ -57,10 +59,12 @@
 	</div>
 
 	<script type="text/javascript">
-	 // 如果我们通过全局配置了，请求的数据接口 根域名，则 ，在每次单独发起 http 请求的时候，请求的 url 路径，应该以相对路径开头，前面不能带 /  ，否则 不会启用根路径做拼接；
+	// 如果我们通过全局配置了，请求的数据接口 根域名，则 ，在每次单独发起 http 请求的时候，请求的 url 路径，应该以相对路径开头，前面不能带 /  ，否则 不会启用根路径做拼接；
 	Vue.http.options.root = 'http://localhost:8216/';
+	
 	// 全局启用 emulateJSON 选项:如果Web服务器无法处理编码为application/json的请求，你可以启用emulateJSON选项。
 	Vue.http.options.emulateJSON = true;
+	
 	var vm = new Vue({
 		el: '#app',
 		data: {
@@ -77,8 +81,6 @@
 					// 注意： 通过 $http 获取到的数据，都在 result.body 中放着
 					var result = result.body
 					if (result.code === 200) {
-						// 成功了
-						console.log(result.data)
 						this.list = result.data
 					} else {
 						// 失败了
@@ -91,10 +93,10 @@
 					if (result.body.code === 200) {
 						// 删除成功
 						this.getAllList()
-					} else 
+					} else {
 						alert('删除失败！')
 					}
-				}
+				})
 			},
 			search() {
 				this.$http.get('getBlogById/'+this.searchId).then(result => {
