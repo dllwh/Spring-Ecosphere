@@ -7,7 +7,7 @@ server:
 
 logging: # 日志级别从低到高分为：trace < debug < info < warn < error < fatal
   level: # 日志级别控制前缀
-    root: debug # 控制root 的日志级别为debug以上
+    root: info # 控制root 的日志级别为debug以上
     org:
       springframework: info #控制org.springframework包下的日志级别为info以上
 

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -54,7 +54,7 @@ public class BlogController {
 		}
 	}
 
-	@PostMapping("insertBlog")
+	@RequestMapping("insertBlog")
 	public Map<String, Object> insertBlog(Blog blog) {
 		blogService.insertBlog(blog);
 		return Json.success(blog);
