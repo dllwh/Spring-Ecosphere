@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.dllwh</groupId>
+	<artifactId>dllwh-SpringBoot2</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- ====================================================================== 
+		项目开发者列表 -->
+	<developers>
+		<!--某个项目开发者的信息 -->
+		<developer>
+			<!--SCM里项目开发者的唯一标识符 -->
+			<id>duleilewuhen</id>
+			<!--项目开发者的全名 -->
+			<name>独泪了无痕</name>
+			<!--项目开发者的email -->
+			<email>duleilewuhen@sina.com</email>
+			<!--项目开发者在项目中扮演的角色，角色元素描述了各种角色 -->
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>GXF5211314</id>
+			<name>皇族灬战狼</name>
+			<email>duleilewuhen@163.com</email>
+			<roles>
+				<role>java developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<properties>
+		<!-- 使用UTF-8编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- 使用jdk1.8版本 -->
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<swagger.version>2.9.2</swagger.version>
+	</properties>
+
+	<!-- 声明项目的父项目 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.5.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<dependencies>
+
+		<!-- SpringBoot依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		
+		<!-- Springboot devtools热部署配置 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Spring 单元测试 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 引入lombok 依赖 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 大多数的web应用都使用spring-boot-starter-web模块进行快速搭建和运行。 -->
+		<!-- spring-boot-starter-web -->
+		<!-- 对全栈web开发的支持， 包括Tomcat和 spring-webmvc -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+			<!-- 制定项目的JDK版本 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerVersion>${java.version}</compilerVersion>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
