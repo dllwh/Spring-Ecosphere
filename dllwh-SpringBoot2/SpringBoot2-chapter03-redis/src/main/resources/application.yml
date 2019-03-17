@@ -1,0 +1,38 @@
+server:
+  port: 8203
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+### profile环境配置 
+spring: 
+  banner:
+    charset: UTF-8
+    image:
+      width: 120
+  profiles:
+    active:
+      - redis # 数据库配置
+      - datasource # 数据库配置
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths:
+        - src/main/java
+      exclude: templates/** ## classpath目录下的webviews文件夹内容修改不重启
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    enable-spring-el-compiler: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+---
+#### mybatis
+mybatis: 
+  mapperLocations: classpath:org/dllwh/mapper/impl/*.xml

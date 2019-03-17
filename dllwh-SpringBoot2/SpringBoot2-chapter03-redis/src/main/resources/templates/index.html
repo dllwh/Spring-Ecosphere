@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>RedisWebAdmin - Redis监控-实时状态监控</title>
+	<link rel="stylesheet" href="/static/layui/css/layui.css" th:href="@{/static/layui/css/layui.css}" media="all">
+		
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<div class="layui-header">
+			<div class="layui-logo">SpringBoot Redis</div>
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item lay-flexible" lay-unselect>
+					<a href="javascript:;" lay-event="flexible" title="侧边伸缩">
+						<i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+					</a>
+				</li>
+				<li class="layui-nav-item" lay-unselect>
+					<a href="javascript:;" layadmin-event="refresh" title="刷新">
+						<i class="layui-icon layui-icon-refresh-3"></i>
+					</a>
+				</li>
+			</ul>
+			<ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+				<li class="layui-nav-item" lay-unselect>
+					<a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+						<i class="layui-icon layui-icon-notice"></i>
+						<!-- 如果有新消息，则显示小圆点 -->
+						<span class="layui-badge-dot" th:if="${unreadMessage}" th:text="@{${unreadMessage}}"></span>
+					</a>
+				</li>
+				<li class="layui-nav-item layui-hide-xs" lay-unselect>
+					<a href="javascript:;" layadmin-event="theme">
+						<i class="layui-icon layui-icon-theme"></i>
+					</a>
+				</li>
+				<li class="layui-nav-item layui-hide-xs" lay-unselect>
+					<a href="javascript:;" layadmin-event="note"> 
+						<i class="layui-icon layui-icon-note"></i>
+					</a>
+				</li>
+				<li class="layui-nav-item layui-hide-xs" lay-unselect>
+					<a href="javascript:;" layadmin-event="fullscreen">
+						<i class="layui-icon layui-icon-screen-full"></i>
+					</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href="javascript:;">
+						<img src="http://t.cn/RCzsdCq" class="layui-nav-img"> 独泪了无痕
+					</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a>基本资料</a>
+						</dd>
+						<hr>
+						<dd><a lay-filter="logout">退出</a></dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item layui-hide-xs" lay-unselect>
+					<a href="javascript:;" layadmin-event="about">
+						<i class="layui-icon layui-icon-more-vertical"></i>
+					</a>
+				</li>
+				<li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+					<a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+				</li>
+			</ul>
+		</div>
+		
+		<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+		<div class="layui-side layui-bg-black layui-side-menu">
+			<div class="layui-side-scroll">
+				<ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="springBoot-redis-side-menu">
+					<li data-name="home" class="layui-nav-item layui-nav-itemed">
+						<a href="javascript:;" lay-tips="主页" lay-direction="2">
+							<i class="layui-icon layui-icon-home">主页</i>
+							<cite></cite>
+						</a>
+						<dl class="layui-nav-child" data-name="console" >
+							<dd class="layui-this">
+								<a lay-href="home/console">控制台</a>
+							</dd>
+							<dd>
+								<a lay-href="redis/redisMonitor">控制台二</a>
+							</dd>
+							<dd>
+								<a href="javascript:void(0);">控制台三</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item" data-name="set">
+						<a href="javascript:;" lay-tips="设置" lay-direction="2">
+							<i class="layui-icon layui-icon-set"></i>
+							<cite>设置</cite>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="layui-nav-itemed">
+								<a href="javascript:;">系统设置</a>
+								<dl class="layui-nav-child">
+									<dd>
+										<a>网站设置</a>
+									</dd>
+									<dd>
+										<a>邮件服务</a>
+									</dd>
+								</dl>
+							</dd>
+							<dd class="layui-nav-itemed">
+								<a href="javascript:;">我的设置</a>
+								<dl class="layui-nav-child">
+									<dd><a>基本资料</a></dd>
+									<dd><a>修改密码</a></dd>
+								</dl>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<!-- 内容主体区域 -->
+		<div class="layui-body">
+		</div>
+		
+		<!-- 底部固定区域 -->
+		<div class="layui-footer">
+			代码成就万世基积沙镇海，梦想永在凌云意意气风发。
+		</div>
+		
+		<!-- 辅助元素，一般用于移动设备下遮罩 -->
+		<div class="layadmin-body-shade" layadmin-event="shade"></div>
+	</div>
+	
+	<script src="/static/layui/layui.js" th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+</body>
+
+	<script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+	<script src="../static/js/redischarts/highcharts.js" th:src="@{/static/js/redischarts/highcharts.js}"></script>
+	<script src="../static/js/redischarts/index.js" th:src="@{/static/js/redischarts/index.js}"></script>
+	<script type="text/javascript">
+		layui.use(['layer', 'table','element'],function(){
+			var i = layui.$;
+			var layer = layui.layer; // 弹层
+			var table = layui.table; // 表格
+			var element = layui.element;// 常用元素操作
+			var tree = layui.tree; // 树结构
+			var jquery = layui.jquery;// DOM库（第三方）
+			
+			table.init('infoTable', {
+				cellMinWidth: 20,
+				page:true
+			});
+			
+			table.init('logTable', {
+				cellMinWidth: 30,
+				page:true
+			});
+			
+			//监听导航点击
+			element.on('nav(springBoot-redis-side-menu)', function(elem){
+				// layer.msg(elem.text());
+				tab.tabAdd(1,2,3);
+			});
+			
+			element.on('nav(logout)', function(elem){
+				layer.msg(elem.text());
+			});
+			
+			// 触发事件
+			var tab = {
+				tabAdd: function(title, url, id) { //新增一个Tab项
+					element.tabAdd('springBoot-redis-tab', {
+						title: title
+						,content: '内容'+ (Math.random()*1000|0)
+						,id: id
+					});
+				},
+				tabDelete: function(id) { // 删除指定Tab项
+					element.tabDelete('springBoot-redis-tab', id);
+					$(this).addClass('layui-btn-disabled');
+				},
+				tabChange: function(id) {// 切换到指定Tab项
+					element.tabChange('springBoot-redis-tab', id);
+				}
+			};
+		});
+	</script>
+</html>

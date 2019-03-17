@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>RedisWebAdmin - Redis监控</title>
+	<link rel="stylesheet" href="/static/layui/css/layui.css"
+		th:href="@{/static/layui/css/layui.css}" media="all">
+		
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->   
+
+</head>
+
+<body>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header">Redis 内存实时占用情况</div>
+					<div class="layui-card-body">
+						<div id="container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header">Redis key的实时数量</div>
+					<div class="layui-card-body">
+						<div id="keysChart"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-tab layui-tab-brief layadmin-latestData">
+						<ul class="layui-tab-title">
+							<li class="layui-this">Redis INFO</li>
+							<li>Redis 实时日志(共[[${logLen}]]条)</li>
+						</ul>
+						<div class="layui-tab-content">
+							<div class="layui-tab-item layui-show">
+								<table lay-filter="infoTable" class="layui-col-md11">
+									<thead>
+										<tr>
+											<th lay-data="{field:'key'}">key</th>
+											<th lay-data="{field:'value'}">value</th>
+											<th lay-data="{field:'desctiption'}">描述</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="info : ${infoList}">
+											<td th:text="${info.key}"></td>
+											<td th:text="${info.value}"></td>
+											<td th:text="${info.desctiption}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="layui-tab-item" style="">
+								<table lay-filter="logTable" class="layui-col-md11">
+									<thead>
+										<tr>
+											<th lay-data="{field:'id'}">id</th>
+											<th lay-data="{field:'executeTime'}">executeTime</th>
+											<th lay-data="{field:'usedTime'}">usedTime</th>
+											<th lay-data="{field:'args'}">args</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="log :${logList}">
+											<td th:text="${log.id}"></td>
+											<td th:text="${log.executeTime}"></td>
+											<td th:text="${log.usedTime}"></td>
+											<td>
+												<p th:text="${log.args }"></p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/static/layui/layui.js" th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+	<script type="text/javascript">
+		layui.use(['layer', 'table','element'],function(){
+			var layer = layui.layer; //弹层
+			var table = layui.table; //表格
+			var element = layui.element;
+			
+			table.init('infoTable', {
+				title:'Redis INFO',
+				cellMinWidth: 20,
+				toolbar: false, //仅开启工具栏，不显示左侧模板
+				defaultToolbar: ['filter', 'exports'], // 设置头部工具栏右侧的图标
+				totalRow:true,// 是否开启合计行区域,默认是false
+				page:true
+			});
+			
+			table.init('logTable', {
+				title:'Redis 实时日志',
+				cellMinWidth: 30,
+				page:true
+			});
+		});
+	</script>
+</body>
+
+<script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+<script src="../static/js/redischarts/highcharts.js" th:src="@{/static/js/redischarts/highcharts.js}"></script>
+<script src="../static/js/redischarts/index.js" th:src="@{/static/js/redischarts/index.js}"></script>
+</html>
