@@ -62,6 +62,7 @@
 		<module>SpringBoot2-chapter06-security</module>
 		<module>SpringBoot2-chapter07-social</module>
 		<module>SpringBoot2-chapter08-amqp</module>
+		<module>SpringBoot2-chapter08-jms</module>
 	</modules>
 
 	<dependencies>
