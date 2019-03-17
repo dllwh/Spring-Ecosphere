@@ -64,6 +64,14 @@
 		<module>SpringBoot2-chapter08-amqp</module>
 		<module>SpringBoot2-chapter08-jms</module>
 		<module>SpringBoot2-chapter09-mobile</module>
+		<module>SpringBoot2-chapter10-webservices</module>
+		<module>SpringBoot2-chapter11-apacheSolr</module>
+		<module>SpringBoot2-chapter12-actuator</module>
+		<module>SpringBoot2-chapter13-session</module>
+		<module>SpringBoot2-chapter14-shiro</module>
+		<module>SpringBoot2-chapter15-task</module>
+		<module>SpringBoot2-chapter16-vue</module>
+		<module>SpringBoot2-chapter17-cache</module>
 	</modules>
 
 	<dependencies>
@@ -132,7 +140,22 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.1</version>
 		</dependency>
-
+		<!--io常用工具类 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<!--文件上传工具类 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
 
 		<!-- 阿里巴巴fastjson，解析json视图 -->
 		<dependency>
