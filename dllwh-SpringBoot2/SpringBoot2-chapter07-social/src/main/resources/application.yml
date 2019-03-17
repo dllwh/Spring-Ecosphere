@@ -1,0 +1,13 @@
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 1800s
+---
+spring:
+  profiles:
+    active: dev
+  jpa:
+    show-sql: true
+  thymeleaf:
+    cache: false
