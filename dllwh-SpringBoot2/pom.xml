@@ -57,6 +57,7 @@
 		<module>SpringBoot2-chapter02</module>
 		<module>SpringBoot2-chapter03-redis</module>
 		<module>SpringBoot2-chapter03-rediscluster</module>
+		<module>SpringBoot2-chapter04-mongo</module>
 	</modules>
 
 	<dependencies>
