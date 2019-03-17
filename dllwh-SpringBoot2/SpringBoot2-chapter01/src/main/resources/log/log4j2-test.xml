@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时， 你会看到log4j2内部各种详细输出。可以设置成OFF(关闭) 
+	或 Error(只输出错误信息)。 30s 刷新此配置 -->
+<configuration status="WARN" monitorInterval="30">
+
+	<!-- 日志文件目录、压缩文件目录、日志格式配置 -->
+	<properties>
+		<Property name="fileName">c:/logs/xxxx/api</Property>
+		<Property name="fileGz">c:/logs/xxxx/api/7z</Property>
+		<Property name="LOG_PATTERN">%d{yyyy-MM-dd HH🇲🇲ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Property>
+	</properties>
+
+	<Appenders>
+		<!-- 输出控制台日志的配置 -->
+		<Console name="console" target="SYSTEM_OUT">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- 输出日志的格式 -->
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+
+		<!-- 打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingRandomAccessFile name="infoFile" fileName="${fileName}/web-info.log" immediateFlush="false"
+			filePattern="${fileGz}/$${date:yyyy-MM}/%d{yyyy-MM-dd}-%i.web-info.gz">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+
+			<Filters>
+				<!-- 只记录info和warn级别信息 -->
+				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+			</Filters>
+
+			<!-- 指定每天的最大压缩包个数，默认7个，超过了会覆盖之前的 -->
+			<DefaultRolloverStrategy max="50" />
+		</RollingRandomAccessFile>
+
+		<!-- 存储所有error信息 -->
+		<RollingRandomAccessFile name="errorFile" fileName="${fileName}/web-error.log" immediateFlush="false"
+			filePattern="${fileGz}/$${date:yyyy-MM}/%d{yyyy-MM-dd}-%i.web-error.gz">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+
+			<Filters>
+				<!-- 只记录error级别信息 -->
+				<ThresholdFilter level="error" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+
+			<!-- 指定每天的最大压缩包个数，默认7个，超过了会覆盖之前的 -->
+			<DefaultRolloverStrategy max="50" />
+		</RollingRandomAccessFile>
+
+		<File name="log4jdbc_delete" fileName="c:/logs/xxxx/api/log4jdbc_delete.log">
+			<MarkerFilter marker="LOG4JDBC_DELETE" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d %-5p %t (%c:%L) - %m%n" />
+		</File>
+		<File name="log4jdbc_insert" fileName="c:/logs/xxxx/api/log4jdbc_insert.log">
+			<MarkerFilter marker="LOG4JDBC_INSERT" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d %-5p %t (%c:%L) - %m%n" />
+		</File>
+		<File name="log4jdbc_update" fileName="c:/logs/xxxx/api/log4jdbc_update.log">
+			<MarkerFilter marker="LOG4JDBC_UPDATE" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d %-5p %t (%c:%L) - %m%n" />
+		</File>
+		<File name="log4jdbc_select" fileName="c:/logs/xxxx/api/log4jdbc_select.log">
+			<MarkerFilter marker="LOG4JDBC_SELECT" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d %-5p %t (%c:%L) - %m%n" />
+		</File>
+
+	</Appenders>
+
+	<Loggers>
+		<logger name="org.springframework.aop.framework.CglibAopProxy" level="ERROR" additivity="false" />
+		<logger name="springfox.documentation" level="ERROR" additivity="false" />
+		<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"
+			level="ERROR" additivity="false" />
+		<logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="ERROR" additivity="false" />
+		<logger name="org.springframework.web.servlet.DispatcherServlet" level="ERROR" additivity="false" />
+		<logger name="io.undertow.servlet" level="ERROR" additivity="false" />
+		<logger name="org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod" level="TRACE" />
+
+		<logger name="jdbc.sqlonly" level="INFO" additivity="false" />
+		<logger name="jdbc.resultset" level="INFO" additivity="false" />
+		<logger name="jdbc.connection" level="INFO" additivity="false" />
+		<logger name="jdbc.audit" level="INFO" additivity="false" />
+		<logger name="jdbc.sqltiming" level="INFO" additivity="false">
+			<appender-ref ref="console" />
+		</logger>
+
+		<!--项目日志等级 -->
+		<logger name="com.junko" level="DEBUG" />
+
+		<logger name="log4jdbc.debug" level="INFO" additivity="false">
+			<appender-ref ref="console" />
+		</logger>
+
+		<!-- 同步异步混合的方式进行写日志 -->
+		<AsyncLogger name="AsyncLogger" level="INFO"
+			includeLocation="true">
+			<appender-ref ref="console" />
+			<appender-ref ref="infoFile" />
+			<appender-ref ref="errorFile" />
+		</AsyncLogger>
+		<asyncRoot level="INFO" includeLocation="true">
+			<appender-ref ref="console" />
+			<appender-ref ref="infoFile" />
+			<appender-ref ref="errorFile" />
+		</asyncRoot>
+
+		<logger name="log4jdbc.log4j2" level="info" additivity="false">
+			<MarkerFilter marker="LOG4JDBC_OTHER" onMatch="DENY" onMismatch="NEUTRAL" />
+			<appender-ref ref="log4jdbc_insert" />
+			<appender-ref ref="log4jdbc_delete" />
+			<appender-ref ref="log4jdbc_update" />
+			<appender-ref ref="log4jdbc_select" />
+			<appender-ref ref="console" />
+		</logger>
+	</Loggers>
+
+</configuration>

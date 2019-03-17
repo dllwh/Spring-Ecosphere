@@ -1,0 +1,51 @@
+#### 数据库配置
+spring: 
+  datasource: 
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username:  #数据库登录账号
+    password:  #数据库登录密码
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid: 
+      filters: stat,wall,slf4j  # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      initial-size: 5
+      min-idle: 5
+      max-wait: 60000 # 获取连接时最大等待时间，单位毫秒
+      time-between-eviction-runs-millis: 60000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000 #配置一个连接在池中最小生存的时间，单位是毫秒
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true #申请连接的时候检测，建议配置为true，不影响性能，并且保证安全性
+      test-on-borrow: false #获取连接时执行检测，建议关闭，影响性能
+      test-on-return: false #归还连接时执行检测，建议关闭，影响性能
+      pool-prepared-statements: false #是否开启PSCache，PSCache对支持游标的数据库性能提升巨大，oracle建议开启，mysql下建议关闭
+      max-pool-prepared-statement-per-connection-size: 20 # 打开PSCache，并且指定每个连接上PSCache的大小
+      connection-properties:  druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500 # 通过connectProperties属性来打开mergeSql功能；慢SQL记
+      use-global-data-source-stat: true #合并多个DruidDataSource的监控数据
+      reset-stat-enable: true #允许清空统计数据 
+      filter: 
+        stat:
+          enabled: true 
+          log-slow-sql: true
+        wall: #配置wall filter
+          enabled: true
+          config:
+            truncate-allow: false 
+        slf4j: # 配置日志输出
+         enabled: true
+         statement-create-after-log-enabled: false
+         statement-close-after-log-enabled: false
+         result-set-open-after-log-enabled: false
+         result-set-close-after-log-enabled: false
+      stat-view-servlet: # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+        enabled: true
+        login-username: admin #登录账号
+        login-password: admin #登录密码
+        reset-enable: false #是否能够重置数据
+        url-pattern: /druid/*
+        allow:  #白名单;为空则允许全部
+        deny: #IP黑名单 (存在共同时，deny优先于allow)
+      web-stat-filter: # 配置WallFilter
+        enabled: true  #是否启用StatFilter默认值true
+        url-pattern: /*
+        exclusions: '*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*'
+        session-stat-enable: true  #session统计功能

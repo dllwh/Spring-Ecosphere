@@ -1,0 +1,69 @@
+### 是否显示banner，可选值[log|OFF]
+spring: 
+  main: 
+    banner-mode: log
+---
+### profile环境配置 
+spring: 
+  profiles:
+    active:
+      - datasource # 数据库配置
+---
+
+logging: # 日志级别从低到高分为：trace < debug < info < warn < error < fatal
+  level: # 日志级别控制前缀
+    root: debug # 控制root 的日志级别为debug以上
+    org:
+      springframework: info #控制org.springframework包下的日志级别为info以上
+--- 
+### 全局异常处理
+server:
+  error:
+    include-stacktrace: ALWAYS
+    path: exception
+  tomcat:
+    uri-encoding: UTF-8
+
+---
+#### Thymeleaf 配置
+spring:
+  thymeleaf:
+    cache:  false ## 关闭缓存，便于在热部署文件，页面不产生缓存，能及时更新,（建议：开发环境下设置为false，生产环境设置为true）
+    check-template: true # 是否在渲染之前检查模板是否存在。
+    check-template-location: true #是否检查模板位置是否存在
+    enabled: true # 是否为Web框架启用Thymeleaf视图分辨率
+    enable-spring-el-compiler: false # 在SpringEL表达式中启用SpringEL编译器
+    prefix: classpath:/templates/ #默认配置可以不用添加
+    suffix: .html #默认属性是 .html，可以不用添加
+    encoding: UTF-8 #编码格式
+  resources:
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+---
+#### mybatis
+mybatis: 
+  mapperLocations: classpath:com/cdeledu/dao/impl/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+---
+
+###邮件发送相关配置
+#spring: 
+#  mail: 
+#    host: smtp.sina.com
+#    username: dllwhcrawler@sina.com
+#    password: dllwhcrawler
+#    default-encoding: utf-8
+spring: 
+  mail: 
+    host: smtp.163.com
+    username: dllwhdemo@163.com
+    password: dllwhtest
+    default-encoding: utf-8
+---
+###上传文件配置
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      
