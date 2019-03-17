@@ -58,6 +58,7 @@
 		<module>SpringBoot2-chapter03-redis</module>
 		<module>SpringBoot2-chapter03-rediscluster</module>
 		<module>SpringBoot2-chapter04-mongo</module>
+		<module>SpringBoot2-chapter05-websocket</module>
 	</modules>
 
 	<dependencies>
