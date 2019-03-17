@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dllwh.modules.system.upms.mapper.RoleMenuMapper">
+	<insert id="batchRoleMenu">
+		insert into sys_upms_role_menu (roleId,menuId)
+		<foreach collection="list" item="item" separator=",">
+			(#{item.roleId},#{item.menuId})
+		</foreach>
+	</insert>
+
+	<delete id="deleteRoleMenu" parameterType="Integer">
+		delete from sys_upms_role_menu where roleId in
+		<foreach collection="array" item="roleId" open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+	</delete>
+</mapper>

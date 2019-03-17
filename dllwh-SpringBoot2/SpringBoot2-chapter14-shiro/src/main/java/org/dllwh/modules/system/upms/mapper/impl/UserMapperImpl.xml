@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dllwh.modules.system.upms.mapper.UserMapper">
+
+	<sql id="getUserList_body">
+		<where>
+			<if test="userName != null and userName != '' ">
+				and userName LIKE CONCAT(#{userName},'%')
+			</if>
+			<if test="password != null and password != '' "> and password =#{password}  </if>
+			<if test="nickName != null and nickName != '' ">
+				and nickName LIKE CONCAT(#{nickName},'%')
+			</if>
+			<if test="email != null and email != '' ">
+				and email LIKE CONCAT(#{email},'%')
+			</if>
+			<if test="emailstatus != null "> and emailstatus=#{emailstatus} </if>
+			<if test="mobile != null and mobile != '' "> and mobile like CONCAT(#{mobile},'%') </if>
+			<if test="ifLocked != null "> and ifLocked=#{ifLocked} </if>
+			<if test="ifEnabled != null "> and ifEnabled=#{ifEnabled} </if>
+			<if test="ifEnabled == null "> and ifEnabled=1 </if>
+		</where>
+	</sql>
+
+	<select id="getUserList" parameterType="org.dllwh.modules.system.upms.domain.SysUser"
+		resultType="org.dllwh.modules.system.upms.domain.SysUser">
+		SELECT * FROM sys_upms_user
+		<include refid="getUserList_body" />
+	</select>
+
+	<select id="getUserListCount" parameterType="org.dllwh.modules.system.upms.domain.SysUser"
+		resultType="int">
+		SELECT count(*) FROM sys_upms_user
+		<include refid="getUserList_body" />
+	</select>
+
+	<delete id="batchDeleteUser">
+		delete from sys_upms_user where id in
+		<foreach collection="array" item="userId" open="(" separator=","
+			close=")">
+			#{userId}
+		</foreach>
+		and id != 1
+	</delete>
+
+	<insert id="insertUser" parameterType="org.dllwh.modules.system.upms.domain.SysUser"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sys_upms_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null and userName != '' ">userName,</if>
+			<if test="password != null and password != '' ">password,</if>
+			<if test="avatar != null and avatar !='' ">avatar,</if>
+			<if test="nickName != null and nickName != '' ">nickName,</if>
+			<if test="email != null and email != '' ">email,</if>
+			<if test="emailstatus != null">emailstatus,</if>
+			<if test="mobile != null and mobile != '' ">mobile,</if>
+			<if test="creator != null">creator,</if>
+			<if test="modifier != null">modifier,</if>
+			<if test="remark != null and remark != '' ">remark,</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null and userName != '' ">#{userName},</if>
+			<if test="password != null and password != '' ">#{password},</if>
+			<if test="avatar != null and avatar !='' ">#{avatar},</if>
+			<if test="nickName != null and nickName != '' ">#{nickName},</if>
+			<if test="email != null and  != '' ">#{email},</if>
+			<if test="emailstatus != null">#{emailstatus},</if>
+			<if test="mobile != null and  != '' ">#{mobile},</if>
+			<if test="creator != null">#{creator},</if>
+			<if test="modifier != null">#{modifier},</if>
+			<if test="remark != null and  != '' ">#{remark},</if>
+		</trim>
+	</insert>
+
+	<update id="updateUser" parameterType="org.dllwh.modules.system.upms.domain.SysUser">
+		update sys_user
+		<trim prefix="SET" suffix="" suffixOverrides=",">
+			<if test="userName != null and userName != '' "> userName = #{userName}, </if>
+			<if test="password != null and password != '' "> password = #{password}, </if>
+			<if test="avatar != null and avatar != '' "> avatar = #{avatar}, </if>
+			<if test="nickName != null and nickName != '' "> nickName = #{nickName}, </if>
+			<if test="email != null and email != '' "> email = #{email}, </if>
+			<if test="emailstatus != null "> emailstatus = #{emailstatus}, </if>
+			<if test="mobile != null and mobile != '' "> mobile = #{mobile}, </if>
+			<if test="ifLocked != null "> ifLocked = #{ifLocked}, </if>
+			<if test="ifVisible != null "> ifVisible = #{ifVisible}, </if>
+			<if test="loginFlag != null ">loginFlag = #{loginFlag}, </if>
+			<if test="ifEnabled != null "> igEnabled = #{ifEnabled}, </if>
+			<if test="modifier != null "> modifier = #{modifier}, </if>
+			<if test="remark != null and remark != '' "> remark = #{remark}, </if>
+		</trim>
+		where id = #{id}
+	</update>
+</mapper>
