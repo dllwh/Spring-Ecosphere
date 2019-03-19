@@ -4,7 +4,20 @@
 
 ![](pic/newlogo.jpg)
 
+# 具备的功能(v0.1)
+
+- Spring Boot (后端)
+
+  - 通过在Spring Boot中建立基于RestFul-API并使用**@RequestMapping**实现一个基本的CRUD逻辑
+  - 处理CORS(跨域资源共享)
+  - 支持热加载
+	
+- VueJS & Vue-Router (前端)
+	- 遵循ECMAScript 6 规范
+	- 如何和后端进行数据交互
+	
 # 技术选型
+
 ## 后端技术
 技术 | 类型 | 版本 | 官网
 ----|------|----|----
@@ -14,6 +27,7 @@ Maven | 项目构建管理 | 3.6 |  [http://maven.apache.org](http://maven.apach
 Apache Shiro | 安全框架 | 1.3.2 |  [http://shiro.apache.org](http://www.mybatis.org/generator/index.html)
 Lombok | 工具 | 1.16.20 |  [https://www.projectlombok.org/](https://www.projectlombok.org/)
 Springfox-Swagger2 | api文档工具 | 2.7.0 | [https://github.com/springfox/springfox](https://github.com/springfox/springfox)
+
 ## 前端技术
 技术 | 类型 | 版本 | 官网
 ----|------|----|----
