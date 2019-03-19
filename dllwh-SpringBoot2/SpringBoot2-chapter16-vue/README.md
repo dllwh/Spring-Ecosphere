@@ -4,6 +4,15 @@
 
 ![](pic/newlogo.jpg)
 
+# 什么是MVVM
+
+&emsp;&emsp;**MVVM**是**Model-View-ViewModel**的简写。即模型-视图-视图模型。【模型】指的是后端传递的数据。【视图】指的是所看到的页面。【视图模型】mvvm模式的核心，它是连接view和model的桥梁。
+
+&emsp;&emsp;在MVVM的框架下视图和模型是不能直接通信的。它们通过ViewModel来通信，ViewModel通常要实现一个observer观察者，当数据发生变化，ViewModel能够监听到数据的这种变化，然后通知到对应的视图做自动更新，而当用户操作视图，ViewModel也能监听到视图的变化，然后通知数据做改动，这实际上就实现了数据的双向绑定。并且MVVM中的View 和 ViewModel可以互相通信。MVVM流程图如下：
+
+![](pic/MVVM流程图.jpg)
+
+
 # 具备的功能(v0.1)
 
 - Spring Boot (后端)
