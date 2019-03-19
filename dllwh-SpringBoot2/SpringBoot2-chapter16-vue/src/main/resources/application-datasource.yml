@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username:  #数据库登录账号
-    password:  #数据库登录密码
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: spring #数据库登录账号
+    password: spring #数据库登录密码
     driver-class-name: com.mysql.jdbc.Driver
 ---
 mybatis:
