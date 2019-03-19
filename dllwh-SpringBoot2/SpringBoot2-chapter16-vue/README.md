@@ -1,8 +1,11 @@
 # SpringBoot2-chapter16-vue
 
+![](pic/newlogo.jpg)
+
 > 即使你是天才，如果你不努力，你也会被其它人超越。
 
-[](/newlogo.jpg)
+
+
 # 技术选型
 ## 后端技术
 技术 | 类型 | 版本 | 官网
