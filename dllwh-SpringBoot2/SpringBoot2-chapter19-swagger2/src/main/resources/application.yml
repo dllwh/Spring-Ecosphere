@@ -1,0 +1,24 @@
+server:
+  port: 8219
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+logging:
+  level:
+    root: info
+    org:
+      springframework: info
+spring:
+  application:
+    name: SpringBoot2-chapter-vue
+  datasource:
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: spring
+    password: spring
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:org/dllwh/dao/*.xml
+  type-aliases-package: org.dllwh.entity
+swagger:
+  enabled: true 
