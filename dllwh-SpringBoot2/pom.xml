@@ -72,6 +72,7 @@
 		<module>SpringBoot2-chapter15-task</module>
 		<module>SpringBoot2-chapter16-vue</module>
 		<module>SpringBoot2-chapter17-cache</module>
+		<module>SpringBoot2-chapter18-springDataJPA</module>
 	</modules>
 
 	<dependencies>
