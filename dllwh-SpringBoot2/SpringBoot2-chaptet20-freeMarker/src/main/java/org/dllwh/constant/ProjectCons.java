@@ -22,7 +22,7 @@ public final class ProjectCons {
 	/** Mapper所在包 */
 	public static final String	MAPPER_PACKAGE				= BASE_PACKAGE + ".dao";
 	/** Mapper所在包 */
-	public static final String	MAPPER_XML_PACKAGE			= "mapper";
+	public static final String	MAPPER_XML_PACKAGE			= MAPPER_PACKAGE+".mapper";
 	/** Service所在包 */
 	public static final String	SERVICE_PACKAGE				= BASE_PACKAGE + ".service";
 	/** ServiceImpl所在包 */

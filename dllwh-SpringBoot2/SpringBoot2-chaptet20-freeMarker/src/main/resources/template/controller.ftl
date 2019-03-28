@@ -1,7 +1,12 @@
 package ${basePackageController};
 
+import java.util.List;
+
 import ${basePackageModel}.${tableNameUpper};
 import ${basePackageService}.${tableNameUpper}Service;
+
+import org.dllwh.constant.RestResult;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import io.swagger.annotations.*;
-
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -29,11 +34,12 @@ import io.swagger.annotations.*;
 @RestController
 @RequestMapping("${baseRequestMapping}")
 @Api
+@Slf4j
 public class ${tableNameUpper}Controller {
 
 
 	@Autowired
-	private ${tableNameUpper}Service ${tableNameUpper}Service;
+	private ${tableNameUpper}Service ${tableNameLower}Service;
 
 	@RequestMapping(value = {"","init","index"})
 	@ApiOperation(value = "", notes = "")
@@ -49,8 +55,13 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
 	@ApiOperation(value = "", notes = "")
-	public void insert(){
-	
+	public RestResult insert(${tableNameUpper} ${tableNameLower}){
+		try {
+			${tableNameUpper} result = ${tableNameLower}Service.insert(${tableNameLower});
+			return RestResult.success();
+		} catch (Exception e) {
+			return RestResult.error();
+		}
 	} 	
 	
 	@DeleteMapping("delete")
@@ -60,8 +71,17 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
 	@ApiOperation(value = "", notes = "")
-	public void delete(){
-	
+	public RestResult delete(@RequestParam Integer id) throws Exception {
+		${tableNameUpper} ${tableNameLower} = ${tableNameLower}Service.get${tableNameUpper}ById(id);
+		if (${tableNameLower} == null) {
+			return RestResult.error(400,"数据不存在");
+		} 
+		
+		if (${tableNameLower}Service.delete${tableNameUpper}ById(id) >= 0){
+			return RestResult.success();
+		}
+		
+		return RestResult.error();
 	} 	
 	
 	@PutMapping("update")
@@ -71,8 +91,14 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
 	@ApiOperation(value = "", notes = "")
-	public void update(){
-	
+	public RestResult update(${tableNameUpper} ${tableNameLower}){
+		try {
+			${tableNameLower}Service.update${tableNameUpper}(${tableNameLower});
+			return RestResult.success();
+		} catch (Exception e){
+			log.error(null, e);
+			return RestResult.error();
+		}
 	} 	
 	
 	@RequestMapping("getList")
@@ -82,7 +108,12 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
 	@ApiOperation(value = "", notes = "")
-	public void getList(){
-	
+	public List<${tableNameUpper}> getList(${tableNameUpper} ${tableNameLower}){
+		try {
+			return ${tableNameLower}Service.get${tableNameUpper}List(${tableNameLower});
+		} catch (Exception e) {
+			log.error(null, e);
+			return null;
+		}
 	} 	
 }

@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.dllwh.constant.ProjectCons;
-import org.dllwh.utils.GenerateConfigHelper;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Context;
@@ -27,9 +25,23 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 把今天最好的表现当作明天最新的起点．．～
+ *
+ * Today the best performance as tomorrow newest starter!
+ *
+ * @类描述: 代码生成器，根据数据表名称生成对应的Model、Mapper、Service、Controller简化开发时间
+ * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @创建时间: 2019年3月28日 下午9:50:40
+ * @版本: V1.0.1
+ * @since: JDK 1.8
+ */
 @Slf4j
 public final class GeneratorSqlHelper {
 
+	public static void main(String[] args) {
+		genCode("t_blog");
+	}
 	/**
 	 * @方法描述:通过数据表名称生成代码
 	 * @param tableName
@@ -50,18 +62,20 @@ public final class GeneratorSqlHelper {
 	 */
 	public static void genController(String tableName) {
 		try {
-			tableName = StringUtils.capitalize(tableName);
+			String upperTableName = tableNameConvertUpperCamel(tableName);
+			String lowerTableName = tableNameConvertLowerCamel(tableName);
 			Map<String, Object> data = new HashMap<>();
 			data.put("date", ProjectCons.DATE);
 			data.put("author", ProjectCons.AUTHOR);
-			data.put("baseRequestMapping", tableName);
+			data.put("baseRequestMapping", lowerTableName);
 			data.put("basePackage", ProjectCons.BASE_PACKAGE);
 			data.put("basePackageController", ProjectCons.CONTROLLER_PACKAGE);
 			data.put("basePackageService", ProjectCons.SERVICE_PACKAGE);
 			data.put("basePackageModel", ProjectCons.MODEL_PACKAGE);
-			data.put("tableNameUpper", tableName);
+			data.put("tableNameUpper", upperTableName);
+			data.put("tableNameLower", lowerTableName);
 
-			File file = new File(ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_CONTROLLER + tableName
+			File file = new File(ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_CONTROLLER + upperTableName
 					+ "Controller.java");
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();
@@ -92,7 +106,7 @@ public final class GeneratorSqlHelper {
 			context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfig);
 
 			SqlMapGeneratorConfiguration sqlMapGeneratorConfig = GenerateConfigHelper
-					.getSqlMapGenerator(ProjectCons.MAPPER_XML_PACKAGE, ProjectCons.RESOURCES_PATH);
+					.getSqlMapGenerator(ProjectCons.MAPPER_XML_PACKAGE, ProjectCons.JAVA_PATH);
 			context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfig);
 
 			JavaClientGeneratorConfiguration javaClientGeneratorConfig = GenerateConfigHelper
@@ -138,7 +152,8 @@ public final class GeneratorSqlHelper {
 	 */
 	public static void genServiceInterface(String tableName) {
 		try {
-			tableName = tableNameConvertUpperCamel(tableName);
+			String upperTableName = tableNameConvertUpperCamel(tableName);
+			String lowerTableName = tableNameConvertLowerCamel(tableName);
 			Configuration cfg = getConfiguration();
 			// 模板所需要的参数
 			Map<String, Object> data = new HashMap<>();
@@ -146,11 +161,12 @@ public final class GeneratorSqlHelper {
 			data.put("author", ProjectCons.AUTHOR);
 			data.put("basePackage", ProjectCons.BASE_PACKAGE);
 			data.put("basePackageService", ProjectCons.SERVICE_PACKAGE);
-			data.put("tableNameUpper", tableName);
+			data.put("tableNameUpper", upperTableName);
+			data.put("tableNameLower", lowerTableName);
 			data.put("basePackageModel", ProjectCons.MODEL_PACKAGE);
 
 			File file = new File(
-					ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_SERVICE + tableName + "Service.java");
+					ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_SERVICE + upperTableName + "Service.java");
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();
 			}
@@ -167,18 +183,22 @@ public final class GeneratorSqlHelper {
 	 */
 	public static void genServiceImpl(String tableName) {
 		try {
-			tableName = tableNameConvertUpperCamel(tableName);
+			String upperTableName = tableNameConvertUpperCamel(tableName);
+			String lowerTableName = tableNameConvertLowerCamel(tableName);
+
 			Configuration cfg = getConfiguration();
 			// 模板所需要的参数
 			Map<String, Object> data = new HashMap<>();
 			data.put("date", ProjectCons.DATE);
 			data.put("author", ProjectCons.AUTHOR);
 			data.put("basePackage", ProjectCons.BASE_PACKAGE);
+			data.put("basePackageService", ProjectCons.SERVICE_PACKAGE);
 			data.put("basePackageServiceImpl", ProjectCons.SERVICE_IMPL_PACKAGE);
-			data.put("tableNameUpper", tableName);
+			data.put("tableNameUpper", upperTableName);
+			data.put("tableNameLower", lowerTableName);
 			data.put("basePackageModel", ProjectCons.MODEL_PACKAGE);
 			data.put("basePackageDao", ProjectCons.MAPPER_PACKAGE);
-			File file = new File(ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_SERVICE_IMPL + tableName
+			File file = new File(ProjectCons.JAVA_PATH + ProjectCons.PACKAGE_PATH_SERVICE_IMPL + upperTableName
 					+ "ServiceImpl.java");
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();
@@ -197,6 +217,10 @@ public final class GeneratorSqlHelper {
 		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, tableName.toLowerCase());
 	}
 
+	private static String tableNameConvertLowerCamel(String tableName) {
+		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, tableName.toLowerCase());
+	}
+	
 	private static Configuration getConfiguration() throws IOException {
 		Configuration cfg = new Configuration(Configuration.getVersion());
 		cfg.setDirectoryForTemplateLoading(new File("src/main/resources/template"));
