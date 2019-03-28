@@ -74,6 +74,7 @@
 		<module>SpringBoot2-chapter17-cache</module>
 		<module>SpringBoot2-chapter18-springDataJPA</module>
 		<module>SpringBoot2-chapter19-swagger2</module>
+		<module>SpringBoot2-chaptet20-freeMarker</module>
 	</modules>
 
 	<dependencies>
