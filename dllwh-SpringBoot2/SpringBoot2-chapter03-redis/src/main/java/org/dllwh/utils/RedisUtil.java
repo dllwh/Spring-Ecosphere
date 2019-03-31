@@ -75,7 +75,7 @@ public class RedisUtil {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
-			// TODO 配置redis服务信息
+			// 配置redis服务信息
 			Client client = jedis.getClient();
 			client.dbSize();
 			return client.getIntegerReply();

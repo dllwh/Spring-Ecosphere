@@ -1,15 +1,20 @@
 package org.dllwh.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dllwh.entity.Operate;
 import org.dllwh.entity.RedisInfoDetail;
 import org.dllwh.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 
@@ -31,9 +36,24 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping(value = "redis")
 @Api
-public class RedisController {
+public class RedisClientController {
 	@Autowired
-	RedisService redisService;
+	RedisService	redisService;
+	@Value("${spring.redis.host}")
+	private String	host;
+	@Value("${spring.redis.port}")
+	private String	port;
+
+	@GetMapping(value = "console")
+	public ModelAndView console() {
+		ModelAndView mv = new ModelAndView("console");
+		Map<String, Object> info = new HashMap<>();
+		info.put("host", host);
+		info.put("port", port);
+		
+		mv.addObject("info", info);
+		return mv;
+	}
 
 	@ApiOperation(value = "跳转到监控页面")
 	@RequestMapping(value = "redisMonitor")
@@ -49,6 +69,11 @@ public class RedisController {
 		model.addAttribute("logLen", logLen);
 
 		return "redisMonitor";
+	}
+
+	@ApiOperation(notes = "首页获取redis info信息", value = "首页获取redis info信息")
+	public void getRedisInfo() {
+
 	}
 
 	@ApiOperation(value = "清空日志按钮")
