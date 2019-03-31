@@ -1,0 +1,21 @@
+#### redis 配置
+spring: 
+  redis: 
+    database: 0  ## Redis数据库索引（默认为0）
+    timeout: 10000 ## 客户端超时时间单位是毫秒 默认是2000
+    ssl: false  # 是否启用SSL支持。
+    jedis:
+      pool:
+        max-active: 1024 ### 连接池的最大数据库连接数。设为0表示无限制
+        min-idle: 8 ### 连接池中的最小空闲连接
+        max-idle: 20 ## 连接池中的最大空闲连接数
+        max-wait: 10000 ### 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制
+    cluster:  ## 普通集群，不使用则不用开启
+      max-redirects: 3 ### 在群集中执行命令时遵循的最大重定向数
+      nodes: ### 以逗号分隔的“主机：端口”对列表进行引导。
+        - localhost1:15001
+        - localhost1:15002
+        - localhost2:15001
+        - localhost2:15002
+        - localhost3:15001
+        - localhost3:15002
