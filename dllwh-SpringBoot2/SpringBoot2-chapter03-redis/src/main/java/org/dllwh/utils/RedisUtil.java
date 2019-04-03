@@ -5,16 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.util.Slowlog;
 
+/**
+ * 把今天最好的表现当作明天最新的起点．．～
+ *
+ * Today the best performance as tomorrow newest starter!
+ *
+ * @类描述: Jedis操作redis的工具类
+ * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @创建时间: 2019年4月3日 下午8:30:17
+ * @版本: V1.0.1
+ * @since: JDK 1.8
+ */
+@Slf4j
 @Component
 public class RedisUtil {
 
 	@Autowired
-	JedisPool jedisPool;
+	private JedisPool jedisPool;
 
 	// 获取redis 服务器信息
 	public String getRedisInfo() {
@@ -26,9 +39,11 @@ public class RedisUtil {
 			client.info();
 			String info = client.getBulkReply();
 			return info;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return "";
 		} finally {
-			// 返还到连接池
-			jedis.close();
+			closeRedisClient(jedis);
 		}
 	}
 
@@ -40,8 +55,7 @@ public class RedisUtil {
 			List<Slowlog> logList = jedis.slowlogGet(entries);
 			return logList;
 		} finally {
-			// 返还到连接池
-			jedis.close();
+			closeRedisClient(jedis);
 		}
 	}
 
@@ -53,8 +67,7 @@ public class RedisUtil {
 			long logLen = jedis.slowlogLen();
 			return logLen;
 		} finally {
-			// 返还到连接池
-			jedis.close();
+			closeRedisClient(jedis);
 		}
 	}
 
@@ -65,8 +78,7 @@ public class RedisUtil {
 			jedis = jedisPool.getResource();
 			return jedis.slowlogReset();
 		} finally {
-			// 返还到连接池
-			jedis.close();
+			closeRedisClient(jedis);
 		}
 	}
 
@@ -80,8 +92,13 @@ public class RedisUtil {
 			client.dbSize();
 			return client.getIntegerReply();
 		} finally {
-			// 返还到连接池
-			jedis.close();
+			closeRedisClient(jedis);
+		}
+	}
+
+	private void closeRedisClient(Jedis jedisClient) {
+		if (jedisClient != null) {
+			jedisClient.close();
 		}
 	}
 }
