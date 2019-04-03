@@ -44,13 +44,38 @@ public class RedisClientController {
 	@Value("${spring.redis.port}")
 	private String	port;
 
+	
 	@GetMapping(value = "console")
 	public ModelAndView console() {
 		ModelAndView mv = new ModelAndView("console");
 		Map<String, Object> info = new HashMap<>();
 		info.put("host", host);
 		info.put("port", port);
-		
+		List<RedisInfoDetail> ridList = redisService.getRedisInfo();
+		ridList.forEach(redisInfo -> {
+			if("redis_version".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("redis_version", redisInfo.getValue());
+			}
+			if("uptime_in_days".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("uptime_in_days", redisInfo.getValue());
+			}
+			if("os".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("os", redisInfo.getValue());
+			}
+			if("connected_clients".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("connected_clients", redisInfo.getValue());
+			}
+			if("used_memory_human".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("used_memory_human", redisInfo.getValue());
+			}
+			if("blocked_clients".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("blocked_clients", redisInfo.getValue());
+			}
+			if("rdb_last_save_time".equalsIgnoreCase(redisInfo.getKey())){
+				info.put("rdb_last_save_time", redisInfo.getValue());
+			}
+			
+		});
 		mv.addObject("info", info);
 		return mv;
 	}
@@ -72,8 +97,11 @@ public class RedisClientController {
 	}
 
 	@ApiOperation(notes = "首页获取redis info信息", value = "首页获取redis info信息")
-	public void getRedisInfo() {
-
+	@GetMapping("getRedisInfo")
+	@ResponseBody
+	public List<RedisInfoDetail> getRedisInfo() {
+		List<RedisInfoDetail> ridList = redisService.getRedisInfo();
+		return ridList;
 	}
 
 	@ApiOperation(value = "清空日志按钮")
