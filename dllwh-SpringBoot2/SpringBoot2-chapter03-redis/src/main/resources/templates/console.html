@@ -29,31 +29,33 @@
 					</tr>
 					<tr>
 						<td>版本</td>
-						<td>{{ info.redis_version }}</td>
+						<td th:text="${info.redis_version }"></td>
 					</tr>
 					<tr>
 						<td>系统</td>
-						<td>{{ info.os }}</td>
+						<td th:text="${info.os}"></td>
 					</tr>
 					<tr>
 						<td>使用内存</td>
-						<td>{{ info.used_memory_human }}</td>
+						<td th:text="${info.used_memory_human}"></td>
 					</tr>
 					<tr>
 						<td>运行天数</td>
-						<td>{{ info.uptime_in_days }}天</td>
+						<td th:text="${info.uptime_in_days}+天"></td>
 					</tr>
 					<tr>
 						<td>客户端数量</td>
-						<td>{{ info.connected_clients }}</td>
+						<td th:text="${info.connected_clients}"></td>
 					</tr>
 					<tr>
 						<td>阻塞的客户端数</td>
-						<td>{{ info.blocked_clients }}</td>
+						<td th:text="${info.blocked_clients}"></td>
 					</tr>
 					<tr>
 						<td>数据保存时间</td>
-						<td>{{ info.rdb_last_save_time }}</td>
+<!-- 						<td th:text="${ info.rdb_last_save_time}"></td> -->
+<!-- 							<td thSys:text="${info.rdb_last_save_time}"></td> -->
+							<td><thSys:pager value="1111"></thSys:pager></td>
 					</tr>
 				</tbody>
 			</table>

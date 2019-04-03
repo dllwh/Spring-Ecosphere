@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>RedisWebAdmin - Redis监控-实时状态监控</title>
-	<link rel="stylesheet" href="/static/layui/css/layui.css" th:href="@{/static/layui/css/layui.css}" media="all">
-		
+	<meta th:replace="commom/head.html">	
+	<link rel="stylesheet" th:href="@{/static/layui/css/layui.css?v=1.0.1}" media="all">
+	
 	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 	<!--[if lt IE 9]>
 		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -15,11 +11,19 @@
 	<![endif]-->
 </head>
 
+<style type="text/css">
+iframe {
+	margin: 0;
+	border-style: none;
+	width: 100%;
+	height: 100%;
+}
+</style>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<!-- 头部区域（可配合layui已有的水平导航） -->
 		<div class="layui-header">
-			<div class="layui-logo">SpringBoot Redis</div>
+			<div class="layui-logo">SpringBoot Redis管理系统</div>
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item lay-flexible" lay-unselect>
 					<a href="javascript:;" lay-event="flexible" title="侧边伸缩">
@@ -61,7 +65,7 @@
 					</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a>基本资料</a>
+							<a onclick="dialogOpen('基本资料','https://www.baidu.com')">基本资料</a>
 						</dd>
 						<hr>
 						<dd><a lay-filter="logout">退出</a></dd>
@@ -89,39 +93,13 @@
 						</a>
 						<dl class="layui-nav-child" data-name="console" >
 							<dd class="layui-this">
-								<a lay-href="home/console">控制台</a>
+								<a data-href="redis/console" data-id="0"> 控制台</a>
 							</dd>
 							<dd>
-								<a lay-href="redis/redisMonitor">控制台二</a>
+								<a data-href="redis/redisMonitor" data-id="1">控制台二</a>
 							</dd>
 							<dd>
-								<a href="javascript:void(0);">控制台三</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item" data-name="set">
-						<a href="javascript:;" lay-tips="设置" lay-direction="2">
-							<i class="layui-icon layui-icon-set"></i>
-							<cite>设置</cite>
-						</a>
-						<dl class="layui-nav-child">
-							<dd class="layui-nav-itemed">
-								<a href="javascript:;">系统设置</a>
-								<dl class="layui-nav-child">
-									<dd>
-										<a>网站设置</a>
-									</dd>
-									<dd>
-										<a>邮件服务</a>
-									</dd>
-								</dl>
-							</dd>
-							<dd class="layui-nav-itemed">
-								<a href="javascript:;">我的设置</a>
-								<dl class="layui-nav-child">
-									<dd><a>基本资料</a></dd>
-									<dd><a>修改密码</a></dd>
-								</dl>
+								<a data-href="" data-id="2">控制台三</a>
 							</dd>
 						</dl>
 					</li>
@@ -131,6 +109,18 @@
 		
 		<!-- 内容主体区域 -->
 		<div class="layui-body">
+			<div class="layui-tab" lay-allowClose="true" lay-filter="springBoot-redis-tab">
+				<ul class="layui-tab-title">
+					<li class="home">
+						<i class="layui-icon">&#xe68e;</i>&emsp;我的桌面
+					</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<iframe src='redis/console'></iframe>
+					</div>
+				</div>
+			</div> 
 		</div>
 		
 		<!-- 底部固定区域 -->
@@ -142,13 +132,14 @@
 		<div class="layadmin-body-shade" layadmin-event="shade"></div>
 	</div>
 	
-	<script src="/static/layui/layui.js" th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+	<script th:src="@{/static/layui/layui.js?v=1.0.1}" charset="utf-8"></script>
+	<script th:src="@{/static/layui/layuiUtils.js?v=1.0.1}" charset="utf-8"></script>
+	<script th:src="@{/static/lib/extJavascript.js?v=1.0.1}" charset="utf-8"></script>
 </body>
 
-	<script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
-	<script src="../static/js/redischarts/highcharts.js" th:src="@{/static/js/redischarts/highcharts.js}"></script>
-	<script src="../static/js/redischarts/index.js" th:src="@{/static/js/redischarts/index.js}"></script>
+	<script th:src="@{/static/js/jquery.min.js}"></script>
 	<script type="text/javascript">
+		frameWH();
 		layui.use(['layer', 'table','element'],function(){
 			var i = layui.$;
 			var layer = layui.layer; // 弹层
@@ -167,33 +158,119 @@
 				page:true
 			});
 			
+			var tabID = "springBoot-redis-tab";
+			
+			$(".home .layui-icon").eq(1).remove();
+			
 			//监听导航点击
 			element.on('nav(springBoot-redis-side-menu)', function(elem){
-				// layer.msg(elem.text());
-				tab.tabAdd(1,2,3);
+				var childHtml = elem.attr("data-href");//获取当前点击的路径
+				var childId = elem.attr("data-id");
+				
+				if(dllwh.isNullOrEmpty(childHtml)){
+					return;	
+				}
+				/**
+				 *判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
+				 */
+				if ($(".layui-tab-title li[lay-id]").length <= 0) {
+					// 如果比零小，则直接打开新的tab项
+					tab.tabAdd(elem.text(),childHtml,childId);
+					tab.tabChange(childId);
+					return;
+				} 
+				
+				
+				/**
+				 * 判断该tab项是否以及存在
+				 */
+				//初始化一个标志，为false说明未打开该tab项 为true则说明已有
+				var isExist = false;  
+				var isRefresh = false;
+				
+				$.each($(".layui-tab-title li[lay-id]"), function () {
+					// 如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+					if ($(this).attr("lay-id") == childId) {
+						tab.tabChange(childId);
+						isExist = true;
+						event.stopPropagation();
+					}
+				});
+				
+				if(!isExist){
+					tab.tabAdd(elem.text(),childHtml,childId);
+				}
+				
+				/**
+				 * 最后不管是否新增tab，最后都转到要打开的选项页面上
+				 */ 
+				tab.tabChange(childId);
+				
+				event.stopPropagation();
+			});
+			
+			element.on('tabDelete('+tabID+')', function(data){
+				if(data.index == 0){
+					return;
+				}
 			});
 			
 			element.on('nav(logout)', function(elem){
 				layer.msg(elem.text());
 			});
 			
+			
 			// 触发事件
 			var tab = {
-				tabAdd: function(title, url, id) { //新增一个Tab项
-					element.tabAdd('springBoot-redis-tab', {
-						title: title
-						,content: '内容'+ (Math.random()*1000|0)
-						,id: id
+				// 新增一个Tab项
+				// 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+				tabAdd: function(title, url, id) { 
+					var content = '<iframe tab-id="'+id+'" frameborder="0" src="'+url+'" scrolling="auto"'
+						+' frameborder="0" style="width:100%;height:99%;"></iframe>'
+					element.tabAdd(tabID, {
+						title: title, 
+						content: content,
+						id: id
 					});
+					customRightClick(id); 
+					frameWH();  
+					$(".home .layui-icon").eq(1).remove();
 				},
 				tabDelete: function(id) { // 删除指定Tab项
-					element.tabDelete('springBoot-redis-tab', id);
+					element.tabDelete(tabID, id);
 					$(this).addClass('layui-btn-disabled');
 				},
 				tabChange: function(id) {// 切换到指定Tab项
-					element.tabChange('springBoot-redis-tab', id);
+					//根据传入的id传入到指定的tab项
+					element.tabChange(tabID, id);
+				},
+				tabDeleteAll: function (ids) {//删除所有
+					$.each(ids, function (i,item) {
+						if( item != 0 ){
+							element.tabDelete(tabID, item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+						}	
+					});
 				}
 			};
+		});
+		
+		//给tab绑定右击事件
+		function customRightClick(id) {
+			// 取消右键  rightmenu属性开始是隐藏的 ，当右击的时候显示，左击的时候隐藏
+			$('.layui-tab-title li').on('contextmenu', function () { 
+				return false; 
+			});
+		}
+	
+		
+		//计算ifram层的大小
+		function frameWH() {
+			var h = $(window).height();
+			$("iframe").css("height",h+"px");
+		}
+		
+		$(window).resize(function () {
+			frameWH();
 		});
 	</script>
 </html>
