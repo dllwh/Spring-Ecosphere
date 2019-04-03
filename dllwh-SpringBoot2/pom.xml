@@ -75,6 +75,7 @@
 		<module>SpringBoot2-chapter18-springDataJPA</module>
 		<module>SpringBoot2-chapter19-swagger2</module>
 		<module>SpringBoot2-chaptet20-freeMarker</module>
+		<module>SpringBoot2-chaptet20-thymeleaf</module>
 	</modules>
 
 	<dependencies>
