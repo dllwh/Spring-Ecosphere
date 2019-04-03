@@ -18,6 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * 把今天最好的表现当作明天最新的起点．．～
+ *
+ * Today the best performance as tomorrow newest starter!
+ *
+ * @类描述: Redis 配置类
+ * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @创建时间: 2019年4月3日 下午8:28:29
+ * @版本: V1.0.1
+ * @since: JDK 1.8
+ */
 @Configuration
 @Slf4j
 public class RedisConfig {
