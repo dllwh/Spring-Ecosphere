@@ -1,9 +1,6 @@
 # Thymeleaf 3.0 学习笔记
 ---
 
-#  第一章、初识 Thymeleaf 3.0
-
-
 [第一章、初识 Thymeleaf 3.0](./doc/第01章、初识Thymeleaf.md)
 
 [第二章、Thymeleaf 对象的使用](./doc/第02章、Thymeleaf对象的使用.md)
