@@ -1,11 +1,12 @@
 package org.dllwh.config;
 
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -68,7 +69,14 @@ public class RedisConfig {
 		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
 		template.setConnectionFactory(factory);
 
-		// 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
+		// 设置义key序列化的实例化对象
+		RedisSerializer<String> stringSerializer = new StringRedisSerializer(StandardCharsets.UTF_8);
+		// key采用String的序列化方式
+		template.setKeySerializer(stringSerializer);
+		// hash的key也采用String的序列化方式
+		template.setHashKeySerializer(stringSerializer);
+		
+		// 定义value的序列化方式
 		Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<Object>(
 				Object.class);
 		ObjectMapper mapper = new ObjectMapper();
@@ -76,26 +84,12 @@ public class RedisConfig {
 		mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 		serializer.setObjectMapper(mapper);
 
-		// 设置序列化的实例化对象
-		template.setKeySerializer(serializer);
-		template.setHashKeySerializer(serializer);
+		// value序列化方式采用jackson
 		template.setValueSerializer(serializer);
+		// hash的value序列化方式采用jackson
 		template.setHashValueSerializer(serializer);
-		template.afterPropertiesSet();
-		return template;
-	}
 
-	/**
-	 * @方法描述: 配置自定义stringRedisTemplate
-	 */
-	@Bean
-	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
-		StringRedisTemplate template = new StringRedisTemplate(factory);
-		RedisSerializer<String> stringSerializer = new StringRedisSerializer();
-		template.setKeySerializer(stringSerializer);
-		template.setValueSerializer(stringSerializer);
-		template.setHashKeySerializer(stringSerializer);
-		template.setHashValueSerializer(stringSerializer);
+		// template.afterPropertiesSet();
 		return template;
 	}
 }
