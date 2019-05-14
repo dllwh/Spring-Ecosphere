@@ -50,6 +50,7 @@
 		<dllwh.registry.version>0.0.1</dllwh.registry.version>
 		<dllwh.pay.version>0.0.1</dllwh.pay.version>
 		<dllwh.registy.version>0.0.1</dllwh.registy.version>
+		<dllwh.common.version>0.0.1</dllwh.common.version>
 	</properties>
 	<modules>
 		<module>dllwh-education-auth</module>
@@ -58,6 +59,7 @@
 		<module>dllwh-education-monitor</module>
 		<module>dllwh-education-pay</module>
 		<module>dllwh-education-modules</module>
+		<module>dllwh-education-common</module>
 	</modules>
 
 	<!--依赖管理，用于管理spring-cloud的依赖，其中Finchley.RELEASE是版本号 -->
@@ -88,8 +90,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
-<!-- 引入 Web的起步依赖spring-boot-starter-web -->
+
+		<!-- 引入 Web的起步依赖spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
