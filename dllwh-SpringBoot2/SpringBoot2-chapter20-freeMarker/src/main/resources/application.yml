@@ -13,24 +13,23 @@ spring:
   application:
     name: SpringBoot2-chapter20-freeMarker
   datasource:
-    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true
-    username: spring
-    password: spring
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/db_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: product
+    password: product
     driver-class-name: com.mysql.jdbc.Driver
   devtools: # 设置热部署
     restart: 
       enabled: true #开启热部署
       additional-paths: src/main/java # 重启范围
-  freemarker:
-    suffix: .html ## 设置模板后缀名
-    content-type: text/html ## 设置文档类型
-    enabled: true
-    cache: false ## 缓存配置
-    template-loader-path: ## 模板加载路径 按需配置
-      - classpath:/templates/
-    charset: UTF-8 ## 编码格式
-  mvc: # 设置静态文件路径，js,css等
-    static-path-pattern: /static/**
+      exclude: webviews/,static/ # classpath目录下的webviews文件夹内容修改不重启
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  resources:
+    static-locations: classpath:/static/,classpath:/webviews/
 mybatis:
-  mapper-locations: classpath:mapper/*.xml,classpath:org/dllwh/dao/**/*.xml,classpath:org/dllwh/mapper/*.xml,classpath:org/dllwh/**/**/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: org.dllwh.model
+
+swagger: # 是否开启swagger，正式环境一般是需要关闭的，可根据springboot的多环境配置进行设置
+  enabled: true 

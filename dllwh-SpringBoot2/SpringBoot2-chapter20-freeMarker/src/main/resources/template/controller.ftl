@@ -54,7 +54,7 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 400, message = "业务逻辑异常"),
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
-	@ApiOperation(value = "", notes = "")
+	@ApiOperation(value = "创建", notes = "创建")
 	public RestResult insert(${tableNameUpper} ${tableNameLower}){
 		try {
 			${tableNameUpper} result = ${tableNameLower}Service.insert(${tableNameLower});
@@ -70,7 +70,7 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 400, message = "业务逻辑异常"),
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
-	@ApiOperation(value = "", notes = "")
+	@ApiOperation(value = "删除", notes = "删除")
 	public RestResult delete(@RequestParam Integer id) throws Exception {
 		${tableNameUpper} ${tableNameLower} = ${tableNameLower}Service.get${tableNameUpper}ById(id);
 		if (${tableNameLower} == null) {
@@ -90,7 +90,7 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 400, message = "业务逻辑异常"),
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
-	@ApiOperation(value = "", notes = "")
+	@ApiOperation(value = "更新", notes = "更新")
 	public RestResult update(${tableNameUpper} ${tableNameLower}){
 		try {
 			${tableNameLower}Service.update${tableNameUpper}(${tableNameLower});
@@ -107,7 +107,7 @@ public class ${tableNameUpper}Controller {
 		@ApiResponse(code = 400, message = "业务逻辑异常"),
 		@ApiResponse(code = 500, message = "服务器内部错误")
 	})
-	@ApiOperation(value = "", notes = "")
+	@ApiOperation(value = "列表", notes = "列表")
 	public List<${tableNameUpper}> getList(${tableNameUpper} ${tableNameLower}){
 		try {
 			return ${tableNameLower}Service.get${tableNameUpper}List(${tableNameLower});
