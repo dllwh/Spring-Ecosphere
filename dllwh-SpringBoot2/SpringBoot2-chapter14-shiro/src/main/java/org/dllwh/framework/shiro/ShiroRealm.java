@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * Today the best performance as tomorrow newest starter!
  *
- * @类描述: TODO(这里用一句话描述这个类的作用)
+ * @类描述: Shiro核心类:创建Realm用于授权和认证
  * @创建者: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月5日 下午10:57:30
  * @版本: V1.0.1
@@ -61,7 +61,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		// 添加角色和权限
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		// 超级管理员，添加所有角色、添加所有权限
-		if(sysUser.getId() == 1){
+		if (sysUser.getId() == 1) {
 			authorizationInfo.addRole("*");
 			authorizationInfo.addStringPermission("*");
 		} else {
