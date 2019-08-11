@@ -77,7 +77,6 @@
 		<module>SpringBoot2-chapter19-swagger2</module>
 		<module>SpringBoot2-chapter20-freeMarker</module>
 		<module>SpringBoot2-chapter20-thymeleaf</module>
-		<module>SpringBoot2-chapter21-mail</module>
 	</modules>
 
 	<dependencies>
