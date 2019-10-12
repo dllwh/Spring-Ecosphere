@@ -1,18 +1,17 @@
 package org.dllwh;
 
 import java.io.File;
-import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ReplacementChain {
-	static String path = "";
+	static String path = "/Users/dllwh/Desktop/DevVideo/IDEA视频教程";
 
 	public static void main(String[] args) {
 		String[] fileName = getFileName(path);
 		for (int i = 0; i < fileName.length; i++) {
-			String newName = String.valueOf(new Date().getTime()) + ".jpg";// 修改新名字为从第四个字符之后的内容
+			String newName = "";
 			renameFile(path, fileName[i], newName);
 		}
 	}
@@ -25,15 +24,16 @@ public class ReplacementChain {
 	}
 
 	// 重命名
-	public static void renameFile(String path, String oldname, String newname) {
-		if (!oldname.equals(newname)) {// 新的文件名和以前文件名不同时,才有必要进行重命名
-			File oldfile = new File(path + "\\" + oldname);
-			File newfile = new File(path + "\\" + newname);
+	public static void renameFile(String path, String oldName, String newName) {
+		if (!oldName.equals(newName)) {// 新的文件名和以前文件名不同时,才有必要进行重命名
+			File oldfile = new File(path + File.separator + oldName);
+			File newfile = new File(path + File.separator + newName);
 			if (!oldfile.exists()) {
+				log.info(oldName + " 文件不存在！");
 				return;// 重命名文件不存在
 			}
 			if (newfile.exists())// 若在该目录下已经有一个文件和新文件名相同，则不允许重命名
-				log.info(newname + "已经存在！");
+				log.info(newName + "已经存在！");
 			else {
 				oldfile.renameTo(newfile);
 			}
