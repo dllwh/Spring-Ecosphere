@@ -75,6 +75,7 @@
 		<module>SpringBoot2-chapter19-swagger2</module>
 		<module>SpringBoot2-chapter20-freeMarker</module>
 		<module>SpringBoot2-chapter20-thymeleaf</module>
+		<module>SpringBoot2-chapter21-mybatisPlus</module>
 	</modules>
 
 	<dependencies>
@@ -85,7 +86,7 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
-		<!-- Springboot devtools热部署配置 -->
+		<!-- SpringBoot devtools热部署配置 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -108,7 +109,7 @@
 
 		<!-- 大多数的web应用都使用spring-boot-starter-web模块进行快速搭建和运行。 -->
 		<!-- spring-boot-starter-web -->
-		<!-- 对全栈web开发的支持， 包括Tomcat和 spring-webmvc -->
+		<!-- 对全栈web开发的支持， 包括tomCat和 spring-webMVC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
