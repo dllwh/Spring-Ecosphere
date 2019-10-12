@@ -1,0 +1,22 @@
+server:
+  port: 8222
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+logging:
+  level:
+    root: info
+    org:
+      springframework: info
+spring:
+  application:
+    name: SpringBoot2-chapter21-mybatis
+  devtools: # 设置热部署
+    restart: 
+      enabled: true #开启热部署
+      additional-paths: src/main/java # 重启范围
+      exclude: webviews/,static/ # classpath目录下的webviews文件夹内容修改不重启
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
