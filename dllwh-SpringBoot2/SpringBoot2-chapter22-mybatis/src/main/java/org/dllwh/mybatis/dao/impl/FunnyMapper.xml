@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dllwh.mybatis.dao.FunnyMapper">
+
+	<resultMap id="BaseResultMap" type="org.dllwh.mybatis.entity.FunnyEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="article_genre" property="articleGenre" jdbcType="VARCHAR" />
+		<result column="behot_time" property="behotTime" jdbcType="TIMESTAMP" />
+		<result column="chinese_tag" property="chineseTag" jdbcType="VARCHAR" />
+		<result column="group_id" property="groupId" jdbcType="VARCHAR" />
+		<result column="has_gallery" property="hasGallery" jdbcType="VARCHAR" />
+		<result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+		<result column="is_feed_ad" property="isFeedAd" jdbcType="VARCHAR" />
+		<result column="media_avatar_url" property="mediaAvatarUrl" jdbcType="VARCHAR" />
+		<result column="media_url" property="mediaUrl" jdbcType="VARCHAR" />
+		<result column="middle_mode" property="middleMode" jdbcType="VARCHAR" />
+		<result column="more_mode" property="moreMode" jdbcType="VARCHAR" />
+		<result column="single_mode" property="singleMode" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="source_url" property="sourceUrl" jdbcType="VARCHAR" />
+		<result column="tag" property="tag" jdbcType="VARCHAR" />
+		<result column="tag_url" property="tagUrl" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="comments_count" property="commentsCount" jdbcType="VARCHAR" />
+		<result column="document" property="document" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, article_genre, behot_time, chinese_tag, group_id, has_gallery, image_url,
+		is_feed_ad, media_avatar_url,
+		media_url, middle_mode, more_mode, single_mode, source,
+		source_url, tag, tag_url, title, comments_count
+	</sql>
+
+	<select id="getByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from funny
+		where id = #{funnyId,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="org.dllwh.mybatis.entity.FunnyEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into funny (id, article_genre, behot_time,
+		chinese_tag, group_id,
+		has_gallery,
+		image_url, is_feed_ad, media_avatar_url,
+		media_url, middle_mode, more_mode,
+		single_mode, source, source_url,
+		tag, tag_url, title,
+		comments_count, document)
+		values (#{id,jdbcType=INTEGER}, #{articleGenre,jdbcType=VARCHAR},
+		#{behotTime,jdbcType=TIMESTAMP},
+		#{chineseTag,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR},
+		#{hasGallery,jdbcType=VARCHAR},
+		#{imageUrl,jdbcType=VARCHAR}, #{isFeedAd,jdbcType=VARCHAR},
+		#{mediaAvatarUrl,jdbcType=VARCHAR},
+		#{mediaUrl,jdbcType=VARCHAR}, #{middleMode,jdbcType=VARCHAR},
+		#{moreMode,jdbcType=VARCHAR},
+		#{singleMode,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR},
+		#{sourceUrl,jdbcType=VARCHAR},
+		#{tag,jdbcType=VARCHAR}, #{tagUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+		#{commentsCount,jdbcType=VARCHAR}, #{document,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<select id="getByGroupId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" /> from funny where group_id = #{groupId,jdbcType=VARCHAR}
+	</select>
+</mapper>

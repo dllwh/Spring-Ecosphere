@@ -6,7 +6,8 @@ server:
     uri-encoding: UTF-8
 logging:
   level:
-    root: info
+    root: root
+    com.dllwh.dao.*: debug
     org:
       springframework: info
 spring:
@@ -20,3 +21,15 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username:  spring
+    password:  spring
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，
+  type-aliases-package: org.dllwh.mybatis.entity
+  # MyBatis Mapper 所对应的 XML 文件位置
+  mapper-locations:
+    - classpath:org/dllwh/mybatis/dao/impl/*Mapper.xml
+  
