@@ -20,3 +20,12 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username:  spring
+    password:  spring
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations:
+    - classpath:org/dllwh/mybatisPlus/dao/impl/*Mapper.xml 
+  type-aliases-package: org.dllwh.mybatisPlus.entity
