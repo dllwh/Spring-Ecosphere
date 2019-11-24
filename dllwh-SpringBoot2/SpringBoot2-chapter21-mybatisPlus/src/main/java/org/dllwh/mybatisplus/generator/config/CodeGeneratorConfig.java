@@ -52,7 +52,7 @@ public class CodeGeneratorConfig {
 		// 是否覆盖已有文件，默认值：false
 		globalConfig.setFileOverride(true);
 		// 是否打开输出目录，默认值：true
-		globalConfig.setOpen(true);
+		globalConfig.setOpen(false);
 		globalConfig.setActiveRecord(false);// 开启 activeRecord 模式
 		// 是否在xml中添加二级缓存配置，默认值：`false
 		globalConfig.setEnableCache(false);

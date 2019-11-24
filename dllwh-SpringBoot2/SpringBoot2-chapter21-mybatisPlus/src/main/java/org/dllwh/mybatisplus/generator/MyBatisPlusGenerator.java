@@ -1,5 +1,6 @@
 package org.dllwh.mybatisplus.generator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dllwh.mybatisplus.generator.config.CodeGeneratorConfig;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -17,31 +18,25 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
  */
 public class MyBatisPlusGenerator {
 	/** 输出文件的路径 */
-	private String projectPath = "";
+	private String projectPath;
 	/** 包名 */
-	private String packageName = "";
+	private String packageName = "org.dllwh.mybatisplus";
 	/** 模块名称 */
-	private String moduleName = "";
+	private String moduleName;
 	/** 代码生成者 */
 	private String author = "独泪了无痕";
 	/** JDBC相关配置 */
-	private String dbType = "";
-	private String driverName = "com.mysql.jdbc.Driver";
-	private String url = "jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/spring?useUnicode=true&characterEncoding=UTF-8&useSSL=true";
-	private String userName = "spring";
-	private String password = "spring";
+	private String dbType;
+	private String driverName;
+	private String url;
+	private String userName;
 
-	public MyBatisPlusGenerator() {
-		super();
-	}
+	private String password;
 
-	public MyBatisPlusGenerator(String projectPath, String packageName, String moduleName, String author, String dbType,
-			String driverName, String url, String userName, String password) {
+	public MyBatisPlusGenerator(String moduleName, String dbType, String driverName, String url, String userName,
+			String password) {
 		super();
-		this.projectPath = projectPath;
-		this.packageName = packageName;
 		this.moduleName = moduleName;
-		this.author = author;
 		this.dbType = dbType;
 		this.driverName = driverName;
 		this.url = url;
@@ -49,8 +44,22 @@ public class MyBatisPlusGenerator {
 		this.password = password;
 	}
 
-	public static void main(String[] args) {
-		new MyBatisPlusGenerator().codeAutoGenerator("crawler_china_area");
+	public MyBatisPlusGenerator(String projectPath, String packageName, String moduleName, String author, String dbType,
+			String driverName, String url, String userName, String password) {
+		super();
+		this.projectPath = projectPath;
+		if (StringUtils.isNotBlank(packageName)) {
+			this.packageName = packageName;
+		}
+		this.moduleName = moduleName;
+		if (StringUtils.isNotBlank(author)) {
+			this.author = author;
+		}
+		this.dbType = dbType;
+		this.driverName = driverName;
+		this.url = url;
+		this.userName = userName;
+		this.password = password;
 	}
 
 	/**
