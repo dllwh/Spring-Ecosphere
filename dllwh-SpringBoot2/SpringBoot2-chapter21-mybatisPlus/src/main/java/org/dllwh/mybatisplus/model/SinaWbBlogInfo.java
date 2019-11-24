@@ -1,4 +1,4 @@
-package org.dllwh.mybatisPlus.model;
+package org.dllwh.mybatisplus.model;
 
 import java.io.Serializable;
 

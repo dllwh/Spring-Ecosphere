@@ -1,4 +1,4 @@
-package org.dllwh.mybatisPlus;
+package org.dllwh.mybatisplus;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2 // 开启 swagger2 功能
-@MapperScan("org.dllwh.mybatisPlus.mapper")
+@MapperScan("org.dllwh.mybatisplus.mapper")
 public class MybatisPlusApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MybatisPlusApplication.class, args);

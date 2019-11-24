@@ -1,11 +1,11 @@
-package org.dllwh.mybatisPlus.crawler;
+package org.dllwh.mybatisplus.crawler;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.dllwh.mybatisPlus.model.SinaWbBlogInfo;
-import org.dllwh.mybatisPlus.model.SinaWbBlogInfo.Mblog;
-import org.dllwh.mybatisPlus.model.SinaWbUserInfo;
+import org.dllwh.mybatisplus.model.SinaWbBlogInfo;
+import org.dllwh.mybatisplus.model.SinaWbBlogInfo.Mblog;
+import org.dllwh.mybatisplus.model.SinaWbUserInfo;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

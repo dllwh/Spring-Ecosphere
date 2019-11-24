@@ -1,6 +1,6 @@
-package org.dllwh.mybatisPlus.mapper;
+package org.dllwh.mybatisplus.mapper;
 
-import org.dllwh.mybatisPlus.entity.ChinaAreaEntity;
+import org.dllwh.mybatisplus.entity.ChinaAreaEntity;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
