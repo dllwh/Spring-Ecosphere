@@ -32,7 +32,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  * @类描述: Mybatis-plus 代码生成器  相关配置
  * @创建者: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
  * @创建时间: 2019-11-24 11:16:05 PM
- * @版本: V1.0.1
+ * @版本: V 1.0.1
  * @since: JDK 1.8
  */
 public class CodeGeneratorConfig {
