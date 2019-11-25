@@ -22,7 +22,7 @@ public class MyBatisPlusGeneratorTest {
 	private static String password = "spring";
 
 	public static void main(String[] args) {
-		new MyBatisPlusGenerator(null, null, moduleName, null, dbType, driverName, url, userName, password).codeAutoGenerator("crawler_china_area");
-				
+		new MyBatisPlusGenerator(null, null, moduleName, null, dbType, driverName, userName, password,url)
+				.codeAutoGenerator("crawler_china_area");
 	}
 }
