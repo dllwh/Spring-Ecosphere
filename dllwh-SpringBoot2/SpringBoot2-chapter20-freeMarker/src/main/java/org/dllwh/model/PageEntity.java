@@ -1,5 +1,7 @@
 package org.dllwh.model;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,17 +18,19 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PageEntity {
-	/** 当前页数:第几页 --pageNo */
-	protected Integer	pageNumber	= 1;
-	/** 每页记录数 :pageSize */
-	protected Integer	pageSize	= 10;
+public class PageEntity implements Serializable {
+
+	private static final long serialVersionUID = -4786994433842857653L;
+	/** 当前页数:第几页 */
+	protected Integer         pageNumber       = 1;
+	/** 每页记录数 */
+	protected Integer         pageSize         = 10;
 	/** 起始页 */
-	protected int		startRow;
+	protected int             startRow;
 	/** 排序字段名 */
-	protected String	sortName;
+	protected String          sortName;
 	/** 按什么排序(asc,desc) */
-	protected String	sortOrder;
+	protected String          sortOrder;
 
 	public PageEntity(Integer pageNumber, Integer pageSize) {
 		super();

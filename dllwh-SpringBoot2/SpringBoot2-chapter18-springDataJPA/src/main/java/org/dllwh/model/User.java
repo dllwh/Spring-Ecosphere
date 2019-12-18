@@ -1,5 +1,6 @@
 package org.dllwh.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,26 +22,28 @@ import lombok.Data;
  * @Id 注解说明该属性作为该表的主键
  * @Column 注解说明该属性对应的列名
  */
-@Entity 
-@Table(name = "sys_upms_user")  
+@Entity
+@Table(name = "sys_upms_user")
 @Data
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = -7169286622518619612L;
 	@Id // 说明该属性作为该表的主键
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer	id;
+	private Integer           id;
 	@Column(name = "userName", nullable = false, unique = true)
-	private String	userName;
+	private String            userName;
 	@Column(name = "password", nullable = false)
-	private String	password;
+	private String            password;
 	@Column(name = "creator", nullable = false)
-	private Integer	creator;
+	private Integer           creator;
 	@Column(name = "createTime", nullable = false)
-	private Date	createTime;
+	private Date              createTime;
 	@Column(name = "modifier", nullable = false)
-	private Integer	modifier;
+	private Integer           modifier;
 	@Column(name = "updateTime", nullable = false)
-	private Date	updateTime;
+	private Date              updateTime;
 	@Column(name = "remark")
-	private String	remark;
+	private String            remark;
 }

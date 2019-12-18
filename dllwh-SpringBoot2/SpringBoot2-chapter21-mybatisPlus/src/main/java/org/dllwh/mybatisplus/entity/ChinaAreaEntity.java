@@ -1,5 +1,7 @@
 package org.dllwh.mybatisplus.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,7 +11,9 @@ import lombok.Data;
 
 @Data
 @TableName(value = "crawler_china_area") // 指定表名
-public class ChinaAreaEntity {
+public class ChinaAreaEntity implements Serializable {
+
+	private static final long serialVersionUID = 3530835123242134182L;
 	// value与数据库主键列名一致，若实体类属性名与表主键列名一致可省略value
 	@TableId(value = "id", type = IdType.AUTO) // 指定自增策略
 	private Integer id;
@@ -21,23 +25,23 @@ public class ChinaAreaEntity {
 	private Integer level;
 	/** 行政代码 */
 	@TableField(value = "areaCode", exist = true)
-	private String areaCode;
+	private String  areaCode;
 	/** 邮政编码 */
 	@TableField(value = "zipCode", exist = true)
 	private Integer zipCode;
 	/** 区号 */
 	@TableField(value = "cityCode", exist = true)
-	private String cityCode;
+	private String  cityCode;
 	/** 简称 */
 	@TableField(value = "shortName", exist = true)
-	private String shortName;
+	private String  shortName;
 	/** 组合名 */
 	@TableField(value = "mergerName", exist = true)
-	private String mergerName;
+	private String  mergerName;
 	/** 拼音 */
-	private String pinyin;
+	private String  pinyin;
 	/** 经度 */
-	private Double lng;
+	private Double  lng;
 	/** 纬度 */
-	private Double lat;
+	private Double  lat;
 }

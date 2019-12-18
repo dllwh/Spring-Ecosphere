@@ -1,5 +1,6 @@
 package org.dllwh.mybatis.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
@@ -16,44 +17,46 @@ import lombok.Data;
  * @since: JDK 1.8
  */
 @Data
-public class FunnyEntity {
-	private Integer id;
+public class FunnyEntity implements Serializable {
+
+	private static final long serialVersionUID = -5537520595297073747L;
+	private Integer           id;
 	/***/
-	private String articleGenre;
+	private String            articleGenre;
 	/***/
-	private Date behotTime;
+	private Date              behotTime;
 	/***/
-	private String chineseTag;
+	private String            chineseTag;
 	/***/
-	private String groupId;
+	private String            groupId;
 	/***/
-	private String hasGallery;
+	private String            hasGallery;
 	/***/
-	private String imageUrl;
+	private String            imageUrl;
 	/***/
-	private String isFeedAd;
+	private String            isFeedAd;
 	/***/
-	private String mediaAvatarUrl;
+	private String            mediaAvatarUrl;
 	/***/
-	private String mediaUrl;
+	private String            mediaUrl;
 	/***/
-	private String middleMode;
+	private String            middleMode;
 	/***/
-	private String moreMode;
+	private String            moreMode;
 	/***/
-	private String singleMode;
+	private String            singleMode;
 	/***/
-	private String source;
+	private String            source;
 	/***/
-	private String sourceUrl;
+	private String            sourceUrl;
 	/***/
-	private String tag;
+	private String            tag;
 	/***/
-	private String tagUrl;
+	private String            tagUrl;
 	/***/
-	private String title;
+	private String            title;
 	/***/
-	private String commentsCount;
+	private String            commentsCount;
 	/***/
-	private String document;
+	private String            document;
 }
