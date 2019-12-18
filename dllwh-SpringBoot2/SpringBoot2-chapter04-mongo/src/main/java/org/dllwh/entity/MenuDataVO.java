@@ -24,19 +24,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenuDataVO {
 	/** ID,唯一标识 */
-	private Integer				id;
+	private Integer          id;
 	/** 显示的标题 */
-	private String				title;
+	private String           title;
 	/** 地址，(a标签的href属性值) */
-	private String				path;
+	private String           path;
 	/** 图标 */
-	private String				icon;
+	private String           icon;
 	/** 父级ID(重要)，一级菜单pid为0 */
-	private String				pid;
+	private String           pid;
 	/** 是否展开(该值只对拥有子菜单的菜单有效) */
-	private boolean				open;
+	private boolean          open;
 	/** 跳转到外链 */
-	private boolean				blank;
+	private boolean          blank;
 	/** 子菜单的数据列表 */
-	private List<MenuDataVO>	children;
+	private List<MenuDataVO> children;
 }
