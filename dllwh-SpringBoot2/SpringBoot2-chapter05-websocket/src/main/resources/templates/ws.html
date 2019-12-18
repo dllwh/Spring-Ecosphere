@@ -13,6 +13,8 @@
 
 <link rel="stylesheet" href="http://coolaf.com/static/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://coolaf.com/static/css/offcanvas.css">
+<link rel="stylesheet" th:href="@{/js/websocket.js}" media="all">
+
 <style type="text/css">
 	.newmessage {
 		width: 100%;
@@ -38,6 +40,21 @@
 	.disabled {
 		pointer-events:none; 
 	}
+	
+	.leftul{
+		
+	}
+	.leftulli{
+		list-style:none; 
+		margin-top:10px;
+		border-bottom:1px solid #ccc;
+	}
+	.siteleadul li{
+		list-style:none;
+		width:200px;
+		float:left;
+		line-height:25px
+	}
 </style>
 </head>
 <body onload="">
@@ -46,16 +63,15 @@
 			<div class="col-xs-12 col-sm-8">
 				<div style="">
 					<div>
-						<input type='text' value='ws://localhost:8080/websocket/duleilewuhen' class="form-control" style='width:390px;display:inline'id='wsaddr'/> 
+						<input type='text' value='ws://localhost:8205/websocket/ws/duleilewuhen' class="form-control" style='width:390px;display:inline'id='wsaddr'/> 
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" class="btn btn-default" onclick='addsocket();'>连接</button>
 							<button type="button" class="btn btn-default" onclick='closesocket();'>断开</button>
 							<button type="button" class="btn btn-default" onclick='$("#wsaddr").val("")'>清空</button>
-							<button type="button" class="btn btn-default" onclick='$("#wsaddr").val("ws://123.207.167.163:9010/ajaxchattest")'>示例</button>
+							<button type="button" class="btn btn-default" onclick='$("#wsaddr").val("ws://localhost:8205/websocket/ws/duleilewuhen")'>示例</button>
 						</div>
 						<div style='margin-top:10px;margin-button:10px'>
-							<pre>本工具主要是为了测试服务端websocket功能是否完善可用而开发，主要是利用html5 的websocket去连接服务端的websocket,因此，
-							无论你是内网还是外网都可使用!服务端只是实现了接受和发送，这里只是测试而已！</pre>
+							<pre style="white-space: pre-wrap;word-wrap: break-word;">本工具主要是为了测试服务端websocket功能是否完善可用而开发，主要是利用html5 的websocket去连接服务端的websocket,因此，无论你是内网还是外网都可使用!服务端只是实现了接受和发送，这里只是测试而已！</pre>
 						</div>
 					</div>
 					<div class="row" >
@@ -72,22 +88,7 @@
 					</div>
 				</div>
 			</div>
-			<style>
-				.leftul{
-					
-				}
-				.leftulli{
-					list-style:none; 
-					margin-top:10px;
-					border-bottom:1px solid #ccc;
-				}
-				.siteleadul li{
-					list-style:none;
-					width:200px;
-					float:left;
-					line-height:25px
-				}
-			</style>
+
 			<div class="col-xs-6 col-sm-4 sidebar-offcanvas" id="sidebar">
 				<ul class='leftul'>
 					<li class='leftulli'>
@@ -106,7 +107,7 @@
 	</div>
 </body>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 	function formatDate(now) {
 		var year = now.getFullYear();
 		var month = now.getMonth() + 1;

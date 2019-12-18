@@ -1,6 +1,8 @@
 package org.dllwh.service;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.OnClose;
@@ -40,28 +42,33 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/websocket/{userName}")
+@ServerEndpoint(value = "/ws/{userName}") // 标记此类为服务端
 public class WebSocketServser {
 	// 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-	private static int										onlineCount			= 0;
+	private static int onlineCount = 0;
 	// concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-	private static CopyOnWriteArraySet<WebSocketServser>	webSocketSet		= new CopyOnWriteArraySet<WebSocketServser>();
+	private static CopyOnWriteArraySet<WebSocketServser> webSocketSet = new CopyOnWriteArraySet<WebSocketServser>();
 	// 与某个客户端的连接会话，需要通过它来给客户端发送数据
-	private Session											session;
+	private Session session;
+	/**
+	 * 全部在线会话 PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。
+	 */
+	private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
+
 	/**
 	 * @方法描述 : 连接成功的回调函数
 	 * 
 	 *       <pre>
-	 * 使用@Onopen注解的表示当客户端链接成功后的回掉
+	 * 当客户端打开连接：1.添加会话对象 2.更新在线人数
 	 *       </pre>
 	 * 
-	 * @param session
-	 *            可选参数,session是WebSocket规范中的会话，表示与某个客户端的连接会话，需要通过它来给客户端发送数据
+	 * @param session 可选参数,session是WebSocket规范中的会话，表示与某个客户端的连接会话，需要通过它来给客户端发送数据
 	 */
 	@OnOpen
-	public void onOpen(Session session,@PathParam(value="userName") String userName) {
+	public void onOpen(Session session, @PathParam(value = "userName") String userName) {
 		this.session = session;
 		webSocketSet.add(this);
+		onlineSessions.put(session.getId(), session);
 
 		addOnlineCount();
 		log.info("【websocket消息】有新连接{}加入！当前在线人数为{}", userName, getOnlineCount());
@@ -69,7 +76,8 @@ public class WebSocketServser {
 		/**
 		 * 1、给所有人发送上线通知
 		 */
-		publishAsync("有游客【"+userName+"】加入聊天室!");
+		publishAsync("有游客【" + userName + "】加入聊天室!");
+		// sendMessageToAll(Message.jsonStr(Message.ENTER, "", "", onlineSessions.size()));
 
 		/**
 		 * 2、获取在线用户
@@ -80,22 +88,33 @@ public class WebSocketServser {
 	 * @方法描述 : 连接关闭的回调函数
 	 * 
 	 *       <pre>
-	 *       客户端调用了断开链接方法后才会回调
+	 *  当关闭连接：1.移除会话对象 2.更新在线人数
 	 *       </pre>
+	 * 
+	 * @param session
 	 */
 	@OnClose
-	public void onClose() {
-		if(session.isOpen()){
+	public void onClose(Session session) {
+		if (session.isOpen()) {
 			webSocketSet.remove(this.session);
 		}
-		
+		onlineSessions.remove(session.getId());
+
 		subOnlineCount();
-		publishAsync("【websocket消息】连接断开，当前在线人数为:"+getOnlineCount());
+		publishAsync("【websocket消息】连接断开，当前在线人数为:" + getOnlineCount());
 		log.info("【websocket消息】连接断开，当前在线人数为{}", getOnlineCount());
+		// sendMessageToAll(Message.jsonStr(Message.QUIT, "", "下线了！", onlineSessions.size()));
 	}
 
 	/**
-	 * @方法描述 : 在客户端接收来自客户端消息触发
+	 * @方法描述: 在客户端接收来自客户端消息触发
+	 * 
+	 *        <pre>
+	 * 当客户端发送消息：1.获取它的用户名和消息 2.发送消息给所有人
+	 *        </pre>
+	 * 
+	 * @param session
+	 * @param message 约定传递的消息为JSON字符串 方便传递更多参数！
 	 */
 	@OnMessage
 	public void OnMessage(Session session, String message) {
@@ -103,10 +122,16 @@ public class WebSocketServser {
 		// 广播信息
 		publishAsync(message);
 		// 点播信息
+		
+		// sendMessageToAll(Message.jsonStr(Message.SPEAK, message.getUsername(), message.getMsg(), onlineSessions.size()));
 	}
 
 	/**
 	 * @方法描述 : 在发生错误时触发
+	 * 
+	 *       <pre>
+	 * 当通信发生异常：打印错误日志
+	 *       </pre>
 	 */
 	@OnError
 	public void onError(Session sessio, Throwable error) {
@@ -135,6 +160,7 @@ public class WebSocketServser {
 			}
 		}
 	}
+
 	/**
 	 * @方法描述 : 自定义群发消息(同步消息)
 	 * @param message
@@ -148,6 +174,19 @@ public class WebSocketServser {
 			} catch (Exception e) {
 			}
 		}
+	}
+
+	/**
+	 * 公共方法：发送信息给所有人
+	 */
+	private static void sendMessageToAll(String msg) {
+		onlineSessions.forEach((id, session) -> {
+			try {
+				session.getBasicRemote().sendText(msg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**
