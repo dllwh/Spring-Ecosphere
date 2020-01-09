@@ -1,13 +1,11 @@
-function WebClient() {
-}
 var WebClient = {
-	userAgent : (function() {
+	userAgent : (function() { // 浏览器设定的User-Agent字符串
 		return navigator.userAgent;
 	})(),
-	platform : (function() {
+	platform : (function() { // 操作系统类型
 		return navigator.platform;
 	})(),
-	appName : (function() {
+	appName : (function() { // 浏览器名称
 		return navigator.appName;
 	})(),
 	// 检测浏览器版本
