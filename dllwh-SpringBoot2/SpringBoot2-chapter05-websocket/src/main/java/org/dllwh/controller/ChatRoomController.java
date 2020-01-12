@@ -78,7 +78,7 @@ public class ChatRoomController {
 		message.put("timestamp", System.currentTimeMillis());
 
 		// 好友发送消息
-		if (mine.getString("type").equals("friend")) {
+		if ("friend".equals(mine.getString("type"))) {
 			// 判断接收着是否在线
 			//  如果在线，发送信息保存到聊天信息数据库
 			//  如果不在线，保存到离线信息数据库
