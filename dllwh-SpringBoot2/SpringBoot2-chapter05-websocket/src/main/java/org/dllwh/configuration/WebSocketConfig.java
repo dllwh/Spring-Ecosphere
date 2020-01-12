@@ -14,7 +14,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 开启webSocket支持
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author: 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年10月27日 下午8:32:30
  * @版本: V1.0
  * @since: JDK 1.8
