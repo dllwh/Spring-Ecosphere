@@ -88,8 +88,6 @@ public class WebSocketService {
 		subOnlineCount();
 		publishAsync("【websocket消息】连接断开，当前在线人数为:" + getOnlineCount());
 		log.info("【websocket消息】连接断开，当前在线人数为{}", getOnlineCount());
-		// sendMessageToAll(Message.jsonStr(Message.QUIT, "", "下线了！",
-		// onlineSessions.size()));
 		if (session.isOpen()) {
 			webSocketSet.remove(this);
 		}
