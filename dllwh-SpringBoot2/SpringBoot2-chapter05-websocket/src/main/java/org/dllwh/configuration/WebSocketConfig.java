@@ -41,8 +41,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// 注册一个stomp的节点，使用SockJS协议
-		registry.addEndpoint("/customendpoint").setAllowedOrigins("*") // 添加允许跨域访问
-				.withSockJS();
+		registry.addEndpoint("/customendpoint")
+				// 添加允许跨域访问
+				.setAllowedOrigins("*").withSockJS();
 	}
 
 	/**
@@ -51,8 +52,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		// 使用内置的消息代理进行订阅和广播；路由消息的目标头以“/topic”或“/queue”开头。
-		registry.enableSimpleBroker("/topic", "/queue"); // 推送消息前缀
-		// registry.setApplicationDestinationPrefixes(""); // 应用请求前缀
-		// registry.setUserDestinationPrefix(""); // 推送用户前缀
+		registry.enableSimpleBroker("/topic", "/queue");
+		// 应用请求前缀
+		// registry.setApplicationDestinationPrefixes("");
+		// 推送用户前缀
+		// registry.setUserDestinationPrefix("");
 	}
 }
