@@ -20,7 +20,6 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @since: JDK 1.8
  */
 @Configuration
-// @EnableWebSocketMessageBroker // 开启使用STOMP协议来传输基于代理的消息，支持使用@MessageMapping(类似于@RequestMapping)
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	/**
 	 * @方法描述 : ServerEndpointExporter 用于扫描和注册所有携带 ServerEndPoint 注解的实例，若部署到外部容器
