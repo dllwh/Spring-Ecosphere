@@ -42,14 +42,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @ServerEndpoint(value = "/websocket/duleilewuhen")
 public class WebSocketService {
-	/**静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。*/
+	/** 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。 */
 	private static int onlineCount = 0;
-	// concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
+	/** concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。 */
 	private static CopyOnWriteArraySet<WebSocketService> webSocketSet = new CopyOnWriteArraySet<WebSocketService>();
-	// 创建一个房间的集合，用来存放房间
+	/** 创建一个房间的集合，用来存放房间 */
 	private static ConcurrentHashMap<String, ConcurrentHashMap<String, WebSocketService>> roomList = new ConcurrentHashMap<String, ConcurrentHashMap<String, WebSocketService>>();
-
-	// 与某个客户端的连接会话，需要通过它来给客户端发送数据
+	/** 与某个客户端的连接会话，需要通过它来给客户端发送数据 */
 	private Session session;
 	/**
 	 * 全部在线会话 PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。
