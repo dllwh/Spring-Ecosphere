@@ -106,9 +106,6 @@ public class WebSocketService {
 		// 广播信息
 		publishAsync(message);
 		// 点播信息
-
-		// sendMessageToAll(Message.jsonStr(Message.SPEAK, message.getUsername(),
-		// message.getMsg(), onlineSessions.size()));
 	}
 
 	/**

@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+body {
+  padding-top: 10px;
+}
+
+.newmessage {
+	width: 100%;
+}
+
+.bubble {
+	background-color: lightgreen position: relative;
+	max-width: 240px;
+	word-wrap: break-word;
+	text-align: left;
+	margin-left: 16px;
+	margin-right: 16px;
+	border-radius: 9px;
+}
+
+.bubble:after {
+	position: absolute;
+	border: 4.8px solid transparent;
+	content: " ";
+	top: 20px;
+}
+
+.disabled {
+	pointer-events: none;
+}
+
+.leftul {
+	
+}
+
+.leftulli {
+	list-style: none;
+	margin-top: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.siteleadul li {
+	list-style: none;
+	width: 200px;
+	float: left;
+	line-height: 25px
+}
+
+.select-input-group {
+	padding-bottom : 10px;
+}
