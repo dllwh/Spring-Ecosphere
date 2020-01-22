@@ -4,7 +4,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
   servlet:
-    context-path: /
+    context-path: /websocket
 #日志配置
 logging:
   level:
@@ -32,3 +32,9 @@ spring:
       exclude: templates/** ## classpath目录下的webviews文件夹内容修改不重启
 swagger:
   enabled: true 
+webSocket:
+  heartCheck:
+    enabled: true # 是否开启心跳监测
+    timeSpan: 1000
+    errorToleration: 30
+    trigger: 0/1 * * * * ? 
