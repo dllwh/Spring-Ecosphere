@@ -24,7 +24,7 @@ public interface ChatService {
 	void sendRefreshUserList();
 
 	/**
-	 * @方法描述:  是否在线
+	 * @方法描述:  判断用户是否在线
 	 * @param userName
 	 * @return true:是;false:否
 	 */
