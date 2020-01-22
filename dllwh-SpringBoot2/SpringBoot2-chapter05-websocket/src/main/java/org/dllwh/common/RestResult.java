@@ -1,4 +1,4 @@
-package org.dllwh.configuration;
+package org.dllwh.common;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

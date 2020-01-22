@@ -1,4 +1,4 @@
-package org.dllwh.configuration;
+package org.dllwh.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
