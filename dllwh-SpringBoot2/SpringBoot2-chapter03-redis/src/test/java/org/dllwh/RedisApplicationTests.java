@@ -31,14 +31,14 @@ import redis.clients.jedis.JedisPool;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class RedisApplicationTests {
 	@Autowired
-	RedisTemplate<String, Object>	redisTemplate;
+	RedisTemplate<String, Object> redisTemplate;
 	@Autowired
-	StringRedisTemplate				stringRedisTemplate;
+	StringRedisTemplate stringRedisTemplate;
 	@Autowired
-	JedisPool						jedisPool;
+	JedisPool jedisPool;
 
 	@Test
 	public void ValueOperationsTest() {
