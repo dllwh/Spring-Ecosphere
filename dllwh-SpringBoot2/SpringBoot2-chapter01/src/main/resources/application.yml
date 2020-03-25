@@ -56,8 +56,13 @@ spring:
   mail: 
     host: smtp.163.com
     username: dllwhdemo@163.com
-    password: dllwhtest
+    password: SUJEAABLTGLCEPKL
     default-encoding: utf-8
+    properties:
+      mail: 
+        smtp: 
+          ssl: 
+            enable: true
 ---
 ###上传文件配置
 spring:
