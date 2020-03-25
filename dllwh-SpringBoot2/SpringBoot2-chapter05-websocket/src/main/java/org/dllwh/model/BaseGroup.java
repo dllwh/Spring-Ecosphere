@@ -9,7 +9,7 @@ import lombok.Data;
  *
  * Today the best performance as tomorrow newest starter!
  *
- * @类描述: TODO(这里用一句话描述这个类的作用)
+ * @类描述: 群组数据
  * @author: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
  * @创建时间: 2019-12-25 9:45:52 PM
  * @版本: V 1.0.1
@@ -17,10 +17,20 @@ import lombok.Data;
  */
 @Data
 public class BaseGroup {
-	/** 实体编号（唯一标识） */
+	/** 群组 ID，群组唯一标识符 */
 	protected Long id;
-	/** 群组名 */
+	/** 群组名称，根据用户输入创建 */
 	private String groupName;
+	/** 群组描述，根据用户输入创建 */
+	private String description;
+	/** 群组类型：true：公开群，false：私有群 */
+	private Boolean ifPublic;
+	/** 加入群组是否需要群主或者群管理员审批。true：是，false：否。 */
+	private Boolean membersonly;
+	/** 是否允许群成员邀请别人加入此群。 true：允许群成员邀请人加入此群，false：只有群主才可以往群里加人。 */
+	private Boolean allowInvites;
+	/** 群成员上限，创建群组的时候设置，可修改 */
+	private int maxUsers;
 	/** 群组头像 */
 	private String avatar;
 	/** 最初创建者 */

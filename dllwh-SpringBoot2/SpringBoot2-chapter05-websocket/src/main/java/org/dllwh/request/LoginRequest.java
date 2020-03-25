@@ -30,4 +30,12 @@ public class LoginRequest extends BaseRequest {
 	private long time;
 	/** 校验码(此字段可与logingname、password共存,也可只选一种方式) */
 	private String token;
+	/** 终端类型 */
+	private String platform;
+	/** 终端版本号 */
+	private String platformVersion;
+	/** 登录时间 */
+	private Long bindTime;
+	/** 客户端ID (设备号码+应用包名),ios为devicetoken */
+	private String deviceId;
 }

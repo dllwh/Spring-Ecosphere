@@ -6,12 +6,15 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.dllwh.common.RestResult;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -26,10 +29,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since: JDK 1.8
  */
 @Controller
+@Slf4j
 public class WebSocketController {
 
 	@RequestMapping(value = "/")
 	public String index() {
+		log.debug("进入聊天室页面......");
 		return "ws";
 	}
 
@@ -78,9 +83,9 @@ public class WebSocketController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "getWebSocketKey")
-	public String getWebSocketKey(long time) {
-		String result = "{\"code\":1,\"key\":\"df09d23445e39ba0c313a83ebcb81e87\",\"nowTime\":" + time + "}";
-		return result;
+	public RestResult getWebSocketKey(long time) {
+		String key = "df09d23445e39ba0c313a83ebcb81e87";
+		return RestResult.success(key);
 	}
 
 }

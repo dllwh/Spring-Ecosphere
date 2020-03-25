@@ -234,10 +234,32 @@ var WebClient = {
 		}
 	})()
 }
+
+var getBrowser = function() {
+	let explorer = window.navigator.userAgent.toLowerCase();
+	if (explorer.indexOf("msie") >= 0) {
+	let ver = explorer.match(/msie ([\d.]+)/)[1];
+		return {name: "IE", version: ver};
+	} else if (explorer.indexOf("firefox") >= 0) {
+		let ver = explorer.match(/firefox\/([\d.]+)/)[1];
+		return {name: "Firefox", version: ver};
+	} else if (explorer.indexOf("chrome") >= 0) {
+		let ver = explorer.match(/chrome\/([\d.]+)/)[1];
+		return {name: "Chrome", version: ver};
+	} else if (explorer.indexOf("opera") >= 0) {
+		let ver = explorer.match(/opera.([\d.]+)/)[1];
+		return {name: "Opera", version: ver};
+	} else if (explorer.indexOf("Safari") >= 0) {
+		let ver = explorer.match(/version\/([\d.]+)/)[1];
+		return {name: "Safari", version: ver};
+	}
+	return {name: "Other", version: "1.0.0"};
+}
+
 var getClientInfo = function() {
 	var info = "\"userAgent\":\"" + WebClient.userAgent + "\",\"platform\":\"" + WebClient.platform
 			+ "\",\"appName\":\"" + WebClient.appName + "\",\"browser\":\"" + WebClient.browser[0]
-			+ "\",\"browser_version\":\"" + WebClient.browser[1] + "\",\"OS\":\"" + WebClient.sys.OS
-			+ "\",\"OS_version\":\"" + WebClient.sys.ver + "\"";
+			+ "\",\"browserVersion\":\"" + WebClient.browser[1] + "\",\"OS\":\"" + WebClient.sys.OS
+			+ "\",\"osVersion\":\"" + WebClient.sys.ver + "\"";
 	return info;
 }

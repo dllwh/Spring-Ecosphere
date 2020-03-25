@@ -16,7 +16,9 @@
 <script th:src="@{https://cdn.bootcss.com/layer/2.3/layer.js}"></script>
 <script type="text/javascript" th:src="@{/js/baseUtils.js}"></script>
 <script type="text/javascript" th:src="@{/js/WebClient.js}"></script>
+<!--webim相关配置-->
 <script type="text/javascript" th:src="@{/js/websocket/webim.config.js}"></script>
+<script type="text/javascript" th:src="@{/js/websocket/websocketService.js}"></script>
 <script type="text/javascript" th:src="@{/js/websocketSDK.js}"></script>
 <link rel="stylesheet" th:href="@{/websocket/chat.css}">
 </head>
@@ -94,7 +96,6 @@
 		return false; //屏蔽右键菜单
 	}
 	
-	websocketService.serverInfo();
 	var option = {
 		appId : "web",
 		roomId : $("#roomId").val(),
@@ -129,7 +130,6 @@
 	}
 
 	function onOpen(evt) {
-		console.log(evt);
 		$("#operateBut .btn").removeClass('disabled');
 		writeToScreen("<span style='color:red'>连接成功，现在你可以发送信息啦！！！</span>");
 	}
@@ -144,7 +144,8 @@
 	}
 
 	function onError(evt) {
-		writeToScreen('<span style="color: red;">发生错误:</span> ' + evt.data);
+		console.log(evt);
+		writeToScreen('<span style="color: red;">发生错误:</span> ' + evt.msg);
 	}
 
 	function doSend() {

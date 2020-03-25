@@ -49,7 +49,7 @@ public class WebSocketHeartBeatChecker {
 				long interval = DateTime.now().getMillis() - webSocket.getLastHeart().getTime();
 				if (interval >= timeSpans) {
 					// 说明失去心跳了
-					log.info("{} 失去心跳了", identifier);
+					log.info("{} 已经 {} 秒没有发送信息，失去心跳了", identifier,interval);
 					toRemoves.add(webSocket);
 				}
 			});

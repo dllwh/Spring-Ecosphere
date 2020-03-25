@@ -12,7 +12,17 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.dllwh.common.IMConstants;
+import org.dllwh.model.IMMessage;
+import org.dllwh.protocol.IMWebMessageDecoder;
+import org.dllwh.protocol.IMWebMessageEncoder;
+import org.dllwh.request.LoginRequest;
+import org.dllwh.service.LoginChatService;
+import org.dllwh.utils.WebSocketHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/websocket/duleilewuhen")
+@ServerEndpoint(value = "/webChat")
 public class WebSocketService {
 	/** 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。 */
 	private static int onlineCount = 0;
@@ -50,10 +60,13 @@ public class WebSocketService {
 	private static ConcurrentHashMap<String, ConcurrentHashMap<String, WebSocketService>> roomList = new ConcurrentHashMap<String, ConcurrentHashMap<String, WebSocketService>>();
 	/** 与某个客户端的连接会话，需要通过它来给客户端发送数据 */
 	private Session session;
-	/**
-	 * 全部在线会话 PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。
-	 */
+	/** 全部在线会话 PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。 */
 	private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
+
+	private IMWebMessageDecoder decoder = new IMWebMessageDecoder();
+	private IMWebMessageEncoder encoder = new IMWebMessageEncoder();
+	@Autowired
+	private LoginChatService loginChatService;  
 
 	/**
 	 * @方法描述 : 连接成功的回调函数
@@ -103,9 +116,31 @@ public class WebSocketService {
 	@OnMessage
 	public void onMessage(Session session, String message) {
 		log.info("【websocket消息】来自客户端的消息:{},客户端ID是：{}", message, session.getId());
-		// 广播信息
-		publishAsync(message);
-		// 点播信息
+		// 将字符串解析为自定义格式
+		IMMessage request = decoder.decode(message);
+		if (request != null) {
+			// 1.判断如果是登录动作，就往onlineUsers中加入一条数据
+			if (IMConstants.getType("LOGIN").equalsIgnoreCase(request.getCmd())) {
+				LoginRequest loginInfo = new Gson().fromJson(message, LoginRequest.class);
+				loginChatService.loginChatServerHandle(loginInfo);
+				// 向其他人发送消息:xxx加入
+				// 向自己发送消息:欢迎xxx进入
+				WebSocketHelper.sendMessage(session, message);
+			}
+			// 2.如果是登出
+			if (IMConstants.getType("LOGOUT").equalsIgnoreCase(request.getCmd())) {
+				// 向其他人发送消息:xxx退出
+			}
+			// 3.如果是聊天信息
+			if (IMConstants.getType("CHAT").equalsIgnoreCase(request.getCmd())) {
+				// 向其他人发送消息
+				// 向自己发送消息
+			}
+			// 4.如果是系统信息
+			if (IMConstants.getType("SYSTEM").equalsIgnoreCase(request.getCmd())) {
+
+			}
+		}
 	}
 
 	/**
@@ -115,20 +150,12 @@ public class WebSocketService {
 	 * @throws IOException
 	 */
 	@OnError
-	public void onError(Session sessio, Throwable error) throws IOException {
+	public void onError(Session session, Throwable error) throws IOException {
 		// 可以保存数据到数据库
 		log.error("【websocket消息】发生错误:{}", error.getLocalizedMessage());
-		sendMessage(error.getLocalizedMessage());
+		WebSocketHelper.sendMessage(session,error.getLocalizedMessage());
 	}
 
-	/**
-	 * @方法描述 : 服务器主动推送消息(同步消息)
-	 * @param message
-	 * @throws IOException
-	 */
-	public void sendMessage(String message) throws IOException {
-		this.session.getBasicRemote().sendText(message);
-	}
 
 	/**
 	 * @方法描述 : 自定义群发消息(异步消息)
@@ -139,7 +166,7 @@ public class WebSocketService {
 		log.info("【websocket消息】广播消息, message={}", message);
 		for (WebSocketService item : webSocketSet) {
 			if (item.session != session) {
-				item.session.getAsyncRemote().sendText(message);
+				WebSocketHelper.sendMessageAsync(item.session,message);
 			}
 		}
 	}
@@ -153,24 +180,10 @@ public class WebSocketService {
 		log.info("【websocket消息】广播消息, message={}", message);
 		for (WebSocketService item : webSocketSet) {
 			try {
-				item.session.getBasicRemote().sendText(message);
+				WebSocketHelper.sendMessage(item.session,message);
 			} catch (Exception e) {
 			}
 		}
-	}
-
-	/**
-	 * @方法描述: 发送信息给所有人
-	 * @param msg
-	 */
-	public static void sendMessageToAll(String msg) {
-		onlineSessions.forEach((id, session) -> {
-			try {
-				session.getBasicRemote().sendText(msg);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});
 	}
 
 	/**
