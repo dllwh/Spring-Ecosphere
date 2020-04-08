@@ -41,7 +41,7 @@ spring:
 ---
 #### mybatis
 mybatis: 
-  mapperLocations: classpath:com/cdeledu/dao/impl/*.xml
+  mapperLocations: classpath:org/dllwh/dao/**/*MapperImpl.xml
   config-location: classpath:mybatis/mybatis-config.xml
 ---
 
