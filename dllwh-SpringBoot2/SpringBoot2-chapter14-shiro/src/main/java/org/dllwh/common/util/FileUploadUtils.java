@@ -3,7 +3,6 @@ package org.dllwh.common.util;
 import java.io.IOException;
 
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,13 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
  * @since: JDK 1.8
  */
 public class FileUploadUtils {
-	
+
 	/** 默认上传的地址 */
 	@Value("")
-	private static String		defaultBaseDir		= "";
+	private static String defaultBaseDir = "";
 	/** 默认图片文件类型jpg */
-	public static final String	IMAGE_JPG_EXTENSION	= ".jpg";
-													
+	public static final String IMAGE_JPG_EXTENSION = ".jpg";
+
 	/**
 	 * @方法描述:以默认配置进行文件上传
 	 * @param file
@@ -35,11 +34,10 @@ public class FileUploadUtils {
 	public static final String upload(MultipartFile file) throws IOException {
 		return "";
 	}
-	
+
 	/**
 	 * @方法描述:根据文件路径上传
-	 * @param baseDir
-	 *            相对应用的基目录
+	 * @param baseDir 相对应用的基目录
 	 * @param file
 	 * @return
 	 * @throws IOException
@@ -47,7 +45,7 @@ public class FileUploadUtils {
 	public static final String upload(String baseDir, MultipartFile file) throws IOException {
 		return "";
 	}
-	
+
 	/**
 	 * @方法描述:TODO(这里用一句话描述这个方法的作用)
 	 * @param baseDir
@@ -59,7 +57,7 @@ public class FileUploadUtils {
 	 * @throws FileNameLengthLimitExceededException
 	 */
 	public static final String upload(String baseDir, MultipartFile file, String extension)
-			throws FileSizeLimitExceededException, IOException, FileUploadException {
+			throws IOException, FileUploadException {
 		return "";
 	}
 }

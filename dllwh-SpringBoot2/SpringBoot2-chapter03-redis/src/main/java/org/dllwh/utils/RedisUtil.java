@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.util.Slowlog;
+import redis.clients.jedis.util.Slowlog;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～

@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
-import redis.clients.util.Slowlog;
+import redis.clients.jedis.util.Slowlog;
+
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
