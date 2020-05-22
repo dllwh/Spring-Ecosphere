@@ -1,10 +1,17 @@
-# SpringBoot2-chapter15-task(尚在学习中，还未开始)
-
-基于springBoot 2.x + quartz 的CRUD任务管理系统。
+# SpringBoot2-chapter15-task
 
 > 即使你是天才，如果你不努力，你也会被其它人超越。
 
-## 开发环境
+* [概述](#概述)
+* [环境依赖](#开发环境)
+
+# 概述
+
+此 demo 主要演示
+1. Spring Boot 如何快速实现定时任务。
+2. Spring Boot 如何集成 Quartz 定时任务，并实现对定时任务的管理，包括新增定时任务，删除定时任务，暂停定时任务，恢复定时任务，修改定时任务启动时间，以及定时任务列表查询。
+
+# 开发环境
 
 JDK1.8、Maven、Eclipse
 
