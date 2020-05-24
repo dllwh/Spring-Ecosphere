@@ -4,12 +4,16 @@
 
 * [概述](#概述)
 * [环境依赖](#开发环境)
+* [定时器 Quartz](#定时器 Quartz)
+* [功能](#功能)
 
 # 概述
 
 此 demo 主要演示
 1. Spring Boot 如何快速实现定时任务。
 2. Spring Boot 如何集成 Quartz 定时任务，并实现对定时任务的管理，包括新增定时任务，删除定时任务，暂停定时任务，恢复定时任务，修改定时任务启动时间，以及定时任务列表查询。
+
+[Spring Boot 任务调度](https://my.oschina.net/u/1030471/blog/4289076)
 
 # 开发环境
 
@@ -23,7 +27,7 @@ SpringBoot 2.0.5、thymeleaf 3.0.9、quartz 2.3.0、vue、layer、bootstrap
 + server.port = 8215
 + server.servlet.context-path=/task
 
-## 定时器 Quartz
+# 定时器 Quartz
 
 Quartz 设计有三个核心类，分别是
 
@@ -34,12 +38,13 @@ Quartz 设计有三个核心类，分别是
 - Trigger 触发器
     - 负责设置调度策略。该类是一个接口，描述触发 job 执行的时间触发规则。主要有 SimpleTrigger 和 CronTrigger 这两个子类。当且仅当需调度一次或者以固定时间间隔周期执行调度，SimpleTrigger 是最适合的选择；而 CronTrigger 则可以通过 Cron 表达式定义出各种复杂时间规则的调度方案：如工作日周一到周五的 15：00~16：00 执行调度等
 
-## 功能
-- [x] 任务列表
+# 功能
+
+- [ ] 任务列表
 - [ ] 任务新增
 - [ ] 任务修改
 - [ ] 任务执行
-- [x] 表达式生成器(集成：https://gitee.com/finira/cronboot)
+- [ ] 表达式生成器(集成：https://gitee.com/finira/cronboot)
 - [ ] 任务移除
 - [ ] 任务开启
 - [ ] 任务停止

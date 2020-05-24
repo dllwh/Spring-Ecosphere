@@ -40,7 +40,7 @@ public class TaskConfig implements SchedulingConfigurer {
 
 			@Override
 			public void run() {
-				// log.info("SchedulingConfigurer定时任务：" + LocalDateTime.now().format(formatter));
+				log.info("SchedulingConfigurer定时任务：" + LocalDateTime.now().format(formatter));
 			}
 		}, new CronTrigger("0/5 * * * * * "));// 每5秒执行一次
 	}
