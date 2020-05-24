@@ -4,7 +4,7 @@
 
 * [概述](#概述)
 * [环境依赖](#开发环境)
-* [定时器 Quartz](#定时器 Quartz)
+* [定时器 Quartz](#定时器Quartz)
 * [功能](#功能)
 
 # 概述
@@ -27,7 +27,7 @@ SpringBoot 2.0.5、thymeleaf 3.0.9、quartz 2.3.0、vue、layer、bootstrap
 + server.port = 8215
 + server.servlet.context-path=/task
 
-# 定时器 Quartz
+# 定时器Quartz
 
 Quartz 设计有三个核心类，分别是
 
