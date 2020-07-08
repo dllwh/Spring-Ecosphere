@@ -230,4 +230,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- maven的plugins报错解决方法 -->
+	<profiles>
+		<profile>
+			<id>jdk-${java.version}</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>${java.version}</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>${java.version}</maven.compiler.source>
+				<maven.compiler.target>${java.version}</maven.compiler.target>
+				<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
+	
 </project>
