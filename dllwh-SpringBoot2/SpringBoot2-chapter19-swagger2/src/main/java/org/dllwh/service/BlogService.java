@@ -24,24 +24,19 @@ public interface BlogService {
     /**
      * 全
      *
-     * @param id
      * @return
      */
     List<Blog> getAllBlogs();
 
     /**
      * 增
-     *
-     * @param id
-     * @return
+     * @param blog
      */
     void insertBlog(Blog blog);
 
     /**
      * 改
-     *
-     * @param id
-     * @return
+     * @param blog
      */
     void updateBlog(Blog blog);
 }
