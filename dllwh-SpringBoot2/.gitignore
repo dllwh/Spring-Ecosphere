@@ -5,3 +5,6 @@
 .factorypath
 /.project
 /.classpath
+/.idea/
+*.iml
+*.DS_Store
