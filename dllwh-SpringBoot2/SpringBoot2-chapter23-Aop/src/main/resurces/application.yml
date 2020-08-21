@@ -1,0 +1,6 @@
+server:
+  port: 8223
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
