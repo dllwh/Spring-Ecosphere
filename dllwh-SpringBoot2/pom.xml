@@ -79,6 +79,7 @@
 		<module>SpringBoot2-chapter20-thymeleaf</module>
 		<module>SpringBoot2-chapter21-mybatisPlus</module>
 		<module>SpringBoot2-chapter22-mybatis</module>
+		<module>SpringBoot2-chapter23-Aop</module>
 	</modules>
 
 	<dependencies>
