@@ -13,7 +13,7 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-		<!-- 引入 Eureka Server 依赖 -->
+		<!-- 引入 spring-cloud-starter-netflix-eureka-server的依赖，已经包含了spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
