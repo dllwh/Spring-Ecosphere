@@ -1,13 +1,13 @@
 server:
-   port: 7900 # 运行端口号
+   port: 7901 # 运行端口号
    servlet:
     context-path: /
 spring:
    application:
-      name: eurekaProviderClientApplication ## 指定服务名称
+      name: EurekaConsumerClientApplication ## 指定服务名称
 eureka:
    instance:
-      instance-id: provider-application # 指定当前客户端在注册中心的名称
+      instance-id: consumer-application # 指定当前客户端在注册中心的名称
       prefer-ip-address: true ## 注册时显示ip
    client:
       register-with-eureka: true # 是否向注册中心注册自己

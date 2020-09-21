@@ -1,24 +1,30 @@
 server:
-  port: 8761
+   port: 8761 # 指定运行端口
+   servlet:
+    context-path: /
 eureka:
-  instance:
-    ## 指定了Eureka服务端的IP
-    hostname: localhost
-  client:
-    ## 表示是否将服务注册到Eureka服务端，由于自身就是Eureka服务端，所以设置为false；
-    register-with-eureka: false 
-    ## 是否从Eureka服务端获取服务信息，因为这里只搭建了一个Eureka服务端，并不需要从别的Eureka服务端同步服务信息，所以这里设置为false；
-    fetch-registry: false
-    serviceUrl:
-    ## 指定Eureka服务端的地址，默认值为http://localhost:8761/eureka。
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-  server:
-    enable-self-preservation: true ## 设置为false，以确保注册中心将不可用的实例删除
+   instance:
+      hostname: localhost # 指定了Eureka服务端的IP
+      prefer-ip-address: true ## 注册时显示ip
+      # 租约续约间隔时间，默认30秒
+      lease-renewal-interval-in-seconds: 30
+      # 租约到期，服务时效时间，默认值90秒,服务超过90秒没有发⽣⼼跳，EurekaServer会将服务从列表移除
+      lease-expiration-duration-in-seconds: 90
+   client:
+      # 是否向服务中心注册,默认为true，由于当前就是server，故而设置成false，表明该服务不会向eureka注册
+      register-with-eureka: false
+      # 是否能够获取Eureka注册信息，由于单节点，不需要同步其他节点数据，用false
+      fetch-registry: false
+      serviceUrl:
+         # 指定Eureka服务端的地址，默认值为http://localhost:8761/eureka。
+         defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+   server:
+      enable-self-preservation: true # 启动自我保护（缺省为开启），以确保注册中心将不可用的实例删除
 spring:
-  devtools:
-    restart:
-      enabled: true
-      additional-paths:
-      - src/main/java
-  application:
-    name: eurka-server
+   devtools:
+      restart:
+         enabled: true
+         additional-paths:
+         - src/main/java
+   application:
+      name: eurka-server # 指定服务名称
