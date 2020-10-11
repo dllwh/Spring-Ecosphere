@@ -80,6 +80,8 @@
 		<module>SpringBoot2-chapter21-mybatisPlus</module>
 		<module>SpringBoot2-chapter22-mybatis</module>
 		<module>SpringBoot2-chapter23-Aop</module>
+		<module>SpringBoot2-chapter24-adminServer</module>
+		<module>SpringBoot2-chapter24-adminClient</module>
 	</modules>
 
 	<dependencies>

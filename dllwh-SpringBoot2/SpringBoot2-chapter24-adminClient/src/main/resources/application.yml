@@ -1,0 +1,29 @@
+server:
+  port: 8024
+spring:
+  application:
+    name: spring-boot-admin-client # 应用名称 便于识别
+  boot:
+    admin:
+      client:
+        url:
+        - http://127.0.0.1:8080 # 服务端地址
+        enabled: true # 是否启用springbootAdmin客户端，默认为true
+        instance:
+          prefer-ip: true
+management:
+  server:
+    ssl:
+      enabled: false # 关闭安全认证
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include:
+        - '*'
+# 利用info端点，加入版本等信息  
+info:
+  version: '@project.version@'
+  name: '@project.artifactId@'
