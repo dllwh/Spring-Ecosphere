@@ -46,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
  * @创建时间: 2020-08-20 01:00:35
- * @版本: V 1.0.2
+ * @版本: V 1.0.3
  * @since: JDK 1.8
  */
 @Aspect // 使之成为切面类
@@ -68,7 +68,9 @@ public class WebLogAspect {
 	}
 
 	/**
-	 * @方法描述: 前置通知，用于拦截记录用户的操作
+	 * 前置通知，用于拦截记录用户的操作。
+	 * 
+	 * 在某连接点之前执行的通知，但这个通知不能阻止连接点之前的执行流程（除非它抛出一个异常）。
 	 */
 	@Before(value = "webLog()")
 	public void doBefore(JoinPoint joinPoint) {
@@ -80,7 +82,7 @@ public class WebLogAspect {
 	}
 
 	/**
-	 * @方法描述: 环绕通知,决定目标方法是否执行，什么时候执行，执行时是否需要替换方法参数，执行完毕是否需要替换返回值
+	 * 环绕通知,决定目标方法是否执行，什么时候执行，执行时是否需要替换方法参数，执行完毕是否需要替换返回值
 	 *
 	 * @param joinPoint
 	 * @return
@@ -102,7 +104,9 @@ public class WebLogAspect {
 	}
 
 	/**
-	 * @方法描述: 标注该方法体为后置通知,当目标方法执行成功后执行该方法体，不论是正常返回还是异常退出
+	 * 最终(后置)通知。
+	 * 
+	 * 当目标方法执行成功后执行该方法体，不论是正常返回还是异常退出
 	 *
 	 * @param joinPoint
 	 */
@@ -114,7 +118,9 @@ public class WebLogAspect {
 	}
 
 	/**
-	 * @方法描述: 标注该方法体为后置通知,当目标方法执行成功后执行该方法体,使用在方法aspect()上注册的切入点
+	 * 返回通知
+	 * 
+	 * 在某连接点正常完成后执行的通知，通常在一个匹配的方法返回的时候执行。
 	 *
 	 * @param joinPoint
 	 * @param returnObject 返回值的信息
@@ -129,7 +135,9 @@ public class WebLogAspect {
 	}
 
 	/**
-	 * @方法描述: 标注该方法体为异常通知，当目标方法抛出异常返回后，执行该方法体,用于拦截记录异常日志
+	 * 异常通知
+	 * 
+	 * 当目标方法抛出异常返回后，执行该方法体,用于拦截记录异常日志
 	 *
 	 * @param joinPoint
 	 * @param exception 为Throwable类型将匹配任何异常
@@ -141,11 +149,11 @@ public class WebLogAspect {
 		}
 		WebLog webLog = getWebLog(joinPoint, exception);
 		log.info("{}", JSONUtil.parse(webLog));
-		
+
 	}
 
 	/**
-	 * @方法描述: 获取日志信息
+	 * 获取日志信息
 	 *
 	 * @param joinPoint
 	 * @return
