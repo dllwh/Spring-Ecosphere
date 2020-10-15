@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @author: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
  * @创建时间: 2020-08-20 00:49:41
- * @版本: V 1.0.1
+ * @版本: V 1.0.2
  * @since: JDK 1.8
  *
  */
@@ -33,10 +33,6 @@ public class WebLog {
 	private Long spendTime;
 	/** 请求方式(请求类型) */
 	private String method;
-	/** 浏览器信息 */
-	private String browser;
-	/** 浏览器版本 */
-	private String browserVersion;
 	/** 根路径 */
 	private String basePath;
 	/** URI */
@@ -49,6 +45,10 @@ public class WebLog {
 	private Object result;
 	/** 日志类型 */
 	private int logType;
-	/** 异常原因 */
+	/** 异常详情 */
 	private String exceptionDetail = "";
+	/** 异常名称 */
+	private String exceptionName = "";
+	/** 操作模块 */
+	private String operMudel;
 }

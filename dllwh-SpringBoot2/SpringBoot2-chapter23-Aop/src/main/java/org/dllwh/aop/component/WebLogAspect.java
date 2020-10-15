@@ -34,9 +34,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.BrowserType;
-import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,9 +46,8 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
  * @创建时间: 2020-08-20 01:00:35
- * @版本: V 1.0.1
+ * @版本: V 1.0.2
  * @since: JDK 1.8
- *
  */
 @Aspect // 使之成为切面类
 @Component // 把切面类加入到IOC容器中
@@ -193,14 +189,6 @@ public class WebLogAspect {
 		webLog.setClassName(joinPoint.getTarget().getClass().getName());
 		// 获取方法名
 		webLog.setMethodName(signature.getName());
-		// 获取请求头中的User-Agent
-		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-		// 获取浏览器对象
-		Browser browser = userAgent.getBrowser();
-		if (!BrowserType.UNKNOWN.name().equalsIgnoreCase(browser.getName())) {
-			webLog.setBrowser(browser.getName());
-			webLog.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
-		}
 
 		if (exception != null) {
 			webLog.setLogType(-1);
