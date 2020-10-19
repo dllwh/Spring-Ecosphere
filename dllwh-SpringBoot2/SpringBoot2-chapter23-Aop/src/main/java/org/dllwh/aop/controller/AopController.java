@@ -1,6 +1,5 @@
 package org.dllwh.aop.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +32,7 @@ public class AopController {
 
 	@RequestMapping(value = "return")
 	public String haveReturnResult() {
-		String result = "{\"userName\":\"dllwh\",\"realName\":\"独泪了无痕\"}";
+		String result = "{'userName':'dllwh','realName':'独泪了无痕'}";
 		return result;
 	}
 
