@@ -40,6 +40,7 @@
 		<!-- 使用jdk1.8版本 -->
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<swagger.version>2.9.2</swagger.version>
 		<hutool.version>5.0.0</hutool.version>
 	</properties>
@@ -78,6 +79,9 @@
 		<module>SpringBoot2-chapter20-thymeleaf</module>
 		<module>SpringBoot2-chapter21-mybatisPlus</module>
 		<module>SpringBoot2-chapter22-mybatis</module>
+		<module>SpringBoot2-chapter23-Aop</module>
+		<module>SpringBoot2-chapter24-adminServer</module>
+		<module>SpringBoot2-chapter24-adminClient</module>
 	</modules>
 
 	<dependencies>
@@ -229,4 +233,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- maven的plugins报错解决方法 -->
+	<profiles>
+		<profile>
+			<id>jdk-${java.version}</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>${java.version}</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>${java.version}</maven.compiler.source>
+				<maven.compiler.target>${java.version}</maven.compiler.target>
+				<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
+	
 </project>

@@ -1,23 +1,23 @@
 server:
-  port: 7900
+   port: 7900 # 运行端口号
+   servlet:
+    context-path: /
 spring:
-  application:
-    name: EurekaProvideApplication ## 指定服务名称
+   application:
+      name: eurekaProviderClientApplication ## 指定服务名称
 eureka:
-  instance:
-    lease-expiration-duration-in-seconds: 90
-    lease-renewal-interval-in-seconds: 30
-    hostname: localhost
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    ## 表示eureka client间隔多久去拉取服务注册信息，默认为30秒，如果要迅速获取服务注册状态，可以缩小该值。
-    registry-fetch-interval-seconds: 30
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/ ## 指定Eureka服务端的地址
-    
+   instance:
+      instance-id: provider-application # 指定当前客户端在注册中心的名称
+      prefer-ip-address: true ## 注册时显示ip
+   client:
+      register-with-eureka: true # 是否向注册中心注册自己
+      fetch-registry: true # 指定此客户端是否能获取eureka注册信息
+      ## 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+      registry-fetch-interval-seconds: 30
+      serviceUrl:
+         defaultZone: http://localhost:8761/eureka/ ## 指定Eureka服务端的地址
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+   endpoints:
+      web:
+         exposure:
+            include: '*'
