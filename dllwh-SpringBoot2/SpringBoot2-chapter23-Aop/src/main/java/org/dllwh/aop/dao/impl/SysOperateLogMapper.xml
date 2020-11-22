@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dllwh.aop.dao.SysOperateLogDao">
+  <resultMap id="BaseResultMap" type="org.dllwh.aop.model.WebLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="operate_desc" jdbcType="VARCHAR" property="operateDesc" />
+    <result column="operate_method" jdbcType="VARCHAR" property="operateMethod" />
+    <result column="log_type" jdbcType="VARCHAR" property="logType" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="excep_name" jdbcType="VARCHAR" property="excepName" />
+    <result column="excep_detail" jdbcType="VARCHAR" property="excepDetail" />
+    <result column="parameter" jdbcType="VARCHAR" property="parameter" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="operate_user_id" jdbcType="VARCHAR" property="operateUserId" />
+    <result column="operate_user_name" jdbcType="VARCHAR" property="operateUserName" />
+    <result column="start_time" jdbcType="BIGINT" property="spendTime" />
+    <result column="start_time" jdbcType="BIGINT" property="startTime" />
+    <result column="operate_ver" jdbcType="VARCHAR" property="operateVer" />
+    <result column="operate_model" jdbcType="VARCHAR" property="operateModel" />
+    <result column="operate_type" jdbcType="VARCHAR" property="operateType" />
+    <result column="operate_class" jdbcType="VARCHAR" property="operateClass" />
+    <result column="request_type" jdbcType="VARCHAR" property="requestType" />
+    <result column="base_path" jdbcType="VARCHAR" property="basePath" />
+    <result column="uri" jdbcType="VARCHAR" property="uri" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, operate_desc, operate_method, log_type, ip_address, excep_name, excep_detail, 
+    `parameter`, `result`, operate_user_id, operate_user_name, spend_time, start_time, 
+    operate_ver, operate_model, operate_type, operate_class, request_type, base_path, 
+    uri, url
+  </sql>
+  
+  <select id="getWebLog" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_operate_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+    <select id="getWebLogList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_operate_log
+    <trim prefix="WHERE" prefixOverrides="AND||OR">
+      <if test="operateDesc != null">
+        operate_desc like concat(cpncat('%',#{operateDesc,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="operateMethod != null">
+        operate_method like concat(cpncat('%',#{operateMethod,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="logType != null">
+        log_type = #{logType,jdbcType=VARCHAR}
+      </if>
+      <if test="ipAddress != null">
+        ip_address like concat(cpncat('%',#{ipAddress,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="operateUserId != null">
+        operate_user_id=#{operateUserId,jdbcType=VARCHAR}
+      </if>
+      <if test="operateUserName != null">
+        operate_user_name like concat(cpncat('%',#{operateUserName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="operateVer != null">
+        operate_ver = #{operateVer,jdbcType=VARCHAR}
+      </if>
+      <if test="operateModel != null">
+        operate_model like concat(cpncat('%',#{operateModel,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="operateType != null">
+        operate_type = #{operateType,jdbcType=VARCHAR}
+      </if>
+      <if test="operateClass != null">
+        operate_class= like concat(cpncat('%',#{operateClass,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="requestType != null">
+        request_type=#{requestType,jdbcType=VARCHAR}
+      </if>
+      <if test="uri != null">
+        uri=#{url,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  
+  <insert id="insert" parameterType="org.dllwh.aop.model.WebLog">
+    insert into sys_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operateDesc != null">
+        operate_desc,
+      </if>
+      <if test="operateMethod != null">
+        operate_method,
+      </if>
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="ipAddress != null">
+        ip_address,
+      </if>
+      <if test="excepName != null">
+        excep_name,
+      </if>
+      <if test="excepDetail != null">
+        excep_detail,
+      </if>
+      <if test="parameter != null">
+        `parameter`,
+      </if>
+      <if test="result != null">
+        `result`,
+      </if>
+      <if test="operateUserId != null">
+        operate_user_id,
+      </if>
+      <if test="operateUserName != null">
+        operate_user_name,
+      </if>
+      <if test="spendTime != null">
+        spend_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="operateVer != null">
+        operate_ver,
+      </if>
+      <if test="operateModel != null">
+        operate_model,
+      </if>
+      <if test="operateType != null">
+        operate_type,
+      </if>
+      <if test="operateClass != null">
+        operate_class,
+      </if>
+      <if test="requestType != null">
+        request_type,
+      </if>
+      <if test="basePath != null">
+        base_path,
+      </if>
+      <if test="uri != null">
+        uri,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operateDesc != null">
+        #{operateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="operateMethod != null">
+        #{operateMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null">
+        #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null">
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="excepName != null">
+        #{excepName,jdbcType=VARCHAR},
+      </if>
+      <if test="excepDetail != null">
+        #{excepDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null">
+        #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserId != null">
+        #{operateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserName != null">
+        #{operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="spendTime != null">
+        #{spendTime,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="operateVer != null">
+        #{operateVer,jdbcType=VARCHAR},
+      </if>
+      <if test="operateModel != null">
+        #{operateModel,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateClass != null">
+        #{operateClass,jdbcType=VARCHAR},
+      </if>
+      <if test="requestType != null">
+        #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="basePath != null">
+        #{basePath,jdbcType=VARCHAR},
+      </if>
+      <if test="uri != null">
+        #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

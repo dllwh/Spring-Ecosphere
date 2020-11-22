@@ -1,0 +1,9 @@
+server:
+  port: 28080
+spring:
+  application:
+    name: spring-boot-admin-server # 应用名称 便于识别
+  security:
+    user:
+      name: admin
+      password: dllwh
