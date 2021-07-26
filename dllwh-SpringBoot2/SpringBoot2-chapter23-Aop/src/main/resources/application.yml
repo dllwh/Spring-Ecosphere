@@ -1,5 +1,5 @@
 server:
-  port: 8222
+  port: 8223
   servlet:
     context-path: /
   tomcat:
@@ -12,7 +12,7 @@ logging:
       springframework: info
 spring:
   application:
-    name: SpringBoot2-chapter22-mybatis
+    name: SpringBoot2-chapter23-aop
   devtools: # 设置热部署
     restart: 
       enabled: true #开启热部署
@@ -28,8 +28,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
   # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，
-  type-aliases-package: org.dllwh.mybatis.entity
+  type-aliases-package: org.dllwh.aop.model
   # MyBatis Mapper 所对应的 XML 文件位置
   mapper-locations:
-    - classpath:org/dllwh/mybatis/dao/impl/*Mapper.xml
-  
+    - classpath:org/dllwh/aop/dao/impl/*Mapper.xml
