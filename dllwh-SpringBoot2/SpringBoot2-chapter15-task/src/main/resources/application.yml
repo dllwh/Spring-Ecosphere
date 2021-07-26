@@ -1,11 +1,14 @@
 server:
   port: 8215
-  session:
-    timeout: 60   # session最大超时时间(分钟)，默认为30
   tomcat:
     uri-encoding: utf-8
   servlet:
-    context-path: /quartz
-spring:
-  mvc:
-    static-path-pattern: /** # 静态文件请求匹配方式
+    context-path: /task
+    session:
+      timeout: 60   # session最大超时时间(分钟)，默认为30
+---
+spring:  task:
+    scheduling: # Spring Task 调度任务的配置，对应 TaskSchedulingProperties 配置类      thread-name-prefix: dllwh-taskExecutor- # 线程池的线程名的前缀。默认为 scheduling- ，建议根据自己应用来设置
+      pool:        size: 20 # 线程池大小。默认为 1 ，根据自己应用来设置
+      shutdown: # 为了实现 Spring Task 定时任务的优雅关闭        await-termination: true # 应用关闭时，是否等待定时任务执行完成。默认为 false ，建议设置为 true
+        await-termination-period: 60 # 等待任务完成的最大时长，单位为秒。默认为 0 ，根据自己应用来设置

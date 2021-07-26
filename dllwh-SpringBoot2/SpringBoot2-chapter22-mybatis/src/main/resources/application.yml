@@ -6,13 +6,13 @@ server:
     uri-encoding: UTF-8
 logging:
   level:
-    root: root
+    root: info
     com.dllwh.dao.*: debug
     org:
       springframework: info
 spring:
   application:
-    name: SpringBoot2-chapter21-mybatis
+    name: SpringBoot2-chapter22-mybatis
   devtools: # 设置热部署
     restart: 
       enabled: true #开启热部署

@@ -18,8 +18,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient // 表明这是一个EurekaClient（服务提供者）
-public class EurekaProviderApplication {
+public class EurekaProviderClientApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(EurekaProviderApplication.class, args);
+		SpringApplication.run(EurekaProviderClientApplication.class, args);
 	}
 }

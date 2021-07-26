@@ -61,7 +61,7 @@ public final class TouTiaoCrawler {
 		String url = FUNNY + "&max_behot_time=" + hotTime + "&max_behot_time_tmp=" + hotTime;
 
 		// 定义接口访问的模块 __all__ : 推荐 news_hot: 热点 funny：搞笑
-		url += "&category=funny";
+		// url += "&category=funny";
 		Response response = Jsoup.connect(url).header("Accept", "*/*").header("Accept-Encoding", "gzip, deflate")
 				.header("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3")
 				.header("Content-Type", "application/json;charset=UTF-8")
