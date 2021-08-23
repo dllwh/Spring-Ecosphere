@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 机器监控信息存储
- * @创建者: 皇族灬战狼
+ * @author : 皇族灬战狼
  * @联系方式: duleilewuhen@sina.com
  * @创建时间: 2019年1月18日 下午3:03:06
  * @版本: V 1.0.1

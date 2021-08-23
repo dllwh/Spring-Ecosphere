@@ -13,7 +13,7 @@ import redis.clients.jedis.util.Slowlog;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
- *
+ * <p>
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: Jedis操作redis的工具类
@@ -26,79 +26,96 @@ import redis.clients.jedis.util.Slowlog;
 @Component
 public class RedisUtil {
 
-	@Autowired
-	private JedisPool jedisPool;
+    @Autowired
+    private JedisPool jedisPool;
 
-	// 获取redis 服务器信息
-	public String getRedisInfo() {
+    /**
+     * 获取redis 服务器信息
+     *
+     * @return
+     */
+    public String getRedisInfo() {
 
-		Jedis jedis = null;
-		try {
-			jedis = jedisPool.getResource();
-			Client client = jedis.getClient();
-			client.info();
-			String info = client.getBulkReply();
-			return info;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return "";
-		} finally {
-			closeRedisClient(jedis);
-		}
-	}
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            Client client = jedis.getClient();
+            client.info();
+            String info = client.getBulkReply();
+            return info;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "";
+        } finally {
+            closeRedisClient(jedis);
+        }
+    }
 
-	// 获取日志列表
-	public List<Slowlog> getLogs(long entries) {
-		Jedis jedis = null;
-		try {
-			jedis = jedisPool.getResource();
-			List<Slowlog> logList = jedis.slowlogGet(entries);
-			return logList;
-		} finally {
-			closeRedisClient(jedis);
-		}
-	}
+    /**
+     * 获取日志列表
+     * @param entries
+     * @return
+     */
+    public List<Slowlog> getLogs(long entries) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            List<Slowlog> logList = jedis.slowlogGet(entries);
+            return logList;
+        } finally {
+            closeRedisClient(jedis);
+        }
+    }
 
-	// 获取日志条数
-	public Long getLogsLen() {
-		Jedis jedis = null;
-		try {
-			jedis = jedisPool.getResource();
-			long logLen = jedis.slowlogLen();
-			return logLen;
-		} finally {
-			closeRedisClient(jedis);
-		}
-	}
+    /**
+     * 获取日志条数
+     * @return
+     */
+    public Long getLogsLen() {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            long logLen = jedis.slowlogLen();
+            return logLen;
+        } finally {
+            closeRedisClient(jedis);
+        }
+    }
 
-	// 清空日志
-	public String logEmpty() {
-		Jedis jedis = null;
-		try {
-			jedis = jedisPool.getResource();
-			return jedis.slowlogReset();
-		} finally {
-			closeRedisClient(jedis);
-		}
-	}
+    /**
+     * 清空日志
+     * @return
+     */
+    public String logEmpty() {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.slowlogReset();
+        } finally {
+            closeRedisClient(jedis);
+        }
+    }
 
-	// 获取占用内存大小
-	public Long dbSize() {
-		Jedis jedis = null;
-		try {
-			jedis = jedisPool.getResource();
-			// 配置redis服务信息
-			Client client = jedis.getClient();
-			client.dbSize();
-			return client.getIntegerReply();
-		} finally {
-			closeRedisClient(jedis);
-		}
-	}
+    /**
+     * 获取占用内存大小
+     * @return
+     */
+    public Long dbSize() {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            // 配置redis服务信息
+            Client client = jedis.getClient();
+            client.dbSize();
+            return client.getIntegerReply();
+        } finally {
+            closeRedisClient(jedis);
+        }
+    }
 
-	private void closeRedisClient(Jedis jedisClient) {
-		if (jedisClient != null) {
-			jedisClient.close();
-		}
-	}
+    private void closeRedisClient(Jedis jedisClient) {
+        if (jedisClient != null) {
+            jedisClient.close();
+        }
+    }
 }

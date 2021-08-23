@@ -11,7 +11,7 @@ import org.dllwh.entity.Pictures;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 服务实现接口
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月15日 下午10:52:30
  * @版本: V1.0.1
  * @since: JDK 1.8

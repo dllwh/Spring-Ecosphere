@@ -10,7 +10,7 @@ import lombok.Data;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 图片爬取
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月15日 下午10:49:32
  * @版本: V1.0.1
  * @since: JDK 1.8

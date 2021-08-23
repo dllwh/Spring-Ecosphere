@@ -1,25 +1,17 @@
 package org.dllwh.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.dllwh.entity.Operate;
-import org.dllwh.entity.RedisInfoDetail;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+import io.swagger.annotations.*;
+import org.dllwh.entity.*;
 import org.dllwh.service.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.*;
 
 /**
  * 
@@ -28,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: redis监控页面Controller
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月15日 下午11:06:49
  * @版本: V1.0.1
  * @since: JDK 1.8
@@ -37,18 +29,21 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "redis")
 @Api
 public class RedisClientController {
-	@Autowired
 	RedisService	redisService;
 	@Value("${spring.redis.host}")
 	private String	host;
 	@Value("${spring.redis.port}")
 	private String	port;
 
-	
+	@Autowired
+	public void setRedisService(RedisService redisService) {
+		this.redisService = redisService;
+	}
+
 	@GetMapping(value = "console")
 	public ModelAndView console() {
 		ModelAndView mv = new ModelAndView("console");
-		Map<String, Object> info = new HashMap<>();
+		Map<String, Object> info = Maps.newHashMap();
 		info.put("host", host);
 		info.put("port", port);
 		List<RedisInfoDetail> ridList = redisService.getRedisInfo();
@@ -100,8 +95,7 @@ public class RedisClientController {
 	@GetMapping("getRedisInfo")
 	@ResponseBody
 	public List<RedisInfoDetail> getRedisInfo() {
-		List<RedisInfoDetail> ridList = redisService.getRedisInfo();
-		return ridList;
+		return redisService.getRedisInfo();
 	}
 
 	@ApiOperation(value = "清空日志按钮")

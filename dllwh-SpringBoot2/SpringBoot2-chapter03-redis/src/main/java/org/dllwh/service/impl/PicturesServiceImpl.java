@@ -15,15 +15,20 @@ import org.springframework.stereotype.Service;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 服务实现类
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月15日 下午10:55:37
  * @版本: V1.0.1
  * @since: JDK 1.8
  */
 @Service
 public class PicturesServiceImpl implements PicturesService {
-	@Autowired
+
 	private PicturesMapper picturesMapper;
+
+	@Autowired
+	public void setPicturesMapper(PicturesMapper picturesMapper) {
+		this.picturesMapper = picturesMapper;
+	}
 
 	@Override
 	public boolean insert(Pictures entity) {

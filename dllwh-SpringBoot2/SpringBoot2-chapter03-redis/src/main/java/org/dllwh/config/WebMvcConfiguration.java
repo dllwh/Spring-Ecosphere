@@ -10,13 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: TODO(这里用一句话描述这个类的作用)
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019年1月16日 下午11:00:12
  * @版本: V1.0.1
  * @since: JDK 1.8
  */
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
+	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		/**
 		 * 静态资源配置
