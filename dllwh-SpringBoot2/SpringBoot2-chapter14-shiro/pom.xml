@@ -23,11 +23,7 @@
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
-<<<<<<< HEAD
-			<version>1.4.2</version>
-=======
 			<version>1.6.0</version>
->>>>>>> master
 		</dependency>
 
 		<!-- shiro 引擎 -->
