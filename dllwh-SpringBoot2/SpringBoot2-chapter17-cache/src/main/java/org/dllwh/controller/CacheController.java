@@ -45,8 +45,9 @@ public class CacheController {
         Long end = System.currentTimeMillis();
         log.info("耗时：" + (end - start));
 
-        if (null != article)
+        if (null != article){
             return ResultVo.success(article);
+        }
         return ResultVo.fail();
     }
 
