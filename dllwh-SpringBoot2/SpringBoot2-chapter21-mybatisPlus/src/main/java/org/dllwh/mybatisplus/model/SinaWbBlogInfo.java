@@ -10,7 +10,7 @@ import lombok.Data;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: TODO(这里用一句话描述这个类的作用)
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2019-11-05 9:20:00 AM
  * @版本: V1.0.1
  * @since: JDK 1.8
