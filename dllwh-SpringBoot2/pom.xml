@@ -86,6 +86,7 @@
 		<module>SpringBoot2-chapter23-Aop</module>
 		<module>SpringBoot2-chapter24-adminServer</module>
 		<module>SpringBoot2-chapter24-adminClient</module>
+		<module>SpringBoot2-chapter25-DruidDataSource</module>
 	</modules>
 
 	<dependencies>
