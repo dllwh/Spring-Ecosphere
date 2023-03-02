@@ -44,10 +44,8 @@ public final class BeautifulSoup {
 	}
 
 	/**
-	 * @方法描述: 获取用户的 UID
+	 * 获取用户的 UID
 	 * @备注 这种搜索可能会搜索出很多结果，而我们只关心大V，那就只判断个人认证的用户，这样能在一定程度上避免拿到错误的 UID。
-	 * @param self
-	 * @throws IOException
 	 */
 	public static long getUid(String keyWord) throws IOException {
 		String url = String.format("https://s.weibo.com/user?q=%s", keyWord);
@@ -74,7 +72,6 @@ public final class BeautifulSoup {
 
 	/**
 	 * @方法描述: 获取用户信息，包括 containerid
-	 * @param self
 	 * @param uid
 	 * @throws IOException
 	 */
@@ -92,8 +89,7 @@ public final class BeautifulSoup {
 
 	/**
 	 * 
-	 * @方法描述: 获取 page 页的微博信息
-	 * @param self
+	 * 获取 page 页的微博信息
 	 * @param containerid
 	 * @param page
 	 * @throws IOException
@@ -128,10 +124,7 @@ public final class BeautifulSoup {
 	/**
 	 * 
 	 * @方法描述:
-	 * @param self
-	 * @param containerid
-	 * @param blog_text
-	 * @param name
+	 * @param bid
 	 * @throws IOException 
 	 */
 	public static void getBlogInfo(String bid) throws IOException {
@@ -141,12 +134,11 @@ public final class BeautifulSoup {
 	}
 
 	/**
-	 * @方法描述: 用于获取某个微博的评论
-	 * @param self
-	 * @param mblog_id
+	 * 用于获取某个微博的评论
+	 * @param blogId
 	 * @param page
 	 */
-	public void get_comment(long mblog_id, int page) {
+	public void getComment(long blogId, int page) {
 
 	}
 }

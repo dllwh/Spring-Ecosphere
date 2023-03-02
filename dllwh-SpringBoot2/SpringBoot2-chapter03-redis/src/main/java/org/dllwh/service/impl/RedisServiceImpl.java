@@ -1,23 +1,14 @@
 package org.dllwh.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.dllwh.entity.Operate;
-import org.dllwh.entity.RedisInfoDetail;
+import com.alibaba.fastjson.JSON;
+import org.dllwh.entity.*;
 import org.dllwh.service.RedisService;
-import org.dllwh.utils.DateHelper;
-import org.dllwh.utils.RedisUtil;
+import org.dllwh.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.fastjson.JSON;
-
 import redis.clients.jedis.util.Slowlog;
+
+import java.util.*;
 
 
 /**
@@ -47,9 +38,9 @@ public class RedisServiceImpl implements RedisService {
 		String[] strs = info.split("\n");
 		RedisInfoDetail rif = null;
 		if (strs != null && strs.length > 0) {
-			for (int i = 0; i < strs.length; i++) {
+			for (String item : strs) {
 				rif = new RedisInfoDetail();
-				String s = strs[i];
+				String s = item;
 				String[] str = s.split(":");
 				if (str != null && str.length > 1) {
 					String key = str[0];
@@ -76,8 +67,8 @@ public class RedisServiceImpl implements RedisService {
 			opList = new LinkedList<Operate>();
 			for (Slowlog sl : list) {
 				String args = JSON.toJSONString(sl.getArgs());
-				if (args.equals("[\"PING\"]") || args.equals("[\"SLOWLOG\",\"get\"]")
-						|| args.equals("[\"DBSIZE\"]") || args.equals("[\"INFO\"]")) {
+				if ("[\"PING\"]".equals(args) || "[\"SLOWLOG\",\"get\"]".equals(args)
+						|| "[\"DBSIZE\"]".equals(args) || "[\"INFO\"]".equals(args)) {
 					continue;
 				}
 				op = new Operate();
@@ -89,10 +80,11 @@ public class RedisServiceImpl implements RedisService {
 				opList.add(op);
 			}
 		}
-		if (flag)
+		if (flag){
 			return opList;
-		else
+		} else {
 			return null;
+		}
 	}
 
 	/**
@@ -115,7 +107,7 @@ public class RedisServiceImpl implements RedisService {
 	public Map<String, Object> getKeysSize() {
 		long dbSize = redisUtil.dbSize();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("create_time", new Date().getTime());
+		map.put("create_time", System.currentTimeMillis());
 		map.put("dbSize", dbSize);
 		return map;
 	}
@@ -130,10 +122,10 @@ public class RedisServiceImpl implements RedisService {
 		for (int i = 0; i < strs.length; i++) {
 			String s = strs[i];
 			String[] detail = s.split(":");
-			if (detail[0].equals("used_memory")) {
+			if ("used_memory".equals(detail[0])) {
 				map = new HashMap<String, Object>();
 				map.put("used_memory", detail[1].substring(0, detail[1].length() - 1));
-				map.put("create_time", new Date().getTime());
+				map.put("create_time", System.currentTimeMillis());
 				break;
 			}
 		}

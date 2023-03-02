@@ -37,9 +37,9 @@ public class MenuServiceImpl implements MenuService {
 	public int saveMenu(SysMenu sysMenu) {
 		if (sysMenu.getParentCode() == null) { // 主目录也就是根目录
 			sysMenu.setParentCode(-1);
-			int menuID = menuMapper.insertMenu(sysMenu);
+			int menuId = menuMapper.insertMenu(sysMenu);
 			// 分配给超级管理员
-			roleMenuMapper.saveRoleAccess(1, menuID);
+			roleMenuMapper.saveRoleAccess(1, menuId);
 		} else {
 			return menuMapper.updateMenu(sysMenu);
 		}
