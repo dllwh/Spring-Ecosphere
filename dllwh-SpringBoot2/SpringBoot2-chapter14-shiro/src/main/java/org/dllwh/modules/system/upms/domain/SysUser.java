@@ -18,7 +18,7 @@ import lombok.ToString;
  * Today the best performance as tomorrow newest starter!
  *
  * @类描述: 系统管理员用户表
- * @创建者: 独泪了无痕--duleilewuhen@sina.com
+ * @author : 独泪了无痕--duleilewuhen@sina.com
  * @创建时间: 2018年12月12日 下午11:56:24
  * @版本: V1.0.2
  * @since: JDK 1.8
@@ -40,13 +40,13 @@ public class SysUser extends BaseEntity {
 	/** 用户邮箱 */
 	private String			email;
 	/** email是否经过验证 */
-	private Integer			emailstatus;
+	private Integer			emailStatus;
 	/** 联系方式 */
 	private String			mobile;
 	/** 是否锁定(1:不锁定;0：锁定) */
 	private Integer			ifLocked;
 	/** 审核状态(-1：审核未通过；0：待审核或新用户；1：审核成功) */
-	private Integer			IfVisible;
+	private Integer			ifVisible;
 	/** 是否有效;-1:删除;0:不可用,默认值;1:可用 */
 	private Integer			ifEnabled;
 	/** 拒绝登录描述 */
@@ -58,6 +58,8 @@ public class SysUser extends BaseEntity {
 	/** 最后登陆时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp		loginDate;
-	// 一个用户具有多个角色
+	/**
+	 * 一个用户具有多个角色
+	 */
 	private List<SysRole>	roleList;
 }
