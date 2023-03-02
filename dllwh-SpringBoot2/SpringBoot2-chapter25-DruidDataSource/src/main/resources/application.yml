@@ -1,0 +1,69 @@
+server:
+  port: 8225
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+logging:
+  level:
+    root: info
+    org:
+      springframework: info
+
+
+spring:
+  application:
+    name: SpringBoot2-chapter22-mybatis
+  ########## 配置数据源 （Druid）##########
+  datasource:
+    ########## JDBC 基本配置 ##########
+    username: developer
+    password: developer
+    # driver-class-name: com.mysql.cj.jdbc.Driver   # mysql 的连接驱动
+    url: jdbc:mysql://rm-duleilewuhen.mysql.rds.aliyuncs.com:3306/opensource?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    platform: mysql                               # 数据库类型
+    type: com.alibaba.druid.pool.DruidDataSource  # 指定数据源类型
+    # druid 数据源专有配置,对应的是 com.alibaba.druid.pool.DruidDataSource 中的属性
+    druid:
+      # 配置监控统计的内置过滤器：
+      # stat-监控统计(必须配置，否则监控不到sql)
+      # wall-防御sql注入
+      # log4j2-日志记录框架(值与应用中的日志框架保持一致，如 log4j、log4j、logback、slf4j)
+      filters: stat,wall,slf4j
+        # 自定义过滤器配置：stat、slf4j、log4j、log4j2、commons-log、wal
+        # 内置Filter都是默认配置，无法满足需求时，则可以自定义 Filter，自定义的过滤器默认都是没有开启的
+      filter:
+        # 开启 Druid DataSource 的状态监控
+        stat:
+          enabled: true
+          db-type: mysql
+          # 开启慢sql监控，超过2s 就认为是慢sql，记录到日志中
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        slf4j: # 日志监控，使用slf4j 进行日志输出
+          enabled: true
+          statement-log-error-enabled: true
+          statement-create-after-log-enabled: false
+          statement-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+        wall: # 防火墙过滤器
+          enabled: true
+          config:
+            delete-allow: false     #不允许删除数据
+      ########## 配置WebStatFilter，用于采集web关联监控的数据 ##########
+      web-stat-filter:
+        enabled: true                   # 启动 StatFilter
+        url-pattern: /*                 # 过滤所有url
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"     # 排除一些不必要的url
+        session-stat-enable: true       # 开启session统计功能
+        session-stat-max-count: 1000    # session的最大个数,默认100
+      ########## 配置StatViewServlet（监控页面），用于展示Druid的统计信息 ##########
+      stat-view-servlet:
+        enabled: true                   # 启用StatViewServlet
+        url-pattern: /druid/*           # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
+        reset-enable: false             # 不允许清空统计数据,重新计算
+        login-username: root          # 配置监控页面访问密码
+        login-password: 123
+        allow: 127.0.0.1           # 允许访问的地址，如果allow没有配置或者为空，则允许所有访问
+        deny:                                        # 拒绝访问的地址，deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝

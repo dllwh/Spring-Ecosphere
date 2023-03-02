@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>SpringBoot2-chapter17-cache</artifactId>
 	<name>SpringBoot2-chapter17-cache</name>
-	<url>http://maven.apache.org</url>
+	<url>https://maven.apache.org</url>
 
 	<dependencies>
 		<!-- 引入cache 缓存依赖 -->
