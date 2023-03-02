@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @since: JDK 1.8
  */
 @SpringBootApplication
-@EnableSwagger2
 public class DruidDataSourceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DruidDataSourceApplication.class, args);

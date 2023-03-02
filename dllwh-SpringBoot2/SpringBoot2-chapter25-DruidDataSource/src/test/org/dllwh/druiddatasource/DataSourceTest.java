@@ -24,6 +24,9 @@ import java.sql.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DataSourceTest {
+    /**
+     * Spring Boot 默认已经配置好了数据源，可以直接 DI 注入然后使用即可
+     */
     @Resource
     private DataSource dataSource;
 
