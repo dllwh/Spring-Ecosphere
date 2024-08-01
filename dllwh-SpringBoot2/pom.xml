@@ -46,7 +46,7 @@
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<swagger.version>2.9.2</swagger.version>
-		<hutool.version>5.0.0</hutool.version>
+		<hutool.version>5.8.21</hutool.version>
 	</properties>
 
 	<!-- 声明项目的父项目 -->
