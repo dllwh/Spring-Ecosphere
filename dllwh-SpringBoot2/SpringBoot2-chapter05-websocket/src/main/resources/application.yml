@@ -1,0 +1,40 @@
+#开发环境配置
+server:
+  port: 8205
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /websocket
+#日志配置
+logging:
+  level:
+    root: debug
+    org:
+      springframework: warn
+      spring:
+        springboot:
+          dao: debug
+spring:
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    enable-spring-el-compiler: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+  devtools:
+    restart:
+      enabled: true #热部署生效
+      additional-paths:
+        - src/main/java
+      exclude: templates/** ## classpath目录下的webviews文件夹内容修改不重启
+swagger:
+  enabled: true 
+webSocket:
+  heartCheck:
+    enabled: false # 是否开启心跳监测
+    timeSpan: 1000
+    errorToleration: 30
+    trigger: 0/1 * * * * ? 

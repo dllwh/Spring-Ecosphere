@@ -19,6 +19,7 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().frameOptions().disable();
 		String contextPath = env.getProperty("management.endpoints.web.base-path");
 		if (StringUtils.isEmpty(contextPath)) {
 			contextPath = "";
