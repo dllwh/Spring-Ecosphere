@@ -1,18 +1,16 @@
 package org.dllwh.quartz.job;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
  *
- * Today the best performance as tomorrow newest starter!
+ * Today the best performance as tomorrow the newest starter!
  *
  * @类描述: 继承QuartzJobBean实现executeInternal即可，该方法即定时执行任务逻辑
  * @author: <a href="mailto:duleilewuhen@sina.com">独泪了无痕</a>
@@ -23,16 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 */
 @Slf4j
 public class QuartzTask extends QuartzJobBean {
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	/**
 	 * 执行定时任务
-	 * 
+	 *
 	 * @param jobExecutionContext
-	 * @throws JobExecutionException
 	 */
 	@Override
-	protected void executeInternal(JobExecutionContext jobExecutionContextÏ) throws JobExecutionException {
+	protected void executeInternal(JobExecutionContext jobExecutionContext) {
 		log.info("quartz task: " + LocalDateTime.now().format(formatter));
 	}
 }
