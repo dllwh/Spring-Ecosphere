@@ -34,14 +34,15 @@
 	</developers>
 
 	<modules>
+		<module>SpringCloud-eureka-consumer</module>
 		<module>springCloud-eureka-server</module>
 		<module>SpringCloud-eureka-provider</module>
 		<module>SpringCloud-eureka-Server</module>
 		<module>SpringCloud-ribbon</module>
 		<module>SpringCloud-Feign</module>
 		<module>SpringCloud-Zuul</module>
-    <module>SpringCloud-eureka-consumer</module>
-  </modules>
+		<module>SpringCloud-Gateway</module>
+	</modules>
 
 	<!-- 生命项目的父项目 -->
 	<parent>

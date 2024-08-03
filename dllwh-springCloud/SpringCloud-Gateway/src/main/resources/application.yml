@@ -1,0 +1,5 @@
+server:
+  port: 9527  # 端口号
+spring:
+  application:
+    name: microServiceCloudGateway # 服务注册中心注册的服务名
