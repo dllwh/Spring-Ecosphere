@@ -44,6 +44,18 @@
 		<module>SpringCloud-Gateway</module>
 	</modules>
 
+	<properties>
+		<!-- 使用UTF-8编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- 使用jdk1.8版本 -->
+		<java.version>1.8</java.version>
+		<spring.boot.version>2.7.5</spring.boot.version>
+		<spring.cloud.version>2021.0.8</spring.cloud.version>
+		<swagger.version>2.9.2</swagger.version>
+		<spring.cloud.alibaba.version>2.2.3.RELEASE</spring.cloud.alibaba.version>
+	</properties>
+
 	<!-- 生命项目的父项目 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -52,24 +64,21 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<properties>
-		<!-- 使用UTF-8编码 -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- 使用jdk1.8版本 -->
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-		<swagger.version>2.9.2</swagger.version>
-	</properties>
-
-	<!--依赖管理，用于管理spring-cloud的依赖，其中Finchley.RELEASE是版本号 -->
+	<!--依赖管理，用于管理spring-cloud的依赖 -->
 	<dependencyManagement>
 		<dependencies>
 			 <!-- SpringCloud依赖，一定要放到dependencyManagement中，起到管理版本的作用即可 -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

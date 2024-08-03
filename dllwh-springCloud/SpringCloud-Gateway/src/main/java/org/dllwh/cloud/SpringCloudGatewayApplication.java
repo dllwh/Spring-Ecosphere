@@ -2,6 +2,7 @@ package org.dllwh.cloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 把今天最好的表现当作明天最新的起点．．～
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since: JDK 1.8
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 public class SpringCloudGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringCloudGatewayApplication.class, args);
