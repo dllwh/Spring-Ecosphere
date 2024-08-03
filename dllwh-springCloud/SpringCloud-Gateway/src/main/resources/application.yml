@@ -1,0 +1,13 @@
+server:
+  port: 9527  # 端口号
+spring:
+  application:
+    name: microServiceCloudGateway # 服务注册中心注册的服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 让gateway可以发现nacos中的微服务
