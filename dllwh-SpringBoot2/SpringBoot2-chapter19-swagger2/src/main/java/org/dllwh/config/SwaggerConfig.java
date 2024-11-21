@@ -1,4 +1,4 @@
-package org.dllwh.config;
+	package org.dllwh.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +30,14 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket createRestApiDocket() {
-		return new Docket(DocumentationType.SWAGGER_2) //
+		return new Docket(DocumentationType.SWAGGER_2) // 告诉Docket bean我们正在使用Swagger规范的版本2
 				.apiInfo(apiInfo()) // 用来创建该Api的基本信息（这些基本信息会展现在文档页面中）
 				.enable(swaggerEnabled) // 是否开启
 				.genericModelSubstitutes(DeferredResult.class) //
 				.useDefaultResponseMessages(false) //
 				.forCodeGeneration(false) //
-				.pathMapping("/").select() // 选择那些路径和api会生成document
+				.pathMapping("/") // 
+				.select() // 选择那些路径和api会生成document
 				.apis(RequestHandlerSelectors.basePackage("org.dllwh")) // 指定扫描的包路径
 				.paths(PathSelectors.any())// 指定路径处理PathSelectors.any()代表所有的路径
 				.build().pathMapping("/");// 创建
